@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>VoltOps Pro | CPO Command Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-tertiary-fixed-variant": "#564427",
+                      "on-error-container": "#93000a",
+                      "tertiary-container": "#35260c",
+                      "on-secondary-container": "#57657b",
+                      "secondary-container": "#d5e3fd",
+                      "on-primary-fixed": "#111c2d",
+                      "on-secondary": "#ffffff",
+                      "inverse-primary": "#bcc7de",
+                      "surface-container-highest": "#e0e3e5",
+                      "secondary-fixed": "#d5e3fd",
+                      "error": "#ba1a1a",
+                      "surface-container": "#eceef0",
+                      "background": "#f7f9fb",
+                      "surface-variant": "#e0e3e5",
+                      "surface-bright": "#f7f9fb",
+                      "surface-container-high": "#e6e8ea",
+                      "secondary-fixed-dim": "#b9c7e0",
+                      "on-surface-variant": "#45474c",
+                      "error-container": "#ffdad6",
+                      "outline-variant": "#c5c6cd",
+                      "on-tertiary-fixed": "#271902",
+                      "tertiary": "#1e1200",
+                      "on-surface": "#191c1e",
+                      "primary": "#091426",
+                      "on-secondary-fixed-variant": "#3a485c",
+                      "primary-fixed": "#d8e3fb",
+                      "outline": "#75777d",
+                      "primary-fixed-dim": "#bcc7de",
+                      "tertiary-fixed-dim": "#ddc39d",
+                      "surface-tint": "#545f73",
+                      "on-primary-fixed-variant": "#3c475a",
+                      "on-error": "#ffffff",
+                      "surface-container-lowest": "#ffffff",
+                      "secondary": "#515f74",
+                      "inverse-on-surface": "#eff1f3",
+                      "on-tertiary": "#ffffff",
+                      "on-background": "#191c1e",
+                      "on-tertiary-container": "#a38c6a",
+                      "on-secondary-fixed": "#0d1c2f",
+                      "on-primary": "#ffffff",
+                      "surface-container-low": "#f2f4f6",
+                      "surface": "#f7f9fb",
+                      "on-primary-container": "#8590a6",
+                      "primary-container": "#1e293b",
+                      "inverse-surface": "#2d3133",
+                      "surface-dim": "#d8dadc",
+                      "tertiary-fixed": "#fadfb8"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "container-margin": "32px",
+                      "card-padding": "20px",
+                      "table-cell-padding": "12px 16px",
+                      "sidebar-width": "260px",
+                      "gutter": "24px"
+              },
+              "fontFamily": {
+                      "headline-md": ["Inter"],
+                      "body-sm": ["Inter"],
+                      "title-sm": ["Inter"],
+                      "label-caps": ["Inter"],
+                      "display-lg": ["Inter"],
+                      "body-md": ["Inter"],
+                      "data-mono": ["Inter"]
+              },
+              "fontSize": {
+                      "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                      "body-sm": ["13px", {"lineHeight": "18px", "fontWeight": "400"}],
+                      "title-sm": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
+                      "label-caps": ["11px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                      "display-lg": ["36px", {"lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                      "data-mono": ["13px", {"lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500"}]
+              }
+            },
+          },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        body { font-family: 'Inter', sans-serif; background-color: #f7f9fb; }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(8px);
+            border: 1px solid #e2e8f0;
+        }
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 24px;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="text-on-background">
+<!-- Sidebar Navigation (Desktop) -->
+<aside class="fixed left-0 top-0 h-full w-[260px] bg-primary z-50 flex flex-col border-r border-outline-variant hidden md:flex">
+<div class="p-6">
+<h1 class="text-headline-md font-headline-md text-surface-lowest tracking-tight">VoltOps Pro</h1>
+<p class="text-body-sm font-body-sm text-on-primary-container">Charge Point Operator</p>
+</div>
+<nav class="flex-1 mt-4">
+<div class="space-y-1">
+<a class="bg-primary-container text-on-primary-container rounded-lg mx-2 flex items-center px-4 py-3 gap-3 transition-colors" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-body-md font-body-md">Dashboard</span>
+</a>
+<a class="text-on-primary-container/70 hover:text-on-primary-container hover:bg-primary-container/50 mx-2 flex items-center px-4 py-3 gap-3 transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined">ev_station</span>
+<span class="text-body-md font-body-md">Stations</span>
+</a>
+<a class="text-on-primary-container/70 hover:text-on-primary-container hover:bg-primary-container/50 mx-2 flex items-center px-4 py-3 gap-3 transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined">event_available</span>
+<span class="text-body-md font-body-md">Bookings</span>
+</a>
+<a class="text-on-primary-container/70 hover:text-on-primary-container hover:bg-primary-container/50 mx-2 flex items-center px-4 py-3 gap-3 transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined">report_problem</span>
+<span class="text-body-md font-body-md">Discrepancies</span>
+</a>
+<a class="text-on-primary-container/70 hover:text-on-primary-container hover:bg-primary-container/50 mx-2 flex items-center px-4 py-3 gap-3 transition-colors rounded-lg" href="#">
+<span class="material-symbols-outlined">payments</span>
+<span class="text-body-md font-body-md">Payouts</span>
+</a>
+</div>
+</nav>
+<div class="p-4 border-t border-on-primary-container/10">
+<button class="w-full bg-primary-fixed text-on-primary-fixed py-3 rounded-lg font-title-sm text-title-sm flex items-center justify-center gap-2 active:scale-95 transition-transform">
+<span class="material-symbols-outlined">add</span>
+                Add Station
+            </button>
+</div>
+</aside>
+<!-- Main Canvas -->
+<main class="md:ml-[260px] min-h-screen pb-24 md:pb-8">
+<!-- Top Navigation Bar -->
+<header class="h-16 flex items-center justify-between px-gutter bg-surface-lowest border-b border-outline-variant sticky top-0 z-40">
+<div class="flex items-center gap-4">
+<span class="text-title-sm font-title-sm text-on-surface">VoltOps Management</span>
+<div class="h-4 w-[1px] bg-outline-variant"></div>
+<div class="flex items-center text-body-sm font-body-sm text-secondary">
+<span>Admin</span>
+<span class="material-symbols-outlined text-[16px] mx-1">chevron_right</span>
+<span class="text-primary font-bold">Dashboard</span>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<div class="relative hidden lg:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline">search</span>
+<input class="pl-10 pr-4 py-2 bg-surface-container-low border-none rounded-lg text-body-sm w-64 focus:ring-2 focus:ring-primary" placeholder="Search stations, drivers..." type="text"/>
+</div>
+<div class="flex items-center gap-3">
+<button class="material-symbols-outlined p-2 text-secondary hover:bg-surface-container-low rounded-full transition-all">notifications</button>
+<button class="material-symbols-outlined p-2 text-secondary hover:bg-surface-container-low rounded-full transition-all">settings</button>
+<div class="w-8 h-8 rounded-full overflow-hidden border border-outline-variant">
+<img class="w-full h-full object-cover" data-alt="A professional headshot of a corporate fleet manager in a modern office, wearing a navy blue blazer. The lighting is bright and clean, with a shallow depth of field showing a tech-focused workspace in the background. The aesthetic is high-end, minimalist, and corporate professional." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD3yFk9PaebyBbm53Cjsf72QiuzotHP1WFsACrFloztH0fmojIAOSpkrDYgKV3HpVddOxbzQswKeWz6ZaKxg95UHqrYcmSiMN4QljZXypbrMz-ZJJS3gIaMyI2hV8DXT17dbqCneBxRXUzvYCtc_VX1EsOES4UXCJcGl_kTlEY4ITnw3mvJxDqztGX7MLw0uHRuAcP15vfOrki16JHQHr6cgQMlU5xdi46DWV9Tqz8Rz3Pp9SDDYuFL"/>
+</div>
+</div>
+</div>
+</header>
+<!-- Content Area -->
+<div class="p-gutter max-w-[1600px] mx-auto space-y-8">
+<!-- Summary Stats Bento -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<!-- Total Revenue -->
+<div class="bg-surface-container-lowest p-card-padding rounded-xl border border-outline-variant flex flex-col justify-between h-32 relative overflow-hidden group">
+<div>
+<p class="text-label-caps font-label-caps text-secondary uppercase">Total Revenue</p>
+<h2 class="text-display-lg font-display-lg text-primary mt-1">$42,890.50</h2>
+</div>
+<div class="flex items-center gap-1 text-success text-body-sm font-bold text-green-600">
+<span class="material-symbols-outlined text-[18px]">trending_up</span>
+                        +12.4% <span class="text-secondary font-normal ml-1">vs last month</span>
+</div>
+<div class="absolute right-[-10px] bottom-[-10px] opacity-5 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-[100px]">payments</span>
+</div>
+</div>
+<!-- Active Bookings -->
+<div class="bg-surface-container-lowest p-card-padding rounded-xl border border-outline-variant flex flex-col justify-between h-32 relative overflow-hidden group">
+<div>
+<p class="text-label-caps font-label-caps text-secondary uppercase">Active Bookings</p>
+<h2 class="text-display-lg font-display-lg text-primary mt-1">158</h2>
+</div>
+<div class="flex items-center gap-1 text-body-sm font-bold text-secondary">
+<span class="flex h-2 w-2 rounded-full bg-green-500 mr-1 animate-pulse"></span>
+                        24 Sessions Live Now
+                    </div>
+<div class="absolute right-[-10px] bottom-[-10px] opacity-5 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-[100px]">event_available</span>
+</div>
+</div>
+<!-- Station Uptime -->
+<div class="bg-surface-container-lowest p-card-padding rounded-xl border border-outline-variant flex flex-col justify-between h-32 relative overflow-hidden group">
+<div>
+<p class="text-label-caps font-label-caps text-secondary uppercase">Station Uptime</p>
+<h2 class="text-display-lg font-display-lg text-primary mt-1">99.94%</h2>
+</div>
+<div class="flex items-center gap-4">
+<div class="w-full bg-surface-container-highest h-1.5 rounded-full overflow-hidden">
+<div class="bg-primary h-full" style="width: 99.94%"></div>
+</div>
+</div>
+<div class="absolute right-[-10px] bottom-[-10px] opacity-5 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-[100px]">bolt</span>
+</div>
+</div>
+</div>
+<!-- Main Content Grid -->
+<div class="grid grid-cols-1 xl:grid-cols-3 gap-8 items-start">
+<!-- Live Bookings List (2/3 width) -->
+<div class="xl:col-span-2 bg-surface-container-lowest rounded-xl border border-outline-variant overflow-hidden">
+<div class="px-6 py-5 border-b border-outline-variant flex items-center justify-between">
+<h3 class="text-title-sm font-title-sm text-primary">Live &amp; Upcoming Bookings</h3>
+<button class="text-body-sm font-bold text-primary hover:underline">View All</button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead class="bg-surface-container-low border-b border-outline-variant">
+<tr>
+<th class="px-6 py-3 text-label-caps font-label-caps text-secondary">DRIVER</th>
+<th class="px-6 py-3 text-label-caps font-label-caps text-secondary">STATION ID</th>
+<th class="px-6 py-3 text-label-caps font-label-caps text-secondary">SLOT TIME</th>
+<th class="px-6 py-3 text-label-caps font-label-caps text-secondary">STATUS</th>
+<th class="px-6 py-3 text-label-caps font-label-caps text-secondary">ACTION</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant">
+<tr class="hover:bg-surface-container-low/50 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary-container font-bold text-xs">JD</div>
+<div>
+<div class="text-body-md font-bold text-primary">John Dorsey</div>
+<div class="text-[11px] text-secondary">Tesla Model 3</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-data-mono font-data-mono text-primary">US-CAL-042</td>
+<td class="px-6 py-4 text-body-md text-secondary">10:30 AM - 11:45 AM</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full bg-green-100 text-green-800 text-[11px] font-bold">
+                                            IN PROGRESS
+                                        </span>
+</td>
+<td class="px-6 py-4">
+<button class="material-symbols-outlined text-secondary hover:text-primary">more_vert</button>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low/50 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-tertiary-fixed-dim flex items-center justify-center text-on-tertiary-fixed font-bold text-xs">SP</div>
+<div>
+<div class="text-body-md font-bold text-primary">Sarah P.</div>
+<div class="text-[11px] text-secondary">Rivian R1S</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-data-mono font-data-mono text-primary">US-CAL-089</td>
+<td class="px-6 py-4 text-body-md text-secondary">11:15 AM - 12:30 PM</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full bg-secondary-container text-on-secondary-fixed-variant text-[11px] font-bold">
+                                            UPCOMING
+                                        </span>
+</td>
+<td class="px-6 py-4">
+<button class="material-symbols-outlined text-secondary hover:text-primary">more_vert</button>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low/50 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-outline-variant flex items-center justify-center text-surface-lowest font-bold text-xs">ML</div>
+<div>
+<div class="text-body-md font-bold text-primary">Michael Lee</div>
+<div class="text-[11px] text-secondary">Ford F-150 Lightning</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-data-mono font-data-mono text-primary">US-CAL-012</td>
+<td class="px-6 py-4 text-body-md text-secondary">12:00 PM - 01:00 PM</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full bg-secondary-container text-on-secondary-fixed-variant text-[11px] font-bold">
+                                            UPCOMING
+                                        </span>
+</td>
+<td class="px-6 py-4">
+<button class="material-symbols-outlined text-secondary hover:text-primary">more_vert</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Right Sidebar Column -->
+<div class="space-y-6">
+<!-- Quick Action: Report Fault -->
+<button class="w-full bg-error text-on-error p-6 rounded-xl flex flex-col items-start gap-4 hover:bg-error/90 active:scale-[0.98] transition-all shadow-lg shadow-error/10">
+<div class="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined text-[28px]" style="font-variation-settings: 'FILL' 1;">warning</span>
+</div>
+<div class="text-left">
+<h4 class="text-title-sm font-title-sm">Report Fault</h4>
+<p class="text-body-sm opacity-90">Instant alert to maintenance team for station outages or damage.</p>
+</div>
+</button>
+<!-- Trust Score Gauge Card -->
+<div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant">
+<div class="flex items-center justify-between mb-6">
+<h4 class="text-title-sm font-title-sm text-primary">Network Trust Score</h4>
+<span class="material-symbols-outlined text-secondary">info</span>
+</div>
+<div class="flex flex-col items-center justify-center py-4">
+<div class="relative w-32 h-16 overflow-hidden">
+<div class="absolute top-0 left-0 w-32 h-32 rounded-full border-[12px] border-surface-container-high"></div>
+<div class="absolute top-0 left-0 w-32 h-32 rounded-full border-[12px] border-green-500" style="clip-path: polygon(0 0, 100% 0, 100% 50%, 0 50%); transform: rotate(165deg);"></div>
+<div class="absolute bottom-0 left-1/2 -translate-x-1/2 text-headline-md font-bold text-primary">92</div>
+</div>
+<p class="mt-4 text-body-sm font-bold text-green-600">EXCELLENT</p>
+<p class="text-body-sm text-secondary text-center mt-2">Based on reliability, payment success, and user reviews.</p>
+</div>
+</div>
+<!-- Station Snapshot Image -->
+<div class="relative group rounded-xl overflow-hidden h-48 border border-outline-variant">
+<img class="w-full h-full object-cover" data-alt="A high-tech electric vehicle charging hub at twilight. Several sleek, modern charging pedestals glow with minimalist blue LED strips. A premium electric sedan is plugged in, its headlights subtly reflecting on the wet, dark pavement. The surrounding architecture is contemporary glass and steel, lit with soft, professional architectural lighting in cool blue and white tones." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB_GOXI4Kw1ahVLzJHMoHmKzEQHu7nyF2PP9lJgOgvvsVodHffOkTYTc3QwYdWQldo2zWcQNH1zhOv47TTZB10-Wpo3zVBoZyoGqjuoQy2q3SYeUZWcoy2R-oImSyeobhuHSvbZ1aPFBC7AFsPOselhauqIiSLRZWmeDlJHQ4mSNljgcn5EmidG3DKNMdLWCidjyBzwK31Cx-sDQe-jWBSMwj1KlPbYhETHPG6l2gT_heoDw8XYTyuU"/>
+<div class="absolute inset-0 bg-gradient-to-t from-primary/80 to-transparent flex flex-col justify-end p-4">
+<div class="text-surface-lowest text-body-md font-bold">Palo Alto Station Hub</div>
+<div class="text-surface-lowest/70 text-[11px] flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]">location_on</span> 
+                                452 University Ave, CA
+                            </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Bottom Navigation Bar (Mobile Only) -->
+<nav class="fixed bottom-0 left-0 right-0 h-16 bg-surface-lowest border-t border-outline-variant flex items-center justify-around z-50 md:hidden">
+<a class="flex flex-col items-center justify-center text-primary font-bold" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">dashboard</span>
+<span class="text-[10px] font-label-caps mt-1 uppercase">Dashboard</span>
+</a>
+<a class="flex flex-col items-center justify-center text-secondary hover:text-primary" href="#">
+<span class="material-symbols-outlined">ev_station</span>
+<span class="text-[10px] font-label-caps mt-1 uppercase">Chargers</span>
+</a>
+<a class="flex flex-col items-center justify-center text-secondary hover:text-primary" href="#">
+<span class="material-symbols-outlined">payments</span>
+<span class="text-[10px] font-label-caps mt-1 uppercase">Payouts</span>
+</a>
+<a class="flex flex-col items-center justify-center text-secondary hover:text-primary" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="text-[10px] font-label-caps mt-1 uppercase">Account</span>
+</a>
+</nav>
+<!-- Micro-interaction Script -->
+<script>
+        document.querySelectorAll('button, a').forEach(el => {
+            el.addEventListener('mousedown', () => {
+                el.style.transform = 'scale(0.96)';
+            });
+            el.addEventListener('mouseup', () => {
+                el.style.transform = 'scale(1)';
+            });
+            el.addEventListener('mouseleave', () => {
+                el.style.transform = 'scale(1)';
+            });
+        });
+    </script>
+</body></html>

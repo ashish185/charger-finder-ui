@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
+<title>Chargefinder - Registration</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Theme Configuration -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "inverse-on-surface": "#eff1f3",
+                    "primary": "#006e2f",
+                    "on-secondary-fixed": "#111c2d",
+                    "on-primary-fixed": "#002109",
+                    "surface-dim": "#d8dadc",
+                    "tertiary-fixed": "#ffddb8",
+                    "secondary-fixed-dim": "#bcc7de",
+                    "on-primary": "#ffffff",
+                    "on-surface": "#191c1e",
+                    "outline": "#6d7b6c",
+                    "inverse-primary": "#4ae176",
+                    "on-tertiary-container": "#5c3800",
+                    "on-tertiary": "#ffffff",
+                    "primary-fixed-dim": "#4ae176",
+                    "tertiary": "#855300",
+                    "secondary": "#545f73",
+                    "on-primary-fixed-variant": "#005321",
+                    "secondary-fixed": "#d8e3fb",
+                    "primary-container": "#22c55e",
+                    "on-error": "#ffffff",
+                    "tertiary-fixed-dim": "#ffb95f",
+                    "primary-fixed": "#6bff8f",
+                    "surface-tint": "#006e2f",
+                    "on-primary-container": "#004b1e",
+                    "outline-variant": "#bccbb9",
+                    "on-secondary-container": "#586377",
+                    "surface-container-highest": "#e0e3e5",
+                    "secondary-container": "#d5e0f8",
+                    "surface-variant": "#e0e3e5",
+                    "tertiary-container": "#ef9900",
+                    "on-tertiary-fixed": "#2a1700",
+                    "surface": "#f7f9fb",
+                    "on-secondary-fixed-variant": "#3c475a",
+                    "surface-container-low": "#f2f4f6",
+                    "error-container": "#ffdad6",
+                    "surface-container-lowest": "#ffffff",
+                    "surface-bright": "#f7f9fb",
+                    "on-background": "#191c1e",
+                    "on-error-container": "#93000a",
+                    "inverse-surface": "#2d3133",
+                    "on-tertiary-fixed-variant": "#653e00",
+                    "background": "#f7f9fb",
+                    "surface-container": "#eceef0",
+                    "on-secondary": "#ffffff",
+                    "on-surface-variant": "#3d4a3d",
+                    "surface-container-high": "#e6e8ea",
+                    "error": "#ba1a1a"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "stack-xs": "4px",
+                    "stack-lg": "24px",
+                    "stack-md": "16px",
+                    "safe-margin": "20px",
+                    "inline-gutter": "16px",
+                    "stack-sm": "8px"
+            },
+            "fontFamily": {
+                    "headline-md": ["Inter"],
+                    "headline-lg-mobile": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "label-bold": ["Inter"],
+                    "label-sm": ["Inter"],
+                    "body-sm": ["Inter"]
+            },
+            "fontSize": {
+                    "headline-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "30px", "fontWeight": "700"}],
+                    "headline-lg": ["28px", {"lineHeight": "34px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "label-bold": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+                    "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        
+        /* Smooth state transitions */
+        .fade-in { animation: fadeIn 0.8s ease-out forwards; }
+        .slide-up { animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes slideUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .splash-active #registration-flow { display: none; }
+        .flow-active #splash-screen { display: none; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface min-h-screen flex flex-col overflow-x-hidden splash-active" id="main-body">
+<!-- Splash Screen Section -->
+<section class="fixed inset-0 z-[100] bg-surface flex flex-col items-center justify-center p-safe-margin transition-opacity duration-700" id="splash-screen">
+<div class="flex flex-col items-center text-center space-y-stack-md">
+<!-- Brand Identity from JSON TopAppBar keys -->
+<div class="w-20 h-20 bg-primary-container rounded-xl flex items-center justify-center mb-stack-md shadow-sm">
+<span class="material-symbols-outlined text-on-primary-container text-[48px]" style="font-variation-settings: 'FILL' 1;">ev_station</span>
+</div>
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile text-primary tracking-tight">Chargefinder</h1>
+<p class="font-body-lg text-body-lg text-secondary opacity-0 fade-in" style="animation-delay: 0.4s;">Charge with confidence</p>
+</div>
+<!-- Subtle loading indicator -->
+<div class="absolute bottom-16 left-1/2 -translate-x-1/2 w-12 h-1 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-primary-container w-1/2 animate-[loading_1.5s_infinite_ease-in-out]"></div>
+</div>
+</section>
+<!-- Main Registration Flow (Transitioned state) -->
+<main class="flex-1 flex flex-col w-full max-w-md mx-auto bg-surface min-h-screen" id="registration-flow">
+<!-- Top Navigation (Shell suppressed for transactional flow, but implementing the leading icon logic from JSON TopAppBar) -->
+<nav class="flex items-center px-safe-margin h-16 w-full sticky top-0 bg-surface/95 backdrop-blur-md z-50">
+<button aria-label="Go back" class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-container transition-colors active:scale-95 duration-100">
+<span class="material-symbols-outlined text-on-surface">arrow_back</span>
+</button>
+<div class="flex-1 flex justify-center pr-10">
+<span class="font-label-bold text-label-bold uppercase text-outline tracking-widest">Step 1 of 4</span>
+</div>
+</nav>
+<!-- Progress Indicator -->
+<div class="px-safe-margin pt-stack-xs pb-stack-lg">
+<div class="flex gap-2 h-1">
+<div class="flex-1 bg-primary rounded-full"></div>
+<div class="flex-1 bg-surface-container-high rounded-full"></div>
+<div class="flex-1 bg-surface-container-high rounded-full"></div>
+<div class="flex-1 bg-surface-container-high rounded-full"></div>
+</div>
+</div>
+<!-- Hero Graphic -->
+<div class="px-safe-margin mb-stack-lg">
+<div class="relative w-full aspect-video rounded-xl overflow-hidden bg-surface-container-low border border-outline-variant/30">
+<img class="w-full h-full object-cover" data-alt="A clean, high-end photography shot of a sleek modern electric vehicle charging at a futuristic white charging station. The scene is bright and airy with soft morning sunlight, emphasizing a minimalist and eco-friendly lifestyle. The background features a blurred corporate modern campus with manicured greenery, maintaining a high-trust professional atmosphere." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA_msaJ8p0AYfTnikWFnJ_shPPfkYfBhEi8Mk8Eo9pAYO_HekprC3JX-aaSYtpx4DpRndAgFmOxMzPncdqxCrtrXmIAEuqmlO1aGsJKXzlYkkFv65oW5vzl1qpLWKT7AW4LXEDke9SWtLcUb9Oukk2PArCg1-TjfKwlm6yTgGQTx6DH37uuqzn-n8w87QIOgjmW4yFJeF3fkoUTU7kenvnQ_1160Dn0JzP9hy0LAVBuLDEOrQf6fRAX"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface/80 to-transparent"></div>
+</div>
+</div>
+<!-- Form Content -->
+<div class="px-safe-margin flex-1 flex flex-col slide-up" style="animation-delay: 0.1s;">
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface mb-stack-xs">Enter your number</h2>
+<p class="font-body-sm text-body-sm text-secondary mb-stack-lg">We'll send a 6-digit code to verify your account.</p>
+<!-- Phone Input Component -->
+<div class="space-y-stack-sm">
+<label class="font-label-bold text-label-bold text-outline ml-1" for="phone">PHONE NUMBER</label>
+<div class="group relative flex items-center h-16 px-4 bg-surface-container-lowest border border-outline-variant rounded-xl focus-within:border-primary transition-all duration-200">
+<div class="flex items-center gap-2 pr-3 border-r border-outline-variant/50 mr-3">
+<span class="font-body-lg text-body-lg font-semibold">+1</span>
+<span class="material-symbols-outlined text-secondary text-sm">expand_more</span>
+</div>
+<input class="flex-1 bg-transparent border-none p-0 focus:ring-0 font-body-lg text-body-lg tracking-wider placeholder:text-outline-variant text-on-surface" id="phone" maxlength="14" placeholder="(555) 000-0000" type="tel"/>
+</div>
+</div>
+<!-- Policy Text -->
+<p class="mt-stack-md font-label-sm text-label-sm text-outline-variant text-center px-4">
+                By continuing, you agree to Chargefinder's <a class="underline text-secondary" href="#">Terms of Service</a> and <a class="underline text-secondary" href="#">Privacy Policy</a>.
+            </p>
+</div>
+<!-- Sticky Bottom CTA -->
+<div class="p-safe-margin bg-surface/95 backdrop-blur-md sticky bottom-0 border-t border-outline-variant/10">
+<button class="w-full h-14 bg-primary text-on-primary rounded-xl font-label-bold text-label-bold tracking-widest flex items-center justify-center gap-2 active:scale-95 transition-transform duration-100 shadow-sm">
+                SEND OTP
+                <span class="material-symbols-outlined text-[20px]">arrow_forward</span>
+</button>
+</div>
+</main>
+<script>
+        // Micro-interaction: Splash screen transition
+        window.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => {
+                const splash = document.getElementById('splash-screen');
+                const body = document.getElementById('main-body');
+                
+                splash.style.opacity = '0';
+                
+                setTimeout(() => {
+                    body.classList.remove('splash-active');
+                    body.classList.add('flow-active');
+                    splash.style.display = 'none';
+                }, 700);
+            }, 2500); // Wait for splash effect
+        });
+
+        // Basic phone formatting micro-interaction
+        const phoneInput = document.getElementById('phone');
+        phoneInput.addEventListener('input', (e) => {
+            let x = e.target.value.replace(/\D/g, '').match(/(\d{0,3})(\d{0,3})(\d{0,4})/);
+            e.target.value = !x[2] ? x[1] : '(' + x[1] + ') ' + x[2] + (x[3] ? '-' + x[3] : '');
+        });
+
+        // Custom loading animation style injection
+        const style = document.createElement('style');
+        style.innerHTML = `
+            @keyframes loading {
+                0% { transform: translateX(-100%); }
+                100% { transform: translateX(200%); }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+<!-- Material Symbols initialization link included in head as per mandate -->
+</body></html>

@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
+<title>Booking Confirmation | Chargefinder</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .success-checkmark-draw {
+            stroke-dasharray: 100;
+            stroke-dashoffset: 100;
+            animation: draw 0.6s ease-out forwards;
+        }
+        @keyframes draw {
+            to { stroke-dashoffset: 0; }
+        }
+        .success-pulse {
+            animation: pulse-ring 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        @keyframes pulse-ring {
+            0% { transform: scale(0.95); opacity: 0.5; }
+            50% { transform: scale(1.05); opacity: 0.3; }
+            100% { transform: scale(0.95); opacity: 0.5; }
+        }
+    </style>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "inverse-on-surface": "#eff1f3",
+                    "primary": "#006e2f",
+                    "on-secondary-fixed": "#111c2d",
+                    "on-primary-fixed": "#002109",
+                    "surface-dim": "#d8dadc",
+                    "tertiary-fixed": "#ffddb8",
+                    "secondary-fixed-dim": "#bcc7de",
+                    "on-primary": "#ffffff",
+                    "on-surface": "#191c1e",
+                    "outline": "#6d7b6c",
+                    "inverse-primary": "#4ae176",
+                    "on-tertiary-container": "#5c3800",
+                    "on-tertiary": "#ffffff",
+                    "primary-fixed-dim": "#4ae176",
+                    "tertiary": "#855300",
+                    "secondary": "#545f73",
+                    "on-primary-fixed-variant": "#005321",
+                    "secondary-fixed": "#d8e3fb",
+                    "primary-container": "#22c55e",
+                    "on-error": "#ffffff",
+                    "tertiary-fixed-dim": "#ffb95f",
+                    "primary-fixed": "#6bff8f",
+                    "surface-tint": "#006e2f",
+                    "on-primary-container": "#004b1e",
+                    "outline-variant": "#bccbb9",
+                    "on-secondary-container": "#586377",
+                    "surface-container-highest": "#e0e3e5",
+                    "secondary-container": "#d5e0f8",
+                    "surface-variant": "#e0e3e5",
+                    "tertiary-container": "#ef9900",
+                    "on-tertiary-fixed": "#2a1700",
+                    "surface": "#f7f9fb",
+                    "on-secondary-fixed-variant": "#3c475a",
+                    "surface-container-low": "#f2f4f6",
+                    "error-container": "#ffdad6",
+                    "surface-container-lowest": "#ffffff",
+                    "surface-bright": "#f7f9fb",
+                    "on-background": "#191c1e",
+                    "on-error-container": "#93000a",
+                    "inverse-surface": "#2d3133",
+                    "on-tertiary-fixed-variant": "#653e00",
+                    "background": "#f7f9fb",
+                    "surface-container": "#eceef0",
+                    "on-secondary": "#ffffff",
+                    "on-surface-variant": "#3d4a3d",
+                    "surface-container-high": "#e6e8ea",
+                    "error": "#ba1a1a"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "stack-xs": "4px",
+                    "stack-lg": "24px",
+                    "stack-md": "16px",
+                    "safe-margin": "20px",
+                    "inline-gutter": "16px",
+                    "stack-sm": "8px"
+            },
+            "fontFamily": {
+                    "headline-md": ["Inter"],
+                    "headline-lg-mobile": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "label-bold": ["Inter"],
+                    "label-sm": ["Inter"],
+                    "body-sm": ["Inter"]
+            },
+            "fontSize": {
+                    "headline-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "30px", "fontWeight": "700"}],
+                    "headline-lg": ["28px", {"lineHeight": "34px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "label-bold": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+                    "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface font-body-lg text-body-lg min-h-screen flex flex-col antialiased">
+<!-- TopAppBar (As per JSON spec) -->
+<header class="bg-surface/95 dark:bg-surface-dim/95 backdrop-blur-md border-b border-outline-variant dark:border-outline flex items-center justify-between px-safe-margin h-16 w-full z-50 sticky top-0">
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined text-primary dark:text-primary-fixed-dim hover:bg-surface-container-high dark:hover:bg-surface-container-highest transition-colors p-2 rounded-full active:scale-95 duration-100" data-icon="arrow_back">
+                arrow_back
+            </button>
+<h1 class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed-dim">Chargefinder</h1>
+</div>
+<button class="material-symbols-outlined text-on-surface-variant dark:text-on-secondary-fixed-variant hover:bg-surface-container-high p-2 rounded-full transition-colors" data-icon="download">
+            download
+        </button>
+</header>
+<main class="flex-grow w-full max-w-md mx-auto px-safe-margin pt-stack-lg pb-32">
+<!-- Success Animation & Hero -->
+<section class="flex flex-col items-center justify-center text-center mb-stack-lg">
+<div class="relative w-24 h-24 mb-stack-md">
+<div class="absolute inset-0 bg-primary/10 rounded-full success-pulse"></div>
+<div class="relative flex items-center justify-center w-full h-full bg-primary rounded-full shadow-lg">
+<svg class="w-12 h-12 text-white" fill="none" stroke="currentColor" stroke-width="4" viewbox="0 0 24 24">
+<path class="success-checkmark-draw" d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</div>
+</div>
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface mb-stack-xs">Booking Confirmed</h2>
+<p class="text-on-surface-variant font-body-sm text-body-sm">Your charger is reserved and ready for arrival.</p>
+</section>
+<!-- Receipt Card -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden shadow-sm mb-stack-lg">
+<!-- Map Preview (Contextual Map Image) -->
+<div class="w-full h-32 bg-surface-container relative overflow-hidden" data-location="Berlin" style="">
+<img class="w-full h-full object-cover opacity-80" data-alt="A clean, minimalist digital map view showing a highlighted charging station location in a modern urban district. The map style is corporate and flat, using a palette of soft greys, white, and primary green for the marker. The lighting is bright and airy, representing a high-trust digital navigation interface." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCzhwgYoCehIOSRXX9hg3x8vivhXOJSiQoXJU71ZMj9zeyqLjt5k7zYZUzODPEhJp7APE6g3pucatY5qXQIiNEkkab_bqz0HBN8Fnre59A7FvLDUZlQufz7Y6u0Zt8WXm9tSPBUkfbRUwe8zbDohEUuOVtD4vIEyPmUcO4LHEek6UsiX5dbfyzwxZE7z05Id2CsRjCEUTsiE7MzjVD4_GmVKiU2p80WjXKM1eB6gkQ9fJsCVuFZ4hGu"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container-lowest to-transparent"></div>
+<div class="absolute bottom-3 left-4 bg-primary text-white px-3 py-1 rounded-full flex items-center gap-1 shadow-sm">
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">bolt</span>
+<span class="font-label-bold text-label-bold uppercase">Supercharger</span>
+</div>
+</div>
+<!-- Content Details -->
+<div class="p-stack-md space-y-stack-md">
+<!-- Station Info -->
+<div class="flex justify-between items-start">
+<div>
+<h3 class="font-headline-md text-headline-md text-on-surface">Berlin Hub Center</h3>
+<p class="text-on-surface-variant text-body-sm font-body-sm">Friedrichstraße 12, 10117 Berlin</p>
+</div>
+<div class="bg-surface-container p-2 rounded-lg text-primary">
+<span class="material-symbols-outlined" data-icon="qr_code_2">qr_code_2</span>
+</div>
+</div>
+<div class="h-px bg-outline-variant w-full"></div>
+<!-- Slot & Vehicle Bento-ish Grid -->
+<div class="grid grid-cols-2 gap-stack-sm">
+<div class="bg-surface-container-low p-stack-sm rounded-lg flex flex-col">
+<span class="text-on-surface-variant font-label-bold text-label-bold uppercase opacity-60">Slot</span>
+<span class="text-on-surface font-headline-md text-headline-md">14:30 - 15:15</span>
+<span class="text-primary font-body-sm text-body-sm">Today, Oct 24</span>
+</div>
+<div class="bg-surface-container-low p-stack-sm rounded-lg flex flex-col">
+<span class="text-on-surface-variant font-label-bold text-label-bold uppercase opacity-60">Connector</span>
+<span class="text-on-surface font-headline-md text-headline-md">CCS Type 2</span>
+<span class="text-on-surface-variant font-body-sm text-body-sm">Stall #04</span>
+</div>
+</div>
+<!-- Vehicle Info -->
+<div class="flex items-center gap-stack-md p-stack-sm bg-surface-container-low rounded-lg">
+<div class="w-12 h-12 bg-white rounded-lg flex items-center justify-center border border-outline-variant overflow-hidden">
+<img class="w-10 h-10 object-contain" data-alt="A high-quality 3D render of a sleek, white modern electric sedan seen from a side profile. The style is minimalist and clean, set against a solid neutral background that matches a premium corporate UI. The lighting is soft studio lighting highlighting the car's aerodynamic curves." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBxb23y1YZoyYfGJ5BfM0t-oOuIOEPAJ-RNpSFhL4GgPMwmLC3mkkmt_vvzlljoJULUuLZQneNxoZy07pjppYnku-92j330wx2ggKRw92z_2c2myYD6TE8QGbyFDsrK34N8OnMqVywhaF-LH1gzk8yVJa8V5H63My5aOrSNQY6-qthfGvaWfZJJFddTy8qhSHPcm-ItyLKEZFJx4jZfsfpbNrYIAx9gGIuW3d90nVnx4QhSGHpjQpb8"/>
+</div>
+<div class="flex flex-col">
+<span class="text-on-surface font-label-bold text-label-bold">Model 3 Performance</span>
+<span class="text-on-surface-variant font-body-sm text-body-sm">B-EV-2024</span>
+</div>
+</div>
+<div class="h-px bg-outline-variant w-full"></div>
+<!-- Invoice / Summary Footer -->
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2 text-primary">
+<span class="material-symbols-outlined text-[20px]" data-icon="description">description</span>
+<span class="font-label-bold text-label-bold">Invoice_7728.pdf</span>
+</div>
+<button class="text-on-surface-variant hover:text-primary transition-colors flex items-center gap-1 font-label-bold text-label-bold">
+                        DOWNLOAD
+                        <span class="material-symbols-outlined text-[16px]" data-icon="file_download">file_download</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Secondary Action -->
+<div class="flex justify-center mb-stack-lg">
+<button class="text-primary font-label-bold text-label-bold tracking-wider hover:underline py-2 px-4 transition-all active:scale-95 duration-100">
+                VIEW MY BOOKINGS
+            </button>
+</div>
+</main>
+<!-- Sticky Bottom CTA -->
+<div class="fixed bottom-0 left-0 w-full bg-surface/95 backdrop-blur-md z-50 p-stack-md border-t border-outline-variant md:border-none">
+<div class="max-w-md mx-auto">
+<button class="w-full bg-primary text-on-primary font-headline-md text-headline-md py-4 rounded-xl shadow-sm hover:opacity-90 transition-all active:scale-[0.98] flex items-center justify-center gap-3">
+<span class="material-symbols-outlined" data-icon="directions">directions</span>
+                Navigate to Station
+            </button>
+</div>
+</div>
+<!-- Hidden Navigation Logic (As per "The Filter" suppression rule) -->
+<!-- The BottomNavBar is suppressed here because this is a focused "Success/Confirmation" task screen. -->
+<script>
+        // Micro-interaction for the "Navigate" button
+        document.querySelector('button.bg-primary').addEventListener('click', function() {
+            const originalContent = this.innerHTML;
+            this.innerHTML = '<span class="material-symbols-outlined animate-spin" data-icon="progress_activity">progress_activity</span> Opening Maps...';
+            setTimeout(() => {
+                this.innerHTML = originalContent;
+            }, 1500);
+        });
+
+        // Simulating ripple for items
+        const interactiveElements = document.querySelectorAll('.active\\:scale-95');
+        interactiveElements.forEach(el => {
+            el.addEventListener('touchstart', () => el.classList.add('opacity-80'));
+            el.addEventListener('touchend', () => el.classList.remove('opacity-80'));
+        });
+    </script>
+</body></html>

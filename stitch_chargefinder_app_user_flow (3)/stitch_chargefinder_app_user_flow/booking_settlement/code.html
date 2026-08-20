@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>VoltOps Pro - Bookings &amp; Settlements</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "primary-container": "#1e293b",
+                    "on-primary-fixed": "#111c2d",
+                    "secondary": "#515f74",
+                    "surface-container": "#eceef0",
+                    "on-primary-container": "#8590a6",
+                    "secondary-fixed": "#d5e3fd",
+                    "surface-tint": "#545f73",
+                    "surface-bright": "#f7f9fb",
+                    "inverse-primary": "#bcc7de",
+                    "tertiary-container": "#35260c",
+                    "on-tertiary-container": "#a38c6a",
+                    "primary-fixed": "#d8e3fb",
+                    "error-container": "#ffdad6",
+                    "inverse-surface": "#2d3133",
+                    "surface-container-high": "#e6e8ea",
+                    "on-tertiary-fixed": "#271902",
+                    "surface-container-highest": "#e0e3e5",
+                    "on-background": "#191c1e",
+                    "secondary-fixed-dim": "#b9c7e0",
+                    "surface": "#f7f9fb",
+                    "error": "#ba1a1a",
+                    "on-secondary-container": "#57657b",
+                    "on-primary-fixed-variant": "#3c475a",
+                    "outline-variant": "#c5c6cd",
+                    "on-tertiary-fixed-variant": "#564427",
+                    "on-error-container": "#93000a",
+                    "tertiary": "#1e1200",
+                    "on-secondary-fixed": "#0d1c2f",
+                    "primary-fixed-dim": "#bcc7de",
+                    "background": "#f7f9fb",
+                    "tertiary-fixed": "#fadfb8",
+                    "surface-container-lowest": "#ffffff",
+                    "on-primary": "#ffffff",
+                    "on-secondary": "#ffffff",
+                    "tertiary-fixed-dim": "#ddc39d",
+                    "on-tertiary": "#ffffff",
+                    "on-surface-variant": "#45474c",
+                    "surface-dim": "#d8dadc",
+                    "secondary-container": "#d5e3fd",
+                    "surface-variant": "#e0e3e5",
+                    "outline": "#75777d",
+                    "surface-container-low": "#f2f4f6",
+                    "primary": "#091426",
+                    "on-surface": "#191c1e",
+                    "on-secondary-fixed-variant": "#3a485c",
+                    "on-error": "#ffffff",
+                    "inverse-on-surface": "#eff1f3"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "table-cell-padding": "12px 16px",
+                    "sidebar-width": "260px",
+                    "container-margin": "32px",
+                    "gutter": "24px",
+                    "card-padding": "20px"
+            },
+            "fontFamily": {
+                    "body-md": ["Inter"],
+                    "data-mono": ["Inter"],
+                    "label-caps": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "title-sm": ["Inter"],
+                    "display-lg": ["Inter"],
+                    "body-sm": ["Inter"]
+            },
+            "fontSize": {
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "data-mono": ["13px", {"lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500"}],
+                    "label-caps": ["11px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "title-sm": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
+                    "display-lg": ["36px", {"lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-sm": ["13px", {"lineHeight": "18px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+      body {
+        background-color: #f8fafc;
+        font-family: 'Inter', sans-serif;
+      }
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        vertical-align: middle;
+      }
+      .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+      .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+      .custom-scrollbar::-webkit-scrollbar-thumb { background: #e2e8f0; border-radius: 2px; }
+      .glass-card { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(12px); border: 1px solid #e2e8f0; }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen">
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-0 h-full w-[260px] z-50 flex flex-col bg-primary dark:bg-on-primary-fixed border-r border-outline-variant dark:border-outline">
+<div class="p-6">
+<h1 class="text-headline-md font-headline-md text-surface-lowest tracking-tight">VoltOps Pro</h1>
+<p class="text-body-sm font-body-sm text-on-primary-container/60 mt-1">Charge Point Operator</p>
+</div>
+<nav class="flex-1 mt-4">
+<a class="flex items-center gap-3 px-4 py-3 text-on-primary-container/70 hover:text-on-primary-container mx-2 hover:bg-primary-container/50 transition-colors duration-150 scale-95 active:scale-90" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-body-md font-body-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-primary-container/70 hover:text-on-primary-container mx-2 hover:bg-primary-container/50 transition-colors duration-150 scale-95 active:scale-90" href="#">
+<span class="material-symbols-outlined">ev_station</span>
+<span class="text-body-md font-body-md">Stations</span>
+</a>
+<!-- Active Navigation -->
+<a class="flex items-center gap-3 px-4 py-3 bg-primary-container text-on-primary-container rounded-lg mx-2 transition-colors duration-150 scale-95 active:scale-90" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">event_available</span>
+<span class="text-body-md font-body-md">Bookings</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-primary-container/70 hover:text-on-primary-container mx-2 hover:bg-primary-container/50 transition-colors duration-150 scale-95 active:scale-90" href="#">
+<span class="material-symbols-outlined">report_problem</span>
+<span class="text-body-md font-body-md">Discrepancies</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-primary-container/70 hover:text-on-primary-container mx-2 hover:bg-primary-container/50 transition-colors duration-150 scale-95 active:scale-90" href="#">
+<span class="material-symbols-outlined">support_agent</span>
+<span class="text-body-md font-body-md">Support</span>
+</a>
+</nav>
+<div class="p-4 border-t border-on-primary-container/10">
+<button class="w-full py-3 bg-on-primary text-primary font-title-sm text-title-sm rounded-lg hover:opacity-90 transition-all">+ Add Station</button>
+</div>
+</aside>
+<!-- TopNavBar -->
+<header class="fixed top-0 right-0 left-[260px] h-16 flex items-center justify-between px-gutter z-40 bg-surface-lowest dark:bg-inverse-surface border-b border-outline-variant dark:border-outline">
+<div class="flex items-center gap-4">
+<span class="text-title-sm font-title-sm text-on-surface dark:text-inverse-on-surface">VoltOps Management</span>
+<div class="h-4 w-[1px] bg-outline-variant mx-2"></div>
+<nav class="flex gap-4">
+<span class="text-body-sm font-body-sm text-secondary">Bookings &amp; Settlements</span>
+</nav>
+</div>
+<div class="flex items-center gap-6">
+<div class="relative hidden lg:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline">search</span>
+<input class="pl-10 pr-4 py-2 bg-surface-container-low border-none rounded-full text-body-sm w-64 focus:ring-1 focus:ring-primary" placeholder="Search bookings..." type="text"/>
+</div>
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined text-secondary hover:bg-surface-container-low p-2 rounded-full transition-all opacity-80 active:opacity-100">notifications</button>
+<button class="material-symbols-outlined text-secondary hover:bg-surface-container-low p-2 rounded-full transition-all opacity-80 active:opacity-100">settings</button>
+<div class="w-8 h-8 rounded-full overflow-hidden border border-outline-variant">
+<img class="w-full h-full object-cover" data-alt="A professional headshot of a senior operations manager in a minimalist, corporate environment. High-key soft lighting, shallow depth of field, looking confidently towards the camera, wearing a clean, modern navy blue sweater. The background is a blurred office space with sleek glass and steel elements." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDfovAALj_0U-FBv5BhL_i6nnVxBDzMB_3C0E55IWmOCsyEkmuKP-mRR38vsLTIZCZCIoO_2mwJP0tzcylx9CAIQsVHroLCRVzhK8WXU8uMGT8Xrn7uUrOHA6wYCx51ZKh4AyqMxIB6angr0_QaUNTXH4GB6grvmOb245CSj6og2wZqH4l9BQcqe3p4zv0RQ-55Eg5aTMx1HlrFQhyP0gYswL8fnyXJupf3k75r5vFjZzpCwATzHaZi"/>
+</div>
+</div>
+</div>
+</header>
+<!-- Main Content -->
+<main class="ml-[260px] pt-24 px-gutter pb-gutter max-w-[1600px]">
+<!-- Summary Cards (Settlement Summary) -->
+<section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+<div class="bg-surface-container-lowest p-card-padding rounded border border-outline-variant shadow-sm transition-all hover:border-primary/20">
+<p class="text-label-caps font-label-caps text-on-surface-variant uppercase mb-2">Total Revenue</p>
+<div class="flex items-end gap-2">
+<h3 class="text-display-lg font-display-lg text-primary">₹24,58,200</h3>
+<span class="text-body-sm text-green-600 mb-2 flex items-center"><span class="material-symbols-outlined text-sm">arrow_upward</span>12%</span>
+</div>
+<p class="text-body-sm font-body-sm text-on-surface-variant/60 mt-1">Last 30 days</p>
+</div>
+<div class="bg-surface-container-lowest p-card-padding rounded border border-outline-variant shadow-sm transition-all hover:border-primary/20">
+<p class="text-label-caps font-label-caps text-on-surface-variant uppercase mb-2">Platform Fees</p>
+<div class="flex items-end gap-2">
+<h3 class="text-display-lg font-display-lg text-primary">₹1,22,910</h3>
+<span class="text-body-sm text-on-surface-variant/40 mb-2">5% Fixed</span>
+</div>
+<p class="text-body-sm font-body-sm text-on-surface-variant/60 mt-1">Deducted at source</p>
+</div>
+<div class="bg-surface-container-lowest p-card-padding rounded border border-outline-variant shadow-sm transition-all hover:border-primary/20 border-l-4 border-l-green-600">
+<p class="text-label-caps font-label-caps text-on-surface-variant uppercase mb-2">Net Payout</p>
+<div class="flex items-end gap-2">
+<h3 class="text-display-lg font-display-lg text-primary">₹23,35,290</h3>
+<span class="material-symbols-outlined text-green-600 mb-2">verified</span>
+</div>
+<div class="flex items-center gap-2 mt-1">
+<span class="inline-block w-2 h-2 rounded-full bg-green-500"></span>
+<p class="text-body-sm font-body-sm text-on-surface-variant">PAID</p>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-card-padding rounded border border-outline-variant shadow-sm transition-all hover:border-primary/20 border-l-4 border-l-yellow-500">
+<p class="text-label-caps font-label-caps text-on-surface-variant uppercase mb-2">Pending Settlement</p>
+<div class="flex items-end gap-2">
+<h3 class="text-display-lg font-display-lg text-primary">₹4,12,050</h3>
+</div>
+<div class="flex items-center gap-2 mt-1">
+<span class="inline-block w-2 h-2 rounded-full bg-yellow-500"></span>
+<p class="text-body-sm font-body-sm text-on-surface-variant">PENDING</p>
+</div>
+</div>
+</section>
+<!-- Main Workspace: Split View (Calendar & List) -->
+<div class="grid grid-cols-12 gap-8">
+<!-- List View (Left Column) -->
+<div class="col-span-12 xl:col-span-8 space-y-6">
+<div class="bg-surface-container-lowest rounded border border-outline-variant overflow-hidden">
+<div class="px-6 py-4 border-b border-outline-variant flex items-center justify-between">
+<div class="flex items-center gap-6">
+<h2 class="text-title-sm font-title-sm text-primary">Driver Bookings</h2>
+<div class="flex bg-surface-container-low p-1 rounded-lg">
+<button class="px-4 py-1 text-body-sm font-body-md bg-surface-container-lowest shadow-sm rounded-md">All</button>
+<button class="px-4 py-1 text-body-sm font-body-md text-secondary hover:text-primary transition-colors">Completed</button>
+<button class="px-4 py-1 text-body-sm font-body-md text-secondary hover:text-primary transition-colors">Active</button>
+</div>
+</div>
+<button class="flex items-center gap-2 px-4 py-2 border border-outline-variant rounded-lg text-body-sm font-body-md hover:bg-surface-container-low transition-all">
+<span class="material-symbols-outlined text-sm">download</span>
+                            Export to CSV
+                        </button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead class="bg-surface-container-low text-label-caps font-label-caps text-on-surface-variant uppercase">
+<tr>
+<th class="p-table-cell-padding">Booking ID</th>
+<th class="p-table-cell-padding">Driver / Station</th>
+<th class="p-table-cell-padding">Slot</th>
+<th class="p-table-cell-padding text-right">Amount</th>
+<th class="p-table-cell-padding">Status</th>
+<th class="p-table-cell-padding"></th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant">
+<!-- Row 1 -->
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="p-table-cell-padding text-data-mono font-data-mono text-primary">#BK-92841</td>
+<td class="p-table-cell-padding">
+<div class="flex flex-col">
+<span class="text-body-md font-body-md text-primary">Rajesh Kumar</span>
+<span class="text-body-sm text-secondary">Cyber Hub-04 (DC Fast)</span>
+</div>
+</td>
+<td class="p-table-cell-padding">
+<div class="flex flex-col">
+<span class="text-body-sm text-primary">Today, 14:30 - 15:30</span>
+<span class="text-body-sm text-secondary-container bg-primary-container px-1.5 py-0.5 rounded text-[10px] w-fit">IN PROGRESS</span>
+</div>
+</td>
+<td class="p-table-cell-padding text-right font-data-mono text-primary">₹845.00</td>
+<td class="p-table-cell-padding">
+<span class="inline-flex items-center gap-1.5 px-2 py-1 rounded-full bg-blue-50 text-blue-700 text-[11px] font-bold">
+<span class="w-1.5 h-1.5 rounded-full bg-blue-600"></span>
+                                            ACTIVE
+                                        </span>
+</td>
+<td class="p-table-cell-padding text-right opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="material-symbols-outlined text-secondary">more_vert</button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="p-table-cell-padding text-data-mono font-data-mono text-primary">#BK-92839</td>
+<td class="p-table-cell-padding">
+<div class="flex flex-col">
+<span class="text-body-md font-body-md text-primary">Anita Sharma</span>
+<span class="text-body-sm text-secondary">Golf Course Road-02</span>
+</div>
+</td>
+<td class="p-table-cell-padding">
+<div class="flex flex-col">
+<span class="text-body-sm text-primary">Today, 11:00 - 12:00</span>
+<span class="text-body-sm text-on-surface-variant/40 text-[10px]">60 MINS</span>
+</div>
+</td>
+<td class="p-table-cell-padding text-right font-data-mono text-primary">₹1,240.00</td>
+<td class="p-table-cell-padding">
+<span class="inline-flex items-center gap-1.5 px-2 py-1 rounded-full bg-green-50 text-green-700 text-[11px] font-bold">
+<span class="w-1.5 h-1.5 rounded-full bg-green-600"></span>
+                                            COMPLETED
+                                        </span>
+</td>
+<td class="p-table-cell-padding text-right opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="material-symbols-outlined text-secondary">more_vert</button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="p-table-cell-padding text-data-mono font-data-mono text-primary">#BK-92835</td>
+<td class="p-table-cell-padding">
+<div class="flex flex-col">
+<span class="text-body-md font-body-md text-primary">Vikram Singh</span>
+<span class="text-body-sm text-secondary">MG Road Metro-A1</span>
+</div>
+</td>
+<td class="p-table-cell-padding">
+<div class="flex flex-col">
+<span class="text-body-sm text-primary">Yesterday, 18:00 - 19:30</span>
+<span class="text-body-sm text-on-surface-variant/40 text-[10px]">90 MINS</span>
+</div>
+</td>
+<td class="p-table-cell-padding text-right font-data-mono text-primary">₹1,950.00</td>
+<td class="p-table-cell-padding">
+<span class="inline-flex items-center gap-1.5 px-2 py-1 rounded-full bg-green-50 text-green-700 text-[11px] font-bold">
+<span class="w-1.5 h-1.5 rounded-full bg-green-600"></span>
+                                            COMPLETED
+                                        </span>
+</td>
+<td class="p-table-cell-padding text-right opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="material-symbols-outlined text-secondary">more_vert</button>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="p-table-cell-padding text-data-mono font-data-mono text-primary">#BK-92832</td>
+<td class="p-table-cell-padding">
+<div class="flex flex-col">
+<span class="text-body-md font-body-md text-primary">Sunita Rao</span>
+<span class="text-body-sm text-secondary">Sector 56 Market</span>
+</div>
+</td>
+<td class="p-table-cell-padding">
+<div class="flex flex-col">
+<span class="text-body-sm text-primary">Yesterday, 09:15 - 10:45</span>
+<span class="text-body-sm text-on-surface-variant/40 text-[10px]">90 MINS</span>
+</div>
+</td>
+<td class="p-table-cell-padding text-right font-data-mono text-primary">₹620.00</td>
+<td class="p-table-cell-padding">
+<span class="inline-flex items-center gap-1.5 px-2 py-1 rounded-full bg-red-50 text-red-700 text-[11px] font-bold">
+<span class="w-1.5 h-1.5 rounded-full bg-red-600"></span>
+                                            CANCELLED
+                                        </span>
+</td>
+<td class="p-table-cell-padding text-right opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="material-symbols-outlined text-secondary">more_vert</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="px-6 py-4 bg-surface-container-low flex items-center justify-between">
+<p class="text-body-sm text-on-surface-variant">Showing 1-10 of 422 bookings</p>
+<div class="flex gap-2">
+<button class="w-8 h-8 flex items-center justify-center border border-outline-variant rounded bg-surface-container-lowest hover:bg-surface-container-low transition-all">
+<span class="material-symbols-outlined text-sm">chevron_left</span>
+</button>
+<button class="w-8 h-8 flex items-center justify-center border border-primary bg-primary text-on-primary rounded text-body-sm">1</button>
+<button class="w-8 h-8 flex items-center justify-center border border-outline-variant rounded bg-surface-container-lowest hover:bg-surface-container-low transition-all text-body-sm">2</button>
+<button class="w-8 h-8 flex items-center justify-center border border-outline-variant rounded bg-surface-container-lowest hover:bg-surface-container-low transition-all text-body-sm">3</button>
+<button class="w-8 h-8 flex items-center justify-center border border-outline-variant rounded bg-surface-container-lowest hover:bg-surface-container-low transition-all">
+<span class="material-symbols-outlined text-sm">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Calendar View (Right Column) -->
+<div class="col-span-12 xl:col-span-4">
+<div class="bg-surface-container-lowest rounded border border-outline-variant flex flex-col h-full sticky top-24">
+<div class="px-6 py-4 border-b border-outline-variant flex items-center justify-between">
+<h2 class="text-title-sm font-title-sm text-primary">Slot Utilization</h2>
+<div class="flex items-center gap-2">
+<button class="material-symbols-outlined text-secondary p-1">chevron_left</button>
+<span class="text-body-md font-body-md text-primary">Oct 2023</span>
+<button class="material-symbols-outlined text-secondary p-1">chevron_right</button>
+</div>
+</div>
+<!-- Simplified Calendar Grid -->
+<div class="p-6">
+<div class="grid grid-cols-7 gap-2 text-center mb-4">
+<span class="text-label-caps font-label-caps text-on-surface-variant">S</span>
+<span class="text-label-caps font-label-caps text-on-surface-variant">M</span>
+<span class="text-label-caps font-label-caps text-on-surface-variant">T</span>
+<span class="text-label-caps font-label-caps text-on-surface-variant">W</span>
+<span class="text-label-caps font-label-caps text-on-surface-variant">T</span>
+<span class="text-label-caps font-label-caps text-on-surface-variant">F</span>
+<span class="text-label-caps font-label-caps text-on-surface-variant">S</span>
+</div>
+<div class="grid grid-cols-7 gap-2">
+<div class="aspect-square flex items-center justify-center text-body-sm text-on-surface-variant/30">24</div>
+<div class="aspect-square flex items-center justify-center text-body-sm text-on-surface-variant/30">25</div>
+<div class="aspect-square flex items-center justify-center text-body-sm text-on-surface-variant/30">26</div>
+<div class="aspect-square flex items-center justify-center text-body-sm text-on-surface-variant/30">27</div>
+<div class="aspect-square flex items-center justify-center text-body-sm text-on-surface-variant/30">28</div>
+<div class="aspect-square flex items-center justify-center text-body-sm text-on-surface-variant/30">29</div>
+<div class="aspect-square flex items-center justify-center text-body-sm text-primary font-bold bg-green-50 rounded border border-green-200">1</div>
+<div class="aspect-square flex items-center justify-center text-body-sm text-primary font-bold bg-green-100 rounded border border-green-200">2</div>
+<div class="aspect-square flex items-center justify-center text-body-sm text-primary font-bold bg-green-200 rounded border border-green-300">3</div>
+<div class="aspect-square flex items-center justify-center text-body-sm text-primary font-bold bg-green-50 rounded border border-green-200">4</div>
+<div class="aspect-square flex items-center justify-center text-body-sm text-primary font-bold bg-green-100 rounded border border-green-200">5</div>
+<div class="aspect-square flex items-center justify-center text-body-sm text-primary font-bold bg-green-200 rounded border border-green-300">6</div>
+<div class="aspect-square flex items-center justify-center text-body-sm text-primary font-bold bg-green-100 rounded border border-green-200">7</div>
+<div class="aspect-square flex items-center justify-center text-body-sm text-primary font-bold bg-green-50 rounded border border-green-200">8</div>
+<div class="aspect-square flex items-center justify-center text-body-sm text-primary font-bold bg-green-200 rounded border border-green-300">9</div>
+<div class="aspect-square flex items-center justify-center text-body-sm text-white font-bold bg-primary rounded border border-primary shadow-lg ring-2 ring-primary ring-offset-2">10</div>
+<div class="aspect-square flex items-center justify-center text-body-sm text-primary">11</div>
+<div class="aspect-square flex items-center justify-center text-body-sm text-primary">12</div>
+<div class="aspect-square flex items-center justify-center text-body-sm text-primary">13</div>
+<div class="aspect-square flex items-center justify-center text-body-sm text-primary">14</div>
+<div class="aspect-square flex items-center justify-center text-body-sm text-primary">15</div>
+</div>
+<div class="mt-8">
+<p class="text-label-caps font-label-caps text-on-surface-variant uppercase mb-4">Upcoming Peak Demand</p>
+<div class="space-y-4">
+<div class="flex items-center gap-4 p-3 bg-surface-container-low rounded">
+<div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center text-secondary-fixed">
+<span class="material-symbols-outlined">bolt</span>
+</div>
+<div class="flex-1">
+<p class="text-body-md font-body-md text-primary">18:00 - 20:00</p>
+<p class="text-body-sm text-secondary">Estimated 94% Utility</p>
+</div>
+<span class="material-symbols-outlined text-error">trending_up</span>
+</div>
+<div class="flex items-center gap-4 p-3 bg-surface-container-low rounded">
+<div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center text-secondary-fixed">
+<span class="material-symbols-outlined">schedule</span>
+</div>
+<div class="flex-1">
+<p class="text-body-md font-body-md text-primary">08:00 - 10:00</p>
+<p class="text-body-sm text-secondary">Estimated 72% Utility</p>
+</div>
+<span class="material-symbols-outlined text-green-600">trending_flat</span>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-auto p-6 border-t border-outline-variant bg-surface-container-low/50">
+<div class="flex items-center justify-between mb-4">
+<span class="text-body-sm font-body-md text-primary">Payout Eligibility</span>
+<span class="text-body-sm font-bold text-green-600">ELGIBLE</span>
+</div>
+<div class="w-full bg-outline-variant h-1.5 rounded-full overflow-hidden">
+<div class="bg-primary h-full w-4/5"></div>
+</div>
+<p class="text-[11px] text-on-surface-variant/60 mt-2">Next settlement scheduled for 15th October, 2023.</p>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Success Acknowledgement Banner (Hidden by default, used for interaction feedback) -->
+<div class="fixed bottom-8 right-8 max-w-md w-full bg-green-50 border-l-4 border-l-green-600 p-4 shadow-xl translate-y-20 transition-transform duration-300 z-[100]" id="exportBanner">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-green-600">check_circle</span>
+<div>
+<p class="text-body-md font-bold text-green-800">Export Successful</p>
+<p class="text-body-sm text-green-700">Booking report generated: voltops_bookings_oct23.csv</p>
+</div>
+<button class="ml-auto material-symbols-outlined text-green-800 opacity-50 hover:opacity-100" onclick="hideExportBanner()">close</button>
+</div>
+</div>
+<script>
+        function showExportBanner() {
+            const banner = document.getElementById('exportBanner');
+            banner.classList.remove('translate-y-20');
+            banner.classList.add('translate-y-0');
+            setTimeout(hideExportBanner, 5000);
+        }
+
+        function hideExportBanner() {
+            const banner = document.getElementById('exportBanner');
+            banner.classList.remove('translate-y-0');
+            banner.classList.add('translate-y-20');
+        }
+
+        // Attach to the Export Button
+        document.querySelectorAll('button').forEach(btn => {
+            if (btn.innerText.includes('Export to CSV')) {
+                btn.onclick = (e) => {
+                    e.preventDefault();
+                    btn.classList.add('opacity-50');
+                    btn.innerText = 'Exporting...';
+                    setTimeout(() => {
+                        btn.classList.remove('opacity-50');
+                        btn.innerHTML = '<span class="material-symbols-outlined text-sm">download</span> Export to CSV';
+                        showExportBanner();
+                    }, 1500);
+                }
+            }
+        });
+    </script>
+</body></html>

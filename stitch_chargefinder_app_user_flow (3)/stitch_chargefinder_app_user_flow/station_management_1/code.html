@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>VoltOps Pro - Station Control Center</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "primary-container": "#1e293b",
+            "on-primary-fixed": "#111c2d",
+            "secondary": "#515f74",
+            "surface-container": "#eceef0",
+            "on-primary-container": "#8590a6",
+            "secondary-fixed": "#d5e3fd",
+            "surface-tint": "#545f73",
+            "surface-bright": "#f7f9fb",
+            "inverse-primary": "#bcc7de",
+            "tertiary-container": "#35260c",
+            "on-tertiary-container": "#a38c6a",
+            "primary-fixed": "#d8e3fb",
+            "error-container": "#ffdad6",
+            "inverse-surface": "#2d3133",
+            "surface-container-high": "#e6e8ea",
+            "on-tertiary-fixed": "#271902",
+            "surface-container-highest": "#e0e3e5",
+            "on-background": "#191c1e",
+            "secondary-fixed-dim": "#b9c7e0",
+            "surface": "#f7f9fb",
+            "error": "#ba1a1a",
+            "on-secondary-container": "#57657b",
+            "on-primary-fixed-variant": "#3c475a",
+            "outline-variant": "#c5c6cd",
+            "on-tertiary-fixed-variant": "#564427",
+            "on-error-container": "#93000a",
+            "tertiary": "#1e1200",
+            "on-secondary-fixed": "#0d1c2f",
+            "primary-fixed-dim": "#bcc7de",
+            "background": "#f7f9fb",
+            "tertiary-fixed": "#fadfb8",
+            "surface-container-lowest": "#ffffff",
+            "on-primary": "#ffffff",
+            "on-secondary": "#ffffff",
+            "tertiary-fixed-dim": "#ddc39d",
+            "on-tertiary": "#ffffff",
+            "on-surface-variant": "#45474c",
+            "surface-dim": "#d8dadc",
+            "secondary-container": "#d5e3fd",
+            "surface-variant": "#e0e3e5",
+            "outline": "#75777d",
+            "surface-container-low": "#f2f4f6",
+            "primary": "#091426",
+            "on-surface": "#191c1e",
+            "on-secondary-fixed-variant": "#3a485c",
+            "on-error": "#ffffff",
+            "inverse-on-surface": "#eff1f3"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.125rem",
+            "lg": "0.25rem",
+            "xl": "0.5rem",
+            "full": "0.75rem"
+          },
+          "spacing": {
+            "table-cell-padding": "12px 16px",
+            "sidebar-width": "260px",
+            "container-margin": "32px",
+            "gutter": "24px",
+            "card-padding": "20px"
+          },
+          "fontFamily": {
+            "body-md": ["Inter"],
+            "data-mono": ["Inter"],
+            "label-caps": ["Inter"],
+            "headline-md": ["Inter"],
+            "title-sm": ["Inter"],
+            "display-lg": ["Inter"],
+            "body-sm": ["Inter"]
+          },
+          "fontSize": {
+            "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+            "data-mono": ["13px", {"lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500"}],
+            "label-caps": ["11px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700"}],
+            "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+            "title-sm": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
+            "display-lg": ["36px", {"lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+            "body-sm": ["13px", {"lineHeight": "18px", "fontWeight": "400"}]
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
+    .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; vertical-align: middle; }
+    .status-active-glow { box-shadow: 0 0 12px rgba(34, 197, 94, 0.4); }
+    .glass-effect { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(8px); }
+  </style>
+</head>
+<body class="text-on-surface">
+<!-- Side Navigation Bar -->
+<aside class="fixed left-0 top-0 h-full w-[260px] z-50 flex flex-col bg-primary border-r border-outline-variant dark:border-outline">
+<div class="p-6">
+<div class="text-headline-md font-headline-md text-surface-lowest tracking-tight mb-1">VoltOps Pro</div>
+<div class="text-body-sm font-body-sm text-on-primary-container">Charge Point Operator</div>
+</div>
+<nav class="flex-1 px-2 space-y-1">
+<div class="text-on-primary-container/70 hover:text-on-primary-container mx-2 p-3 flex items-center gap-3 rounded-lg hover:bg-primary-container/50 transition-colors cursor-pointer scale-95 active:scale-90 duration-150">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-body-md font-body-md">Dashboard</span>
+</div>
+<div class="bg-primary-container text-on-primary-container rounded-lg mx-2 p-3 flex items-center gap-3 transition-colors cursor-pointer scale-95 active:scale-90 duration-150">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">ev_station</span>
+<span class="text-body-md font-body-md">Stations</span>
+</div>
+<div class="text-on-primary-container/70 hover:text-on-primary-container mx-2 p-3 flex items-center gap-3 rounded-lg hover:bg-primary-container/50 transition-colors cursor-pointer scale-95 active:scale-90 duration-150">
+<span class="material-symbols-outlined">event_available</span>
+<span class="text-body-md font-body-md">Bookings</span>
+</div>
+<div class="text-on-primary-container/70 hover:text-on-primary-container mx-2 p-3 flex items-center gap-3 rounded-lg hover:bg-primary-container/50 transition-colors cursor-pointer scale-95 active:scale-90 duration-150">
+<span class="material-symbols-outlined">report_problem</span>
+<span class="text-body-md font-body-md">Discrepancies</span>
+</div>
+<div class="text-on-primary-container/70 hover:text-on-primary-container mx-2 p-3 flex items-center gap-3 rounded-lg hover:bg-primary-container/50 transition-colors cursor-pointer scale-95 active:scale-90 duration-150">
+<span class="material-symbols-outlined">support_agent</span>
+<span class="text-body-md font-body-md">Support</span>
+</div>
+</nav>
+<div class="p-4 mb-4">
+<button class="w-full py-3 bg-secondary-fixed text-on-secondary-fixed font-bold rounded-xl flex items-center justify-center gap-2 hover:opacity-90 transition-all">
+<span class="material-symbols-outlined">add</span>
+<span>Add Station</span>
+</button>
+</div>
+</aside>
+<!-- Top Navigation Bar -->
+<header class="fixed top-0 right-0 left-[260px] h-16 flex items-center justify-between px-gutter z-40 bg-surface-lowest border-b border-outline-variant">
+<div class="flex items-center gap-4">
+<div class="text-title-sm font-title-sm text-on-surface">VoltOps Management</div>
+<div class="h-6 w-px bg-outline-variant"></div>
+<div class="text-body-sm font-body-sm text-secondary">Stations / VoltCharge Hub - Sector 62</div>
+</div>
+<div class="flex items-center gap-6">
+<div class="relative w-64">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline">search</span>
+<input class="w-full bg-surface-container-low border-none rounded-full pl-10 pr-4 py-2 text-body-sm focus:ring-1 focus:ring-primary" placeholder="Search station ID..." type="text"/>
+</div>
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:bg-surface-container-low p-2 rounded-full">notifications</span>
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:bg-surface-container-low p-2 rounded-full">settings</span>
+<img class="w-8 h-8 rounded-full border border-outline-variant object-cover" data-alt="A professional headshot of a middle-aged male technician wearing a navy blue company uniform, set against a clean industrial background with soft focus. The lighting is bright and professional, emphasizing a light-mode corporate aesthetic. He has a confident and helpful expression, suitable for a charge point operator system profile." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB0kRj9jmICld5hBH6npHanssAvL-OFhwNM4ZOSbURFkm6fTBEGB3REcHftHXz6VeZ2n6NC5OLPBxwcXaNmhtRhEa6cnRospgSLAJXGSAJaTMSZaK3GyYx1eg3MzFTcfZUpBKdcxW5E94H7YDgBm_mQ-O7j8dv5ucNGswnVNKkzDqFpaO7cyDZHbCmXXHF8G9FPPBiwCR4M0LbygQMQ9qK3K4_CV8iryUnZgwNvrI1eIvtra4eZqhDk"/>
+</div>
+</div>
+</header>
+<!-- Main Content Area -->
+<main class="ml-[260px] pt-24 pb-12 px-gutter max-w-[1600px] mx-auto">
+<!-- Acknowledgement Banner -->
+<div class="mb-8 p-4 bg-primary-fixed border border-outline-variant rounded-xl flex items-center justify-between">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">info</span>
+<p class="text-body-md font-body-md text-on-primary-fixed">Daily Review: Please confirm the current status and pricing for Hub Sector 62.</p>
+</div>
+<button class="px-6 py-2 bg-primary text-on-primary font-bold rounded-lg hover:opacity-90 transition-all text-body-sm">
+        Confirm info is accurate
+      </button>
+</div>
+<!-- Page Content Grid -->
+<div class="grid grid-cols-12 gap-gutter">
+<!-- Left Column: Status & Control -->
+<div class="col-span-12 lg:col-span-8 space-y-6">
+<!-- Status Management Card -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-card-padding">
+<div class="flex items-center justify-between mb-6">
+<h2 class="text-title-sm font-title-sm">Operational Control Center</h2>
+<div class="flex items-center gap-2 px-3 py-1 bg-green-50 text-green-700 rounded-full text-label-caps border border-green-200">
+<span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+              LIVE
+            </div>
+</div>
+<!-- Status Toggle Group -->
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+<button class="group p-4 border-2 border-green-500 bg-green-50 rounded-xl flex flex-col items-center gap-2 transition-all status-active-glow">
+<span class="material-symbols-outlined text-green-600" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="text-label-caps text-green-700">Available</span>
+</button>
+<button class="group p-4 border border-outline-variant bg-surface-container-low rounded-xl flex flex-col items-center gap-2 hover:bg-surface-container-high transition-all">
+<span class="material-symbols-outlined text-secondary">flash_on</span>
+<span class="text-label-caps text-secondary">Occupied</span>
+</button>
+<button class="group p-4 border border-outline-variant bg-surface-container-low rounded-xl flex flex-col items-center gap-2 hover:bg-surface-container-high transition-all">
+<span class="material-symbols-outlined text-secondary">power_off</span>
+<span class="text-label-caps text-secondary">Out of Service</span>
+</button>
+<button class="group p-4 border border-outline-variant bg-surface-container-low rounded-xl flex flex-col items-center gap-2 hover:bg-surface-container-high transition-all">
+<span class="material-symbols-outlined text-secondary">build</span>
+<span class="text-label-caps text-secondary">Maintenance</span>
+</button>
+</div>
+<!-- Reason Field -->
+<div class="space-y-2">
+<label class="text-label-caps text-on-surface-variant block">Status Change Reason (Required for Out of Service)</label>
+<textarea class="w-full bg-surface-container-low border border-outline-variant rounded-lg p-4 text-body-md focus:ring-1 focus:ring-primary min-h-[100px]" placeholder="e.g., Scheduled grid maintenance, Connector damaged..."></textarea>
+</div>
+</div>
+<!-- Pricing Quick Edit -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-card-padding">
+<h2 class="text-title-sm font-title-sm mb-4">Pricing Strategy</h2>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="p-4 bg-surface-container-low rounded-lg border border-outline-variant">
+<span class="text-label-caps text-on-surface-variant block mb-1">Base Rate (kWh)</span>
+<div class="flex items-center gap-2">
+<span class="text-title-sm font-bold">$0.34</span>
+<button class="material-symbols-outlined text-body-sm text-secondary hover:text-primary">edit</button>
+</div>
+</div>
+<div class="p-4 bg-surface-container-low rounded-lg border border-outline-variant">
+<span class="text-label-caps text-on-surface-variant block mb-1">Peak Rate (kWh)</span>
+<div class="flex items-center gap-2">
+<span class="text-title-sm font-bold">$0.42</span>
+<button class="material-symbols-outlined text-body-sm text-secondary hover:text-primary">edit</button>
+</div>
+</div>
+<div class="p-4 bg-surface-container-low rounded-lg border border-outline-variant">
+<span class="text-label-caps text-on-surface-variant block mb-1">Idle Fee (min)</span>
+<div class="flex items-center gap-2">
+<span class="text-title-sm font-bold">$0.10</span>
+<button class="material-symbols-outlined text-body-sm text-secondary hover:text-primary">edit</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Fault Reports -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden">
+<div class="p-card-padding border-b border-outline-variant flex items-center justify-between">
+<h2 class="text-title-sm font-title-sm">Active Fault Reports</h2>
+<span class="px-2 py-0.5 bg-error-container text-on-error-container text-label-caps rounded">2 Pending</span>
+</div>
+<div class="divide-y divide-outline-variant">
+<div class="p-4 flex items-center justify-between hover:bg-surface-container-low transition-colors">
+<div class="flex items-start gap-4">
+<div class="mt-1 p-2 bg-error-container text-on-error-container rounded-full">
+<span class="material-symbols-outlined text-body-md" style="font-variation-settings: 'FILL' 1;">warning</span>
+</div>
+<div>
+<div class="text-body-md font-bold">Charger #3 slow charging</div>
+<div class="text-body-sm text-secondary">Reported by: UID-9284 • 12 mins ago</div>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<button class="px-4 py-2 border border-outline text-on-surface-variant text-label-caps rounded-lg hover:bg-surface-container-high transition-all">Acknowledge</button>
+<button class="px-4 py-2 bg-primary text-on-primary text-label-caps rounded-lg hover:opacity-90 transition-all">Mark Resolved</button>
+</div>
+</div>
+<div class="p-4 flex items-center justify-between hover:bg-surface-container-low transition-colors opacity-70">
+<div class="flex items-start gap-4">
+<div class="mt-1 p-2 bg-surface-container-high text-secondary rounded-full">
+<span class="material-symbols-outlined text-body-md">lock</span>
+</div>
+<div>
+<div class="text-body-md font-bold">RFID Scanner Unresponsive</div>
+<div class="text-body-sm text-secondary">Reported by: System Health • 3 hours ago</div>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<span class="text-label-caps text-secondary px-3 py-1 bg-surface-container-high rounded-lg">Acknowledged</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column: Previews & Meta -->
+<div class="col-span-12 lg:col-span-4 space-y-6">
+<!-- Driver App Preview -->
+<div class="bg-primary-container rounded-[2rem] p-6 shadow-2xl relative overflow-hidden">
+<!-- Glass decoration -->
+<div class="absolute -top-10 -right-10 w-40 h-40 bg-secondary/20 rounded-full blur-3xl"></div>
+<div class="flex items-center justify-between mb-8">
+<div class="flex items-center gap-2">
+<div class="w-8 h-8 bg-white/10 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined text-white text-body-md">menu</span>
+</div>
+</div>
+<div class="text-white text-body-sm font-bold tracking-widest">VOLTCHARGE</div>
+<div class="w-8 h-8 rounded-full bg-white/20"></div>
+</div>
+<div class="bg-white rounded-2xl p-5 mb-4 shadow-lg">
+<div class="flex justify-between items-start mb-4">
+<div>
+<h3 class="text-primary font-bold text-lg">Hub - Sector 62</h3>
+<p class="text-secondary text-xs">Avenue 4, Noida, UP</p>
+</div>
+<span class="bg-green-100 text-green-700 px-2 py-1 rounded-full text-[10px] font-bold">AVAILABLE</span>
+</div>
+<div class="flex gap-2 mb-4">
+<div class="flex-1 p-2 bg-surface-container-low rounded-lg text-center">
+<span class="text-secondary text-[10px] block">60kW</span>
+<span class="text-primary font-bold text-xs">CCS2</span>
+</div>
+<div class="flex-1 p-2 bg-surface-container-low rounded-lg text-center">
+<span class="text-secondary text-[10px] block">4 / 4</span>
+<span class="text-primary font-bold text-xs">Available</span>
+</div>
+<div class="flex-1 p-2 bg-surface-container-low rounded-lg text-center">
+<span class="text-secondary text-[10px] block">Price</span>
+<span class="text-primary font-bold text-xs">$0.34</span>
+</div>
+</div>
+<button class="w-full py-3 bg-primary text-white rounded-xl font-bold text-sm flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-sm">navigation</span>
+              Start Route
+            </button>
+</div>
+<p class="text-white/60 text-center text-xs">Previewing as End-User</p>
+</div>
+<!-- Station Info Card -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-card-padding">
+<h2 class="text-title-sm font-title-sm mb-4">Station Summary</h2>
+<div class="space-y-4">
+<div class="flex justify-between border-b border-outline-variant pb-2">
+<span class="text-body-sm text-secondary">Uptime (30d)</span>
+<span class="text-body-sm font-bold text-green-600">99.8%</span>
+</div>
+<div class="flex justify-between border-b border-outline-variant pb-2">
+<span class="text-body-sm text-secondary">Total Sessions (24h)</span>
+<span class="text-body-sm font-bold">42</span>
+</div>
+<div class="flex justify-between border-b border-outline-variant pb-2">
+<span class="text-body-sm text-secondary">Energy Delivered</span>
+<span class="text-body-sm font-bold">1,420 kWh</span>
+</div>
+</div>
+<!-- Trust Score Gauge -->
+<div class="mt-8">
+<div class="flex justify-between items-end mb-2">
+<span class="text-label-caps text-on-surface-variant">Trust Score</span>
+<span class="text-display-lg text-primary leading-none">92</span>
+</div>
+<div class="w-full h-3 bg-surface-container-high rounded-full overflow-hidden">
+<div class="h-full bg-primary" style="width: 92%"></div>
+</div>
+<p class="mt-2 text-body-sm text-secondary">Calculated based on uptime and user ratings.</p>
+</div>
+</div>
+<!-- Location Map Preview -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-card-padding overflow-hidden">
+<h2 class="text-title-sm font-title-sm mb-4">Location</h2>
+<div class="w-full h-48 bg-cover bg-center rounded-lg mb-4" data-alt="A high-contrast digital map interface showing a specific area of Noida, Sector 62. The map uses a minimalist dark-theme style with bright white and blue neon lines representing streets. A large, prominent pin in deep navy blue with a white lightning bolt icon marks the VoltCharge Hub location. The aesthetic is clean, professional, and optimized for a corporate command center." data-location="Noida Sector 62" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDQwoArdBM3A0RGuqZ2FX568iC5OQsvfGnhvZnOKoJJNkAzRCea7fE6WNXM0SbZyHKZgO_Zm_rBreYItdTiiTu3x9N0dsAYWoagFp0ejek21E-zmmvf0LCPliETCTcA1QO_Qjinv-9zvxSOV7AsaybpaBoCsEsz334AsATXtFZhf67X4suL-TbZ1nhjBPJZq92AClifSnW-X6KHM5p4eEjZRnxq_J8eMFCgPBkRrbiad9IBiTTFo-g8')"></div>
+<div class="flex items-center gap-2 text-body-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-body-md">location_on</span>
+<span>Avenue 4, Phase 2, Industrial Area, Sector 62</span>
+</div>
+</div>
+</div>
+</div>
+</main>
+<script>
+    // Micro-interactions for status toggles
+    document.querySelectorAll('.group.p-4.border').forEach(btn => {
+      btn.addEventListener('click', function() {
+        // Reset all buttons
+        document.querySelectorAll('.group.p-4').forEach(b => {
+          b.classList.remove('border-green-500', 'bg-green-50', 'status-active-glow', 'border-2');
+          b.classList.add('border-outline-variant', 'bg-surface-container-low');
+          const icon = b.querySelector('.material-symbols-outlined');
+          const label = b.querySelector('.text-label-caps');
+          icon.style.fontVariationSettings = "'FILL' 0";
+          icon.classList.remove('text-green-600');
+          icon.classList.add('text-secondary');
+          label.classList.remove('text-green-700');
+          label.classList.add('text-secondary');
+        });
+
+        // Highlight selected
+        this.classList.remove('border-outline-variant', 'bg-surface-container-low');
+        this.classList.add('border-green-500', 'bg-green-50', 'status-active-glow', 'border-2');
+        const icon = this.querySelector('.material-symbols-outlined');
+        const label = this.querySelector('.text-label-caps');
+        icon.style.fontVariationSettings = "'FILL' 1";
+        icon.classList.remove('text-secondary');
+        icon.classList.add('text-green-600');
+        label.classList.remove('text-secondary');
+        label.classList.add('text-green-700');
+      });
+    });
+  </script>
+</body></html>

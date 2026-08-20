@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Chargefinder Admin - Station Management</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&amp;family=Geist:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "secondary-fixed": "#c9e6ff",
+                    "on-primary-fixed-variant": "#5a00c6",
+                    "primary-fixed-dim": "#d2bbff",
+                    "surface-dim": "#0b1326",
+                    "on-background": "#dae2fd",
+                    "on-secondary": "#00344d",
+                    "on-tertiary-fixed": "#002113",
+                    "error-container": "#93000a",
+                    "surface-container-high": "#222a3d",
+                    "surface-variant": "#2d3449",
+                    "on-error-container": "#ffdad6",
+                    "primary-fixed": "#eaddff",
+                    "surface-container-low": "#131b2e",
+                    "inverse-primary": "#732ee4",
+                    "tertiary": "#4edea3",
+                    "surface-tint": "#d2bbff",
+                    "on-error": "#690005",
+                    "outline-variant": "#4a4455",
+                    "error": "#ffb4ab",
+                    "on-primary-fixed": "#25005a",
+                    "on-tertiary": "#003824",
+                    "on-primary": "#3f008e",
+                    "on-secondary-fixed-variant": "#004c6e",
+                    "tertiary-fixed": "#6ffbbe",
+                    "on-tertiary-container": "#76ffc2",
+                    "surface-container": "#171f33",
+                    "secondary-fixed-dim": "#89ceff",
+                    "on-tertiary-fixed-variant": "#005236",
+                    "primary": "#d2bbff",
+                    "on-secondary-container": "#00344e",
+                    "tertiary-fixed-dim": "#4edea3",
+                    "on-surface": "#dae2fd",
+                    "background": "#0b1326",
+                    "surface": "#0b1326",
+                    "secondary": "#89ceff",
+                    "outline": "#958da1",
+                    "on-surface-variant": "#ccc3d8",
+                    "secondary-container": "#00a2e6",
+                    "surface-container-highest": "#2d3449",
+                    "surface-bright": "#31394d",
+                    "surface-container-lowest": "#060e20",
+                    "on-secondary-fixed": "#001e2f",
+                    "on-primary-container": "#ede0ff",
+                    "tertiary-container": "#007650",
+                    "inverse-on-surface": "#283044",
+                    "primary-container": "#7c3aed",
+                    "inverse-surface": "#dae2fd"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "unit": "4px",
+                    "stack-lg": "32px",
+                    "container-padding": "24px",
+                    "stack-sm": "8px",
+                    "gutter": "16px",
+                    "stack-md": "16px",
+                    "margin-page": "32px"
+            },
+            "fontFamily": {
+                    "headline-md": ["Geist"],
+                    "body-lg": ["JetBrains Mono"],
+                    "body-sm": ["JetBrains Mono"],
+                    "headline-md-mobile": ["Geist"],
+                    "display-lg": ["Geist"],
+                    "headline-sm": ["Geist"],
+                    "body-md": ["JetBrains Mono"],
+                    "label-caps": ["JetBrains Mono"]
+            },
+            "fontSize": {
+                    "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "body-sm": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+                    "headline-md-mobile": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "display-lg": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-sm": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "label-caps": ["11px", {"lineHeight": "16px", "letterSpacing": "0.08em", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #020617; /* Level 0 Base */
+            color: #dae2fd;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .inner-glow {
+            border: 1px solid rgba(210, 187, 255, 0.2);
+        }
+        .pulse-critical {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: .5; }
+        }
+        .cmd-cursor::after {
+            content: '_';
+            animation: blink 1s step-end infinite;
+        }
+        @keyframes blink {
+            from, to { color: transparent; }
+            50% { color: #d2bbff; }
+        }
+        /* Custom scrollbar for cyber aesthetic */
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: #020617; }
+        ::-webkit-scrollbar-thumb { background: #334155; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-body-md text-body-md pb-20">
+<!-- TopAppBar Shell -->
+<header class="fixed top-0 w-full z-50 bg-surface-container-low border-b border-outline-variant flex items-center justify-between px-gutter h-14">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary" data-icon="bolt">bolt</span>
+<h1 class="font-headline-md-mobile text-headline-md-mobile font-bold text-primary tracking-tight">Chargefinder Admin</h1>
+</div>
+<div class="flex items-center gap-4">
+<button class="hover:bg-surface-container-high transition-colors p-1 rounded-full active:scale-95 duration-100">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="account_circle">account_circle</span>
+</button>
+</div>
+</header>
+<!-- Content Canvas -->
+<main class="pt-20 px-container-padding space-y-stack-md">
+<!-- Search & Filter Area -->
+<section class="space-y-stack-sm">
+<div class="relative">
+<div class="absolute inset-y-0 left-3 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-outline text-sm" data-icon="search">search</span>
+</div>
+<input class="w-full bg-[#020617] border border-outline-variant rounded-DEFAULT pl-10 pr-4 py-2 text-primary focus:ring-0 focus:border-primary placeholder-outline-variant font-body-sm cmd-cursor" placeholder="CMD_FIND_STATION" type="text"/>
+</div>
+<div class="flex gap-2 overflow-x-auto no-scrollbar">
+<button class="flex items-center gap-1 bg-surface-container-high px-3 py-1 rounded-full text-label-caps font-label-caps text-secondary whitespace-nowrap border border-secondary/20">
+<span class="material-symbols-outlined text-[14px]" data-icon="filter_list">filter_list</span>
+                    STATUS: ALL
+                </button>
+<button class="flex items-center gap-1 bg-surface-container-low px-3 py-1 rounded-full text-label-caps font-label-caps text-on-surface-variant whitespace-nowrap border border-outline-variant">
+                    CPO: ANY
+                </button>
+<button class="flex items-center gap-1 bg-surface-container-low px-3 py-1 rounded-full text-label-caps font-label-caps text-on-surface-variant whitespace-nowrap border border-outline-variant">
+                    POWER: &gt;50KW
+                </button>
+</div>
+</section>
+<!-- Stats Overview (Bento Small) -->
+<div class="grid grid-cols-2 gap-2">
+<div class="bg-surface-container p-3 border border-outline-variant rounded-lg">
+<p class="text-label-caps font-label-caps text-on-surface-variant opacity-70">TOTAL_UPTIME</p>
+<p class="text-headline-sm font-headline-sm text-tertiary">98.42%</p>
+</div>
+<div class="bg-surface-container p-3 border border-outline-variant rounded-lg">
+<p class="text-label-caps font-label-caps text-on-surface-variant opacity-70">ACTIVE_LOAD</p>
+<p class="text-headline-sm font-headline-sm text-secondary">1.2MW</p>
+</div>
+</div>
+<!-- Stations List -->
+<div class="space-y-stack-sm pb-10">
+<!-- Station Card 1 -->
+<div class="bg-surface-container-low border border-outline-variant rounded-lg overflow-hidden inner-glow">
+<div class="p-4 space-y-3">
+<div class="flex justify-between items-start">
+<div>
+<h3 class="font-headline-sm text-headline-sm text-primary">Hyperhub Central</h3>
+<p class="text-body-sm font-body-sm text-outline">SN: CF-9920-X1</p>
+</div>
+<span class="bg-tertiary-container/20 text-tertiary px-2 py-0.5 rounded text-label-caps font-label-caps flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span>
+                            ACTIVE
+                        </span>
+</div>
+<div class="grid grid-cols-2 gap-4 py-2 border-y border-outline-variant/30">
+<div>
+<p class="text-label-caps font-label-caps text-on-surface-variant opacity-60">CPO_NAME</p>
+<p class="text-body-md font-body-md text-on-surface">VoltMatrix UK</p>
+</div>
+<div>
+<p class="text-label-caps font-label-caps text-on-surface-variant opacity-60">POWER_OUT</p>
+<p class="text-body-md font-body-md text-secondary">150 kW</p>
+</div>
+</div>
+<div class="flex gap-2 pt-1">
+<button class="flex-1 bg-surface-container-high hover:bg-slate-700 text-on-surface-variant font-label-caps text-label-caps py-2 rounded-DEFAULT border border-outline-variant active:scale-95 transition-all">
+                            DIAGNOSTICS
+                        </button>
+<button class="flex-1 bg-[#020617] hover:bg-error-container/20 text-error font-label-caps text-label-caps py-2 rounded-DEFAULT border border-error/30 active:scale-95 transition-all" onclick="toggleStatus(this)">
+                            DEACTIVATE
+                        </button>
+</div>
+</div>
+</div>
+<!-- Station Card 2 -->
+<div class="bg-surface-container-low border border-outline-variant rounded-lg overflow-hidden inner-glow">
+<div class="p-4 space-y-3">
+<div class="flex justify-between items-start">
+<div>
+<h3 class="font-headline-sm text-headline-sm text-primary">Edge Charger 04</h3>
+<p class="text-body-sm font-body-sm text-outline">SN: CF-8812-Y2</p>
+</div>
+<span class="bg-error-container/20 text-error px-2 py-0.5 rounded text-label-caps font-label-caps flex items-center gap-1 pulse-critical">
+<span class="w-1.5 h-1.5 rounded-full bg-error"></span>
+                            INACTIVE
+                        </span>
+</div>
+<div class="grid grid-cols-2 gap-4 py-2 border-y border-outline-variant/30">
+<div>
+<p class="text-label-caps font-label-caps text-on-surface-variant opacity-60">CPO_NAME</p>
+<p class="text-body-md font-body-md text-on-surface">EcoGrid Solutions</p>
+</div>
+<div>
+<p class="text-label-caps font-label-caps text-on-surface-variant opacity-60">POWER_OUT</p>
+<p class="text-body-md font-body-md text-on-surface-variant">0 kW</p>
+</div>
+</div>
+<div class="flex gap-2 pt-1">
+<button class="flex-1 bg-surface-container-high text-on-surface-variant font-label-caps text-label-caps py-2 rounded-DEFAULT border border-outline-variant">
+                            DIAGNOSTICS
+                        </button>
+<button class="flex-1 bg-primary-container text-on-primary-container font-label-caps text-label-caps py-2 rounded-DEFAULT active:scale-95 transition-all">
+                            ACTIVATE_SYS
+                        </button>
+</div>
+</div>
+</div>
+<!-- Station Card 3 -->
+<div class="bg-surface-container-low border border-outline-variant rounded-lg overflow-hidden inner-glow">
+<div class="p-4 space-y-3">
+<div class="flex justify-between items-start">
+<div>
+<h3 class="font-headline-sm text-headline-sm text-primary">Station North Alpha</h3>
+<p class="text-body-sm font-body-sm text-outline">SN: CF-1021-A9</p>
+</div>
+<span class="bg-tertiary-container/20 text-tertiary px-2 py-0.5 rounded text-label-caps font-label-caps flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span>
+                            ACTIVE
+                        </span>
+</div>
+<div class="grid grid-cols-2 gap-4 py-2 border-y border-outline-variant/30">
+<div>
+<p class="text-label-caps font-label-caps text-on-surface-variant opacity-60">CPO_NAME</p>
+<p class="text-body-md font-body-md text-on-surface">VoltMatrix UK</p>
+</div>
+<div>
+<p class="text-label-caps font-label-caps text-on-surface-variant opacity-60">POWER_OUT</p>
+<p class="text-body-md font-body-md text-secondary">50 kW</p>
+</div>
+</div>
+<div class="flex gap-2 pt-1">
+<button class="flex-1 bg-surface-container-high text-on-surface-variant font-label-caps text-label-caps py-2 rounded-DEFAULT border border-outline-variant">
+                            DIAGNOSTICS
+                        </button>
+<button class="flex-1 bg-[#020617] text-error font-label-caps text-label-caps py-2 rounded-DEFAULT border border-error/30 active:scale-95 transition-all">
+                            DEACTIVATE
+                        </button>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- FAB Integration (Only relevant for primary action of adding/onboarding) -->
+<div class="fixed bottom-20 right-gutter z-40">
+<button class="bg-primary-container text-on-primary-container w-14 h-14 rounded-full shadow-lg flex items-center justify-center active:scale-90 transition-transform">
+<span class="material-symbols-outlined" data-icon="add">add</span>
+</button>
+</div>
+<!-- BottomNavBar Shell -->
+<nav class="fixed bottom-0 w-full z-50 bg-surface-container-lowest border-t border-outline-variant flex justify-around items-center h-16 px-container-padding">
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-secondary-fixed-dim active:opacity-80 transition-opacity" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-label-caps text-label-caps">Dashboard</span>
+</a>
+<a class="flex flex-col items-center justify-center text-secondary font-bold hover:text-secondary-fixed-dim active:opacity-80 transition-opacity" href="#">
+<span class="material-symbols-outlined" data-icon="ev_station" style="font-variation-settings: 'FILL' 1;">ev_station</span>
+<span class="font-label-caps text-label-caps">Stations</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-secondary-fixed-dim active:opacity-80 transition-opacity" href="#">
+<span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+<span class="font-label-caps text-label-caps">Analytics</span>
+</a>
+</nav>
+<script>
+        function toggleStatus(btn) {
+            const card = btn.closest('.bg-surface-container-low');
+            const badge = card.querySelector('.text-label-caps');
+            const powerOut = card.querySelector('.text-secondary');
+            
+            if (btn.innerText === 'DEACTIVATE') {
+                btn.innerText = 'ACTIVATE_SYS';
+                btn.classList.remove('text-error', 'border-error/30');
+                btn.classList.add('bg-primary-container', 'text-on-primary-container');
+                
+                badge.className = 'bg-error-container/20 text-error px-2 py-0.5 rounded text-label-caps font-label-caps flex items-center gap-1 pulse-critical';
+                badge.innerHTML = '<span class="w-1.5 h-1.5 rounded-full bg-error"></span>INACTIVE';
+                
+                if(powerOut) {
+                    powerOut.className = 'text-body-md font-body-md text-on-surface-variant';
+                    powerOut.innerText = '0 kW';
+                }
+            } else {
+                btn.innerText = 'DEACTIVATE';
+                btn.className = 'flex-1 bg-[#020617] hover:bg-error-container/20 text-error font-label-caps text-label-caps py-2 rounded-DEFAULT border border-error/30 active:scale-95 transition-all';
+                
+                badge.className = 'bg-tertiary-container/20 text-tertiary px-2 py-0.5 rounded text-label-caps font-label-caps flex items-center gap-1';
+                badge.innerHTML = '<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span>ACTIVE';
+                
+                const powerVal = card.querySelector('.text-on-surface-variant:not(.font-label-caps)');
+                if(powerVal && powerVal.innerText === '0 kW') {
+                    powerVal.className = 'text-body-md font-body-md text-secondary';
+                    powerVal.innerText = '150 kW';
+                }
+            }
+        }
+    </script>
+</body></html>

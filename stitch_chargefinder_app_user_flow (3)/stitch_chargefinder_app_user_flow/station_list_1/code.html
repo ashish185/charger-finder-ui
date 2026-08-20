@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
+<title>Chargefinder - Nearby Stations</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-container-highest": "#e0e3e5",
+                    "tertiary-container": "#ef9900",
+                    "tertiary": "#855300",
+                    "on-tertiary": "#ffffff",
+                    "error": "#ba1a1a",
+                    "primary-container": "#22c55e",
+                    "on-background": "#191c1e",
+                    "inverse-on-surface": "#eff1f3",
+                    "on-tertiary-fixed": "#2a1700",
+                    "tertiary-fixed-dim": "#ffb95f",
+                    "surface-tint": "#006e2f",
+                    "on-secondary-fixed-variant": "#3c475a",
+                    "on-secondary-container": "#586377",
+                    "surface-bright": "#f7f9fb",
+                    "surface-container": "#eceef0",
+                    "surface-variant": "#e0e3e5",
+                    "surface-container-high": "#e6e8ea",
+                    "surface-container-lowest": "#ffffff",
+                    "inverse-primary": "#4ae176",
+                    "secondary-fixed-dim": "#bcc7de",
+                    "outline": "#6d7b6c",
+                    "tertiary-fixed": "#ffddb8",
+                    "surface": "#f7f9fb",
+                    "secondary": "#545f73",
+                    "on-error": "#ffffff",
+                    "on-tertiary-container": "#5c3800",
+                    "primary": "#006e2f",
+                    "on-tertiary-fixed-variant": "#653e00",
+                    "on-primary-container": "#004b1e",
+                    "error-container": "#ffdad6",
+                    "secondary-fixed": "#d8e3fb",
+                    "secondary-container": "#d5e0f8",
+                    "primary-fixed": "#6bff8f",
+                    "outline-variant": "#bccbb9",
+                    "on-primary": "#ffffff",
+                    "background": "#f7f9fb",
+                    "inverse-surface": "#2d3133",
+                    "surface-dim": "#d8dadc",
+                    "on-primary-fixed-variant": "#005321",
+                    "on-primary-fixed": "#002109",
+                    "on-secondary": "#ffffff",
+                    "surface-container-low": "#f2f4f6",
+                    "primary-fixed-dim": "#4ae176",
+                    "on-surface": "#191c1e",
+                    "on-surface-variant": "#3d4a3d",
+                    "on-error-container": "#93000a",
+                    "on-secondary-fixed": "#111c2d"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "stack-xs": "4px",
+                    "stack-sm": "8px",
+                    "safe-margin": "20px",
+                    "inline-gutter": "16px",
+                    "stack-md": "16px",
+                    "stack-lg": "24px"
+            },
+            "fontFamily": {
+                    "label-bold": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "headline-lg-mobile": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "label-sm": ["Inter"],
+                    "body-sm": ["Inter"]
+            },
+            "fontSize": {
+                    "label-bold": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "headline-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "30px", "fontWeight": "700"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-lg": ["28px", {"lineHeight": "34px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+                    "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f7f9fb;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            vertical-align: middle;
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface antialiased">
+<!-- Top AppBar -->
+<header class="bg-surface/95 backdrop-blur-md border-b border-outline-variant docked full-width top-0 sticky h-16 w-full z-50 flex items-center justify-between px-safe-margin">
+<div class="flex items-center gap-stack-sm">
+<button class="material-symbols-outlined text-primary active:scale-95 duration-100 p-2 -ml-2">arrow_back</button>
+<h1 class="font-headline-md text-headline-md font-bold text-primary">Chargefinder</h1>
+</div>
+<button class="material-symbols-outlined text-secondary active:scale-95 duration-100 p-2">more_vert</button>
+</header>
+<main class="flex flex-col min-h-screen pb-32">
+<!-- Search & View Toggle Sticky Header -->
+<div class="sticky top-16 bg-surface/95 backdrop-blur-md z-40 px-safe-margin pt-stack-md pb-stack-sm space-y-stack-md">
+<!-- Search Bar -->
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-4 text-on-surface-variant">search</span>
+<input class="w-full h-12 pl-12 pr-4 bg-surface-container-low border border-outline-variant rounded-xl focus:border-primary focus:ring-1 focus:ring-primary outline-none font-body-sm text-on-surface transition-all" placeholder="Search area or station" type="text"/>
+</div>
+<!-- View Switcher -->
+<div class="flex p-1 bg-surface-container-high rounded-xl">
+<button class="flex-1 py-2 rounded-lg font-label-bold text-label-bold text-secondary transition-colors hover:bg-surface-container-highest">
+                    Map
+                </button>
+<button class="flex-1 py-2 rounded-lg font-label-bold text-label-bold bg-surface-container-lowest text-primary shadow-sm">
+                    List
+                </button>
+</div>
+<!-- Filter Chips -->
+<div class="flex gap-stack-sm overflow-x-auto hide-scrollbar -mx-safe-margin px-safe-margin pb-stack-xs">
+<button class="flex items-center gap-1 px-4 py-2 bg-secondary-fixed text-on-secondary-fixed rounded-full font-label-bold text-label-bold border border-transparent whitespace-nowrap active:scale-95 duration-100">
+                    Distance <span class="material-symbols-outlined text-[16px]">expand_more</span>
+</button>
+<button class="px-4 py-2 bg-surface-container-lowest text-on-surface-variant border border-outline-variant rounded-full font-label-bold text-label-bold whitespace-nowrap active:scale-95 duration-100">
+                    Price
+                </button>
+<button class="px-4 py-2 bg-surface-container-lowest text-on-surface-variant border border-outline-variant rounded-full font-label-bold text-label-bold whitespace-nowrap active:scale-95 duration-100">
+                    Availability
+                </button>
+<button class="px-4 py-2 bg-surface-container-lowest text-on-surface-variant border border-outline-variant rounded-full font-label-bold text-label-bold whitespace-nowrap active:scale-95 duration-100">
+                    Connector
+                </button>
+</div>
+</div>
+<!-- Scrollable List of Station Cards -->
+<div class="px-safe-margin mt-stack-md space-y-stack-md">
+<!-- Card 1 -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-stack-md shadow-sm active:scale-[0.98] transition-transform duration-200">
+<div class="flex justify-between items-start mb-2">
+<div>
+<h3 class="font-headline-md text-headline-md text-on-surface">VoltCharge Hub</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">1.2 km away • Downtown Plaza</p>
+</div>
+<div class="flex flex-col items-end gap-1">
+<span class="px-2 py-1 bg-primary-container/20 text-on-primary-container rounded-full font-label-bold text-[10px] uppercase tracking-wider flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-primary-container"></span> Available
+                        </span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Updated 2 mins ago</span>
+</div>
+</div>
+<div class="flex flex-wrap gap-2 mt-4">
+<span class="px-3 py-1 bg-surface-container text-secondary rounded-lg font-label-bold text-label-bold border border-outline-variant/30 flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">ev_station</span> CCS2
+                    </span>
+<span class="px-3 py-1 bg-surface-container text-secondary rounded-lg font-label-bold text-label-bold border border-outline-variant/30 flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">ev_station</span> Type 2
+                    </span>
+</div>
+<div class="flex justify-between items-center mt-6 pt-4 border-t border-outline-variant/30">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Price</span>
+<span class="font-headline-md text-headline-md text-on-surface">$0.55/kWh</span>
+</div>
+<button class="px-6 h-10 bg-primary text-on-primary rounded-xl font-label-bold text-label-bold active:scale-95 duration-100 flex items-center gap-2">
+<span class="material-symbols-outlined text-[20px]">near_me</span> Navigate
+                    </button>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-stack-md shadow-sm active:scale-[0.98] transition-transform duration-200">
+<div class="flex justify-between items-start mb-2">
+<div>
+<h3 class="font-headline-md text-headline-md text-on-surface">Greenway FastCharge</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">3.5 km away • North Ring Road</p>
+</div>
+<div class="flex flex-col items-end gap-1">
+<span class="px-2 py-1 bg-tertiary-container/20 text-on-tertiary-container rounded-full font-label-bold text-[10px] uppercase tracking-wider flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-tertiary-container"></span> Busy
+                        </span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Updated 5 mins ago</span>
+</div>
+</div>
+<div class="flex flex-wrap gap-2 mt-4">
+<span class="px-3 py-1 bg-surface-container text-secondary rounded-lg font-label-bold text-label-bold border border-outline-variant/30 flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">bolt</span> 150 kW
+                    </span>
+<span class="px-3 py-1 bg-surface-container text-secondary rounded-lg font-label-bold text-label-bold border border-outline-variant/30 flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">ev_station</span> CCS2
+                    </span>
+</div>
+<div class="flex justify-between items-center mt-6 pt-4 border-t border-outline-variant/30">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Price</span>
+<span class="font-headline-md text-headline-md text-on-surface">$0.62/kWh</span>
+</div>
+<button class="px-6 h-10 bg-secondary text-on-secondary rounded-xl font-label-bold text-label-bold active:scale-95 duration-100 flex items-center gap-2">
+                         View Details
+                    </button>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-stack-md shadow-sm active:scale-[0.98] transition-transform duration-200">
+<div class="flex justify-between items-start mb-2">
+<div>
+<h3 class="font-headline-md text-headline-md text-on-surface">City Power Point</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">0.8 km away • Central Mall</p>
+</div>
+<div class="flex flex-col items-end gap-1">
+<span class="px-2 py-1 bg-primary-container/20 text-on-primary-container rounded-full font-label-bold text-[10px] uppercase tracking-wider flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-primary-container"></span> Available
+                        </span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Updated 1 min ago</span>
+</div>
+</div>
+<div class="flex flex-wrap gap-2 mt-4">
+<span class="px-3 py-1 bg-surface-container text-secondary rounded-lg font-label-bold text-label-bold border border-outline-variant/30 flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">ev_station</span> Type 2
+                    </span>
+</div>
+<div class="flex justify-between items-center mt-6 pt-4 border-t border-outline-variant/30">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Price</span>
+<span class="font-headline-md text-headline-md text-on-surface">$0.45/kWh</span>
+</div>
+<button class="px-6 h-10 bg-primary text-on-primary rounded-xl font-label-bold text-label-bold active:scale-95 duration-100 flex items-center gap-2">
+<span class="material-symbols-outlined text-[20px]">near_me</span> Navigate
+                    </button>
+</div>
+</div>
+<!-- Card 4 (Bento/Asymmetric Style teaser) -->
+<div class="grid grid-cols-2 gap-stack-sm">
+<div class="bg-primary-container/10 border border-primary-container/30 rounded-xl p-stack-md flex flex-col justify-between aspect-square">
+<span class="material-symbols-outlined text-primary text-[32px]">electric_car</span>
+<div>
+<h4 class="font-label-bold text-label-bold text-primary">Battery Low?</h4>
+<p class="font-label-sm text-[10px] text-on-primary-fixed-variant leading-tight">Find chargers with 100kW+ speed nearby.</p>
+</div>
+</div>
+<div class="bg-secondary-container/50 border border-secondary-container rounded-xl p-stack-md flex flex-col justify-between aspect-square">
+<span class="material-symbols-outlined text-secondary text-[32px]">loyalty</span>
+<div>
+<h4 class="font-label-bold text-label-bold text-secondary">Member Deal</h4>
+<p class="font-label-sm text-[10px] text-on-secondary-container leading-tight">Save 15% at Greenway FastCharge today.</p>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center pt-2 pb-6 px-inline-gutter bg-surface/95 backdrop-blur-md border-t border-outline-variant dark:border-outline shadow-sm rounded-t-xl">
+<a class="flex flex-col items-center justify-center text-primary active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">map</span>
+<span class="font-label-bold text-label-bold">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-secondary hover:opacity-80 transition-opacity active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined">receipt_long</span>
+<span class="font-label-bold text-label-bold">Bookings</span>
+</a>
+<a class="flex flex-col items-center justify-center text-secondary hover:opacity-80 transition-opacity active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-bold text-label-bold">Profile</span>
+</a>
+</nav>
+<script>
+        // Micro-interaction: Scale effect on cards and buttons handled via Tailwind utility 'active:scale-95'
+        // Basic filter selection logic simulation
+        const chips = document.querySelectorAll('.filter-chip');
+        chips.forEach(chip => {
+            chip.addEventListener('click', () => {
+                chips.forEach(c => {
+                    c.classList.remove('bg-secondary-fixed', 'text-on-secondary-fixed');
+                    c.classList.add('bg-surface-container-lowest', 'text-on-surface-variant');
+                });
+                chip.classList.add('bg-secondary-fixed', 'text-on-secondary-fixed');
+                chip.classList.remove('bg-surface-container-lowest', 'text-on-surface-variant');
+            });
+        });
+    </script>
+</body></html>

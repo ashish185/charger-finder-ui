@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Chargefinder Admin - Operational Analytics</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&amp;family=JetBrains+Mono:wght@100..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "secondary-fixed": "#c9e6ff",
+                    "on-primary-fixed-variant": "#5a00c6",
+                    "primary-fixed-dim": "#d2bbff",
+                    "surface-dim": "#0b1326",
+                    "on-background": "#dae2fd",
+                    "on-secondary": "#00344d",
+                    "on-tertiary-fixed": "#002113",
+                    "error-container": "#93000a",
+                    "surface-container-high": "#222a3d",
+                    "surface-variant": "#2d3449",
+                    "on-error-container": "#ffdad6",
+                    "primary-fixed": "#eaddff",
+                    "surface-container-low": "#131b2e",
+                    "inverse-primary": "#732ee4",
+                    "tertiary": "#4edea3",
+                    "surface-tint": "#d2bbff",
+                    "on-error": "#690005",
+                    "outline-variant": "#4a4455",
+                    "error": "#ffb4ab",
+                    "on-primary-fixed": "#25005a",
+                    "on-tertiary": "#003824",
+                    "on-primary": "#3f008e",
+                    "on-secondary-fixed-variant": "#004c6e",
+                    "tertiary-fixed": "#6ffbbe",
+                    "on-tertiary-container": "#76ffc2",
+                    "surface-container": "#171f33",
+                    "secondary-fixed-dim": "#89ceff",
+                    "on-tertiary-fixed-variant": "#005236",
+                    "primary": "#d2bbff",
+                    "on-secondary-container": "#00344e",
+                    "tertiary-fixed-dim": "#4edea3",
+                    "on-surface": "#dae2fd",
+                    "background": "#0b1326",
+                    "surface": "#0b1326",
+                    "secondary": "#89ceff",
+                    "outline": "#958da1",
+                    "on-surface-variant": "#ccc3d8",
+                    "secondary-container": "#00a2e6",
+                    "surface-container-highest": "#2d3449",
+                    "surface-bright": "#31394d",
+                    "surface-container-lowest": "#060e20",
+                    "on-secondary-fixed": "#001e2f",
+                    "on-primary-container": "#ede0ff",
+                    "tertiary-container": "#007650",
+                    "inverse-on-surface": "#283044",
+                    "primary-container": "#7c3aed",
+                    "inverse-surface": "#dae2fd"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "unit": "4px",
+                    "stack-lg": "32px",
+                    "container-padding": "24px",
+                    "stack-sm": "8px",
+                    "gutter": "16px",
+                    "stack-md": "16px",
+                    "margin-page": "32px"
+            },
+            "fontFamily": {
+                    "headline-md": ["Geist"],
+                    "body-lg": ["JetBrains Mono"],
+                    "body-sm": ["JetBrains Mono"],
+                    "headline-md-mobile": ["Geist"],
+                    "display-lg": ["Geist"],
+                    "headline-sm": ["Geist"],
+                    "body-md": ["JetBrains Mono"],
+                    "label-caps": ["JetBrains Mono"]
+            },
+            "fontSize": {
+                    "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "body-sm": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+                    "headline-md-mobile": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "display-lg": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-sm": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "label-caps": ["11px", {"lineHeight": "16px", "letterSpacing": "0.08em", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #0b1326;
+            color: #dae2fd;
+            -webkit-font-smoothing: antialiased;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .inner-glow {
+            box-shadow: inset 0 0 0 1px rgba(210, 187, 255, 0.1);
+        }
+        .scanline {
+            width: 100%;
+            height: 2px;
+            background: rgba(137, 206, 255, 0.1);
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 10;
+            pointer-events: none;
+            animation: scanline 4s linear infinite;
+        }
+        @keyframes scanline {
+            0% { top: 0; }
+            100% { top: 100%; }
+        }
+        .pulse-critical {
+            animation: pulse-red 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        @keyframes pulse-red {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+        /* Custom scrollbar for technical look */
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #060e20;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #2d3449;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #89ceff;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-body-md overflow-x-hidden pb-20">
+<!-- Top Navigation Anchor -->
+<header class="fixed top-0 w-full z-50 bg-surface-container-low border-b border-outline-variant flex items-center justify-between px-gutter h-14">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary" data-icon="bolt">bolt</span>
+<span class="font-headline-md-mobile text-headline-md-mobile font-bold text-primary tracking-tight">Chargefinder Admin</span>
+</div>
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined text-on-surface-variant hover:bg-surface-container-high transition-colors p-2 rounded" data-icon="search">search</button>
+<button class="material-symbols-outlined text-on-surface-variant hover:bg-surface-container-high transition-colors p-2 rounded" data-icon="account_circle">account_circle</button>
+</div>
+</header>
+<!-- Content Canvas -->
+<main class="mt-14 px-container-padding pt-stack-md space-y-gutter">
+<!-- Date Range Picker Module -->
+<section class="bg-surface-container p-4 border border-outline-variant inner-glow rounded-lg">
+<div class="flex items-center justify-between mb-stack-sm">
+<span class="font-label-caps text-label-caps text-secondary">CMD_SET_TIME_RANGE</span>
+<span class="text-[10px] text-outline italic">LOG_REF: ANALYTICS_V4</span>
+</div>
+<div class="flex items-center gap-2 bg-surface-container-lowest border border-outline-variant p-2 rounded">
+<span class="material-symbols-outlined text-on-surface-variant text-sm" data-icon="calendar_today">calendar_today</span>
+<input class="bg-transparent border-none text-body-sm font-body-sm text-on-surface focus:ring-0 w-full uppercase tracking-widest" readonly="" type="text" value="OCT 24, 2023 - OCT 31, 2023"/>
+<span class="material-symbols-outlined text-primary text-sm cursor-pointer" data-icon="arrow_drop_down">arrow_drop_down</span>
+</div>
+</section>
+<!-- KPI Grid -->
+<div class="grid grid-cols-2 gap-2">
+<div class="bg-surface-container-low border border-outline-variant p-3">
+<div class="text-label-caps font-label-caps text-on-surface-variant mb-1 uppercase">Avg Duration</div>
+<div class="text-headline-sm font-headline-sm text-secondary">42.5m</div>
+<div class="text-[10px] text-tertiary">+2.1% FROM PREV</div>
+</div>
+<div class="bg-surface-container-low border border-outline-variant p-3">
+<div class="text-label-caps font-label-caps text-on-surface-variant mb-1 uppercase">Peak Load</div>
+<div class="text-headline-sm font-headline-sm text-primary">89.2%</div>
+<div class="text-[10px] text-error pulse-critical">WARN: THRESHOLD</div>
+</div>
+</div>
+<!-- Uptime Trends per CPO -->
+<section class="bg-surface-container-low border border-outline-variant rounded p-4 relative overflow-hidden">
+<div class="scanline"></div>
+<h3 class="font-label-caps text-label-caps text-on-surface-variant mb-4 flex items-center justify-between">
+                UPTIME_TREND_BY_CPO
+                <span class="material-symbols-outlined text-xs" data-icon="more_vert">more_vert</span>
+</h3>
+<div class="space-y-4">
+<!-- CPO Item -->
+<div class="space-y-1">
+<div class="flex justify-between text-body-sm font-body-sm">
+<span class="text-on-surface">Ionity Global</span>
+<span class="text-tertiary">99.82%</span>
+</div>
+<div class="h-1.5 w-full bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-tertiary" style="width: 99.82%"></div>
+</div>
+</div>
+<!-- CPO Item -->
+<div class="space-y-1">
+<div class="flex justify-between text-body-sm font-body-sm">
+<span class="text-on-surface">Tesla Supercharge</span>
+<span class="text-tertiary">99.99%</span>
+</div>
+<div class="h-1.5 w-full bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-tertiary" style="width: 99.99%"></div>
+</div>
+</div>
+<!-- CPO Item -->
+<div class="space-y-1">
+<div class="flex justify-between text-body-sm font-body-sm">
+<span class="text-on-surface">Fastned EU</span>
+<span class="text-secondary">94.10%</span>
+</div>
+<div class="h-1.5 w-full bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-secondary" style="width: 94.1%"></div>
+</div>
+</div>
+<!-- CPO Item -->
+<div class="space-y-1">
+<div class="flex justify-between text-body-sm font-body-sm">
+<span class="text-on-surface">BP Pulse</span>
+<span class="text-error">88.45%</span>
+</div>
+<div class="h-1.5 w-full bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-error" style="width: 88.45%"></div>
+</div>
+</div>
+</div>
+</section>
+<!-- Peak Hours Heat Map (Mobile abstraction) -->
+<section class="bg-surface-container-low border border-outline-variant rounded p-4">
+<h3 class="font-label-caps text-label-caps text-on-surface-variant mb-4">PEAK_HOURS_HEATMAP (24H)</h3>
+<div class="grid grid-cols-12 gap-1">
+<!-- Simple representative heat blocks -->
+<div class="aspect-square bg-surface-container-highest border border-outline-variant/10"></div>
+<div class="aspect-square bg-surface-container-highest border border-outline-variant/10"></div>
+<div class="aspect-square bg-surface-container-highest border border-outline-variant/10"></div>
+<div class="aspect-square bg-primary/20 border border-outline-variant/10"></div>
+<div class="aspect-square bg-primary/40 border border-outline-variant/10"></div>
+<div class="aspect-square bg-primary/60 border border-outline-variant/10"></div>
+<div class="aspect-square bg-primary/80 border border-outline-variant/10"></div>
+<div class="aspect-square bg-primary border border-outline-variant/10"></div>
+<div class="aspect-square bg-primary/80 border border-outline-variant/10"></div>
+<div class="aspect-square bg-primary/60 border border-outline-variant/10"></div>
+<div class="aspect-square bg-primary/40 border border-outline-variant/10"></div>
+<div class="aspect-square bg-primary/20 border border-outline-variant/10"></div>
+<div class="aspect-square bg-surface-container-highest border border-outline-variant/10"></div>
+<div class="aspect-square bg-surface-container-highest border border-outline-variant/10"></div>
+<div class="aspect-square bg-surface-container-highest border border-outline-variant/10"></div>
+<div class="aspect-square bg-surface-container-highest border border-outline-variant/10"></div>
+<div class="aspect-square bg-primary/20 border border-outline-variant/10"></div>
+<div class="aspect-square bg-primary/30 border border-outline-variant/10"></div>
+<div class="aspect-square bg-primary/50 border border-outline-variant/10"></div>
+<div class="aspect-square bg-primary/70 border border-outline-variant/10"></div>
+<div class="aspect-square bg-primary border border-outline-variant/10"></div>
+<div class="aspect-square bg-primary/90 border border-outline-variant/10"></div>
+<div class="aspect-square bg-primary/50 border border-outline-variant/10"></div>
+<div class="aspect-square bg-surface-container-highest border border-outline-variant/10"></div>
+</div>
+<div class="flex justify-between mt-2 text-[8px] font-label-caps text-outline tracking-widest">
+<span>00:00</span>
+<span>12:00</span>
+<span>23:59</span>
+</div>
+</section>
+<!-- Revenue Distribution & Avg Duration -->
+<div class="space-y-gutter">
+<!-- Revenue Distribution Pie Simulation -->
+<div class="bg-surface-container-low border border-outline-variant p-4">
+<h3 class="font-label-caps text-label-caps text-on-surface-variant mb-4">REVENUE_DISTRIBUTION_BY_TYPE</h3>
+<div class="flex items-center gap-6">
+<div class="relative w-24 h-24 rounded-full border-[10px] border-secondary-container" style="border-left-color: transparent; transform: rotate(45deg);">
+<div class="absolute inset-[-10px] w-24 h-24 rounded-full border-[10px] border-primary" style="clip-path: polygon(0 0, 50% 0, 50% 100%, 0 100%);"></div>
+</div>
+<div class="flex-1 space-y-2">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 bg-primary"></span>
+<span class="text-body-sm font-body-sm text-on-surface">Ultra-Fast (62%)</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 bg-secondary-container"></span>
+<span class="text-body-sm font-body-sm text-on-surface">Standard (31%)</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 bg-surface-variant"></span>
+<span class="text-body-sm font-body-sm text-on-surface">Legacy (7%)</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Detailed Stats Table (Condensed) -->
+<div class="bg-surface-container-lowest border border-outline-variant overflow-hidden">
+<table class="w-full text-left">
+<thead class="bg-surface-container text-label-caps font-label-caps text-outline border-b border-outline-variant">
+<tr>
+<th class="px-3 py-2">STATION_ID</th>
+<th class="px-3 py-2 text-right">UTIL%</th>
+</tr>
+</thead>
+<tbody class="text-body-sm font-body-sm text-on-surface divide-y divide-outline-variant/20">
+<tr class="hover:bg-surface-container transition-colors">
+<td class="px-3 py-2 font-mono">BER_092_X</td>
+<td class="px-3 py-2 text-right">88.4</td>
+</tr>
+<tr class="hover:bg-surface-container transition-colors">
+<td class="px-3 py-2 font-mono">LON_121_A</td>
+<td class="px-3 py-2 text-right">72.1</td>
+</tr>
+<tr class="hover:bg-surface-container transition-colors">
+<td class="px-3 py-2 font-mono">AMS_442_F</td>
+<td class="px-3 py-2 text-right">91.9</td>
+</tr>
+<tr class="hover:bg-surface-container transition-colors">
+<td class="px-3 py-2 font-mono">PAR_002_B</td>
+<td class="px-3 py-2 text-right text-error">12.5</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- System Log Snippet -->
+<section class="bg-[#000000] border border-outline-variant p-3 font-mono text-[10px] text-tertiary-fixed-dim rounded">
+<div class="flex items-center gap-2 mb-2 border-b border-outline-variant pb-1">
+<span class="text-error">●</span>
+<span class="text-on-surface font-bold uppercase tracking-widest">Live Terminal</span>
+</div>
+<p>&gt; initializing analytics_worker.bin...</p>
+<p>&gt; fetching telemetry for 12,402 nodes...</p>
+<p>&gt; cache_hit: 98.4% | latency: 12ms</p>
+<p class="text-on-surface">&gt; system status: <span class="text-tertiary font-bold">OPTIMAL</span></p>
+</section>
+</main>
+<!-- Bottom Navigation Shell -->
+<nav class="fixed bottom-0 w-full z-50 bg-surface-container-lowest border-t border-outline-variant flex justify-around items-center h-16 px-container-padding">
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-secondary-fixed-dim active:opacity-80 transition-opacity" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="dashboard">dashboard</span>
+<span class="font-label-caps text-label-caps">Dashboard</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-secondary-fixed-dim active:opacity-80 transition-opacity" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="ev_station">ev_station</span>
+<span class="font-label-caps text-label-caps">Stations</span>
+</a>
+<a class="flex flex-col items-center justify-center text-secondary font-bold active:opacity-80 transition-opacity" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="analytics" style="font-variation-settings: 'FILL' 1;">analytics</span>
+<span class="font-label-caps text-label-caps">Analytics</span>
+</a>
+</nav>
+<script>
+        // Micro-interaction: CMD_CURSOR blinking
+        const terminal = document.querySelector('section.bg-\\[\\#000000\\]');
+        if (terminal) {
+            const cursor = document.createElement('span');
+            cursor.className = 'inline-block w-1.5 h-3 bg-tertiary-fixed-dim ml-1 align-middle animate-pulse';
+            cursor.id = 'cmd-cursor';
+            terminal.lastElementChild.appendChild(cursor);
+        }
+
+        // Simulating data updates
+        setInterval(() => {
+            const utilizationValues = document.querySelectorAll('tbody td.text-right');
+            utilizationValues.forEach(td => {
+                const currentVal = parseFloat(td.innerText);
+                const noise = (Math.random() - 0.5) * 0.2;
+                td.innerText = (currentVal + noise).toFixed(1);
+            });
+        }, 3000);
+    </script>
+</body></html>

@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>VoltOps Pro - CPO Login</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "primary-container": "#1e293b",
+                    "on-primary-fixed": "#111c2d",
+                    "secondary": "#515f74",
+                    "surface-container": "#eceef0",
+                    "on-primary-container": "#8590a6",
+                    "secondary-fixed": "#d5e3fd",
+                    "surface-tint": "#545f73",
+                    "surface-bright": "#f7f9fb",
+                    "inverse-primary": "#bcc7de",
+                    "tertiary-container": "#35260c",
+                    "on-tertiary-container": "#a38c6a",
+                    "primary-fixed": "#d8e3fb",
+                    "error-container": "#ffdad6",
+                    "inverse-surface": "#2d3133",
+                    "surface-container-high": "#e6e8ea",
+                    "on-tertiary-fixed": "#271902",
+                    "surface-container-highest": "#e0e3e5",
+                    "on-background": "#191c1e",
+                    "secondary-fixed-dim": "#b9c7e0",
+                    "surface": "#f7f9fb",
+                    "error": "#ba1a1a",
+                    "on-secondary-container": "#57657b",
+                    "on-primary-fixed-variant": "#3c475a",
+                    "outline-variant": "#c5c6cd",
+                    "on-tertiary-fixed-variant": "#564427",
+                    "on-error-container": "#93000a",
+                    "tertiary": "#1e1200",
+                    "on-secondary-fixed": "#0d1c2f",
+                    "primary-fixed-dim": "#bcc7de",
+                    "background": "#f7f9fb",
+                    "tertiary-fixed": "#fadfb8",
+                    "surface-container-lowest": "#ffffff",
+                    "on-primary": "#ffffff",
+                    "on-secondary": "#ffffff",
+                    "tertiary-fixed-dim": "#ddc39d",
+                    "on-tertiary": "#ffffff",
+                    "on-surface-variant": "#45474c",
+                    "surface-dim": "#d8dadc",
+                    "secondary-container": "#d5e3fd",
+                    "surface-variant": "#e0e3e5",
+                    "outline": "#75777d",
+                    "surface-container-low": "#f2f4f6",
+                    "primary": "#091426",
+                    "on-surface": "#191c1e",
+                    "on-secondary-fixed-variant": "#3a485c",
+                    "on-error": "#ffffff",
+                    "inverse-on-surface": "#eff1f3"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "fontFamily": {
+                    "body-md": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "title-sm": ["Inter"],
+                    "label-caps": ["Inter"]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .login-card {
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.06);
+        }
+        .status-dot {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: .5; }
+        }
+    </style>
+</head>
+<body class="bg-background min-h-screen flex flex-col items-center justify-between text-on-surface selection:bg-primary-fixed">
+<!-- Subtle Background Atmosphere -->
+<div class="fixed inset-0 z-0 pointer-events-none overflow-hidden">
+<div class="absolute -top-[10%] -left-[10%] w-[40%] h-[40%] bg-primary-fixed/20 blur-[120px] rounded-full"></div>
+<div class="absolute -bottom-[10%] -right-[10%] w-[40%] h-[40%] bg-secondary-fixed/20 blur-[120px] rounded-full"></div>
+</div>
+<!-- Header / Brand -->
+<header class="w-full max-w-[1600px] px-8 pt-8 z-10 flex justify-between items-center">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[32px]">bolt</span>
+<span class="text-headline-md font-headline-md text-primary tracking-tight">VoltOps Pro</span>
+</div>
+<div class="flex items-center gap-4 bg-surface-container-lowest px-4 py-2 rounded-full border border-outline-variant">
+<div class="w-2 h-2 rounded-full bg-emerald-500 status-dot"></div>
+<span class="text-body-sm font-body-md text-on-surface-variant">System Status: Operational</span>
+</div>
+</header>
+<!-- Main Content -->
+<main class="flex-grow flex items-center justify-center w-full px-6 z-10">
+<div class="w-full max-w-[440px] animate-in fade-in slide-in-from-bottom-4 duration-700">
+<div class="bg-surface-container-lowest login-card border border-outline-variant p-10 rounded-lg">
+<!-- Brand Lockup -->
+<div class="flex flex-col items-center mb-8">
+<div class="w-16 h-16 bg-primary-container rounded-xl flex items-center justify-center mb-4 shadow-sm">
+<span class="material-symbols-outlined text-primary-fixed text-[36px]" style="font-variation-settings: 'FILL' 1;">ev_station</span>
+</div>
+<h1 class="text-title-sm font-title-sm text-primary mb-1">CPO Portal Login</h1>
+<p class="text-body-md font-body-md text-on-secondary-container">Enter your credentials to manage your network</p>
+</div>
+<!-- Form -->
+<form class="space-y-6" onsubmit="return false;">
+<div class="space-y-1.5">
+<label class="text-label-caps font-label-caps text-on-surface-variant uppercase" for="id">Email or Phone Number</label>
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline group-focus-within:text-primary transition-colors">person</span>
+<input class="w-full pl-10 pr-4 py-3 bg-surface-bright border border-outline-variant rounded focus:ring-1 focus:ring-primary focus:border-primary outline-none transition-all text-body-md font-body-md text-on-surface placeholder:text-outline/60" id="id" placeholder="name@company.com" type="text"/>
+</div>
+</div>
+<div class="space-y-1.5">
+<div class="flex justify-between items-center">
+<label class="text-label-caps font-label-caps text-on-surface-variant uppercase" for="password">Password</label>
+<a class="text-body-sm font-body-md text-primary hover:underline" href="#">Forgot password?</a>
+</div>
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline group-focus-within:text-primary transition-colors">lock</span>
+<input class="w-full pl-10 pr-4 py-3 bg-surface-bright border border-outline-variant rounded focus:ring-1 focus:ring-primary focus:border-primary outline-none transition-all text-body-md font-body-md text-on-surface placeholder:text-outline/60" id="password" placeholder="••••••••" type="password"/>
+<button class="absolute right-3 top-1/2 -translate-y-1/2 text-outline hover:text-on-surface transition-colors" type="button">
+<span class="material-symbols-outlined">visibility</span>
+</button>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<input class="w-4 h-4 text-primary border-outline-variant rounded focus:ring-primary cursor-pointer" id="remember" type="checkbox"/>
+<label class="text-body-sm font-body-md text-on-surface-variant select-none cursor-pointer" for="remember">Stay signed in for 30 days</label>
+</div>
+<button class="w-full py-3.5 bg-primary text-on-primary font-body-md rounded hover:bg-on-primary-fixed active:scale-[0.98] transition-all flex items-center justify-center gap-2 shadow-sm" type="submit">
+<span>Login to Dashboard</span>
+<span class="material-symbols-outlined text-[20px]">arrow_forward</span>
+</button>
+</form>
+<!-- Onboarding Prompt -->
+<div class="mt-8 pt-8 border-t border-outline-variant text-center">
+<p class="text-body-md font-body-md text-on-surface-variant">
+                        New Charge Point Operator? 
+                        <a class="text-primary font-bold hover:underline block mt-1" href="#">Apply for network access</a>
+</p>
+</div>
+</div>
+<!-- Security Trust Badges -->
+<div class="mt-8 flex justify-center items-center gap-6 opacity-60">
+<div class="flex items-center gap-1.5 grayscale">
+<span class="material-symbols-outlined text-sm">verified_user</span>
+<span class="text-[10px] font-label-caps uppercase tracking-widest">ISO 27001</span>
+</div>
+<div class="flex items-center gap-1.5 grayscale">
+<span class="material-symbols-outlined text-sm">shield</span>
+<span class="text-[10px] font-label-caps uppercase tracking-widest">SOC2 Type II</span>
+</div>
+<div class="flex items-center gap-1.5 grayscale">
+<span class="material-symbols-outlined text-sm">security</span>
+<span class="text-[10px] font-label-caps uppercase tracking-widest">256-bit AES</span>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="w-full max-w-[1600px] px-8 pb-8 z-10">
+<div class="flex flex-col md:flex-row justify-between items-center gap-4 text-body-sm font-body-md text-on-surface-variant border-t border-outline-variant pt-6">
+<div class="flex items-center gap-1">
+<span>© 2024 VoltOps Management Systems.</span>
+<span class="hidden md:inline">Powered by Chargefinder Network.</span>
+</div>
+<nav class="flex gap-6">
+<a class="hover:text-primary transition-colors" href="#">Support Center</a>
+<a class="hover:text-primary transition-colors" href="#">Privacy Policy</a>
+<a class="hover:text-primary transition-colors" href="#">Terms of Service</a>
+<a class="hover:text-primary transition-colors" href="#">Infrastructure Status</a>
+</nav>
+</div>
+</footer>
+<script>
+        // Micro-interaction for the login button
+        const loginBtn = document.querySelector('button[type="submit"]');
+        if (loginBtn) {
+            loginBtn.addEventListener('mousedown', () => {
+                loginBtn.classList.add('scale-95');
+            });
+            window.addEventListener('mouseup', () => {
+                loginBtn.classList.remove('scale-95');
+            });
+        }
+
+        // Simple input focus effects handled by Tailwind, but adding a "Ready" check
+        const inputs = document.querySelectorAll('input[type="text"], input[type="password"]');
+        inputs.forEach(input => {
+            input.addEventListener('input', () => {
+                const allFilled = Array.from(inputs).every(i => i.value.length > 0);
+                if (allFilled) {
+                    loginBtn.classList.remove('opacity-80');
+                } else {
+                    loginBtn.classList.add('opacity-80');
+                }
+            });
+        });
+    </script>
+</body></html>

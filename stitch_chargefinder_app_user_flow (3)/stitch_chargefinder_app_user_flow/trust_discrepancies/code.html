@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>VoltOps Pro | Discrepancy & Trust Score</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .gauge-container {
+            position: relative;
+            width: 280px;
+            height: 140px;
+            overflow: hidden;
+        }
+        .gauge-bg {
+            fill: none;
+            stroke: #e2e8f0;
+            stroke-width: 20;
+        }
+        .gauge-fill {
+            fill: none;
+            stroke: #22c55e; /* Success Color > 85 */
+            stroke-width: 20;
+            stroke-dasharray: 440;
+            stroke-dashoffset: 440;
+            transition: stroke-dashoffset 1s ease-out;
+            stroke-linecap: butt;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary-container": "#1e293b",
+                        "on-primary-fixed": "#111c2d",
+                        "secondary": "#515f74",
+                        "surface-container": "#eceef0",
+                        "on-primary-container": "#8590a6",
+                        "secondary-fixed": "#d5e3fd",
+                        "surface-tint": "#545f73",
+                        "surface-bright": "#f7f9fb",
+                        "inverse-primary": "#bcc7de",
+                        "tertiary-container": "#35260c",
+                        "on-tertiary-container": "#a38c6a",
+                        "primary-fixed": "#d8e3fb",
+                        "error-container": "#ffdad6",
+                        "inverse-surface": "#2d3133",
+                        "surface-container-high": "#e6e8ea",
+                        "on-tertiary-fixed": "#271902",
+                        "surface-container-highest": "#e0e3e5",
+                        "on-background": "#191c1e",
+                        "secondary-fixed-dim": "#b9c7e0",
+                        "surface": "#f7f9fb",
+                        "error": "#ba1a1a",
+                        "on-secondary-container": "#57657b",
+                        "on-primary-fixed-variant": "#3c475a",
+                        "outline-variant": "#c5c6cd",
+                        "on-tertiary-fixed-variant": "#564427",
+                        "on-error-container": "#93000a",
+                        "tertiary": "#1e1200",
+                        "on-secondary-fixed": "#0d1c2f",
+                        "primary-fixed-dim": "#bcc7de",
+                        "background": "#f7f9fb",
+                        "tertiary-fixed": "#fadfb8",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary": "#ffffff",
+                        "on-secondary": "#ffffff",
+                        "tertiary-fixed-dim": "#ddc39d",
+                        "on-tertiary": "#ffffff",
+                        "on-surface-variant": "#45474c",
+                        "surface-dim": "#d8dadc",
+                        "secondary-container": "#d5e3fd",
+                        "surface-variant": "#e0e3e5",
+                        "outline": "#75777d",
+                        "surface-container-low": "#f2f4f6",
+                        "primary": "#091426",
+                        "on-surface": "#191c1e",
+                        "on-secondary-fixed-variant": "#3a485c",
+                        "on-error": "#ffffff",
+                        "inverse-on-surface": "#eff1f3"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "table-cell-padding": "12px 16px",
+                        "sidebar-width": "260px",
+                        "container-margin": "32px",
+                        "gutter": "24px",
+                        "card-padding": "20px"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Inter"],
+                        "data-mono": ["Inter"],
+                        "label-caps": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "title-sm": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "body-sm": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "data-mono": ["13px", {"lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500"}],
+                        "label-caps": ["11px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "title-sm": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
+                        "display-lg": ["36px", {"lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "body-sm": ["13px", {"lineHeight": "18px", "fontWeight": "400"}]
+                    }
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background font-body-md text-on-background antialiased">
+<!-- Sidebar Shell -->
+<aside class="fixed left-0 top-0 h-full z-50 flex flex-col bg-primary dark:bg-on-primary-fixed border-r border-outline-variant dark:border-outline w-[260px] transition-all">
+<div class="p-gutter">
+<h1 class="text-headline-md font-headline-md text-surface-lowest tracking-tight">VoltOps Pro</h1>
+<p class="text-title-sm font-title-sm text-on-primary-container">Charge Point Operator</p>
+</div>
+<nav class="flex-1 mt-4 space-y-1">
+<a class="flex items-center gap-3 px-4 py-3 text-on-primary-container/70 hover:text-on-primary-container mx-2 hover:bg-primary-container/50 transition-colors scale-95 active:scale-90 duration-150" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-body-md font-body-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-primary-container/70 hover:text-on-primary-container mx-2 hover:bg-primary-container/50 transition-colors scale-95 active:scale-90 duration-150" href="#">
+<span class="material-symbols-outlined">ev_station</span>
+<span class="text-body-md font-body-md">Stations</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-primary-container/70 hover:text-on-primary-container mx-2 hover:bg-primary-container/50 transition-colors scale-95 active:scale-90 duration-150" href="#">
+<span class="material-symbols-outlined">event_available</span>
+<span class="text-body-md font-body-md">Bookings</span>
+</a>
+<!-- Active Navigation -->
+<a class="flex items-center gap-3 px-4 py-3 bg-primary-container text-on-primary-container rounded-lg mx-2 scale-95 active:scale-90 duration-150" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">report_problem</span>
+<span class="text-body-md font-body-md">Discrepancies</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-primary-container/70 hover:text-on-primary-container mx-2 hover:bg-primary-container/50 transition-colors scale-95 active:scale-90 duration-150" href="#">
+<span class="material-symbols-outlined">support_agent</span>
+<span class="text-body-md font-body-md">Support</span>
+</a>
+</nav>
+<div class="p-4">
+<button class="w-full bg-surface-container-lowest text-primary py-2 rounded-lg font-title-sm text-title-sm hover:bg-surface-container-high transition-all">
+                + Add Station
+            </button>
+</div>
+</aside>
+<!-- Header / Top Bar -->
+<header class="fixed top-0 right-0 left-[260px] h-16 flex items-center justify-between px-gutter z-40 bg-surface-lowest dark:bg-inverse-surface border-b border-outline-variant dark:border-outline">
+<div class="flex items-center gap-4">
+<span class="text-body-sm font-body-sm text-secondary">Dashboard / Discrepancies</span>
+<div class="relative">
+<span class="absolute left-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-outline">search</span>
+<input class="pl-10 pr-4 py-1.5 bg-surface-container-low border-none rounded-lg text-body-sm focus:ring-2 focus:ring-primary/20 w-64" placeholder="Search logs..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<div class="flex gap-4">
+<span class="material-symbols-outlined text-on-surface cursor-pointer hover:bg-surface-container-low p-2 rounded-full transition-all">notifications</span>
+<span class="material-symbols-outlined text-on-surface cursor-pointer hover:bg-surface-container-low p-2 rounded-full transition-all">settings</span>
+</div>
+<div class="flex items-center gap-3 pl-4 border-l border-outline-variant">
+<div class="text-right">
+<p class="text-title-sm font-title-sm text-on-surface">Alex Rivera</p>
+<p class="text-body-sm font-body-sm text-secondary">Lead Operator</p>
+</div>
+<img class="w-10 h-10 rounded-full bg-surface-container" data-alt="A professional headshot of a Hispanic male operations manager in his 40s wearing a clean white shirt. The background is a blurred office setting with cool blue tones and soft lighting, conveying a sense of corporate authority and technological focus. The image style is sharp, professional, and well-lit." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBNbe49csyG4CoC2B1_snXMaprFnQZwt71rhuGvgurTSHp4iRXxbG36C_FCeTrsDuUNyH8nehx8vJ0wm_jBZXzD6zZRrS8_DmuQWI9AvJ95X08gkb2QyHkqutjEuGNtB46kGCVTGwzSJ7bFBWWEwE2Zl2NGRi0WGf84EwTE9QjxYK4HLLU8ZPUr-35GmtXgZf5kj7pjDwN4q8iqPIr7X-IozhKMpdqwgMgZrBpbFfZkFv6O542Dca1N"/>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="ml-[260px] pt-16 min-h-screen">
+<div class="max-w-[1600px] mx-auto p-gutter space-y-gutter">
+<!-- Impact Alert Banner -->
+<div class="flex items-center justify-between p-4 bg-error-container rounded-lg border border-error/20">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-error" style="font-variation-settings: 'FILL' 1;">warning</span>
+<p class="text-body-md font-body-md text-on-error-container">
+<strong>Impact Alert:</strong> Your visibility is reduced due to unresolved discrepancies. 3 critical reports are pending verification.
+                    </p>
+</div>
+<button class="text-error font-title-sm text-title-sm hover:underline">View Critical Issues</button>
+</div>
+<!-- Top Grid: Trust Score & Guidance -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-gutter">
+<!-- Trust Score Card -->
+<div class="lg:col-span-1 bg-surface-container-lowest border border-outline-variant p-card-padding rounded-xl flex flex-col items-center justify-center relative overflow-hidden">
+<h3 class="absolute top-4 left-6 text-label-caps font-label-caps text-secondary uppercase">Operational Trust Score</h3>
+<div class="gauge-container mt-8">
+<svg class="w-full" viewbox="0 0 200 100">
+<path class="gauge-bg" d="M20,90 A80,80 0 0,1 180,90"></path>
+<path class="gauge-fill" d="M20,90 A80,80 0 0,1 180,90" id="gaugePath" style="stroke-dashoffset: 440;"></path>
+</svg>
+<div class="absolute inset-0 flex flex-col items-center justify-end pb-2">
+<span class="text-display-lg font-display-lg text-primary">94</span>
+<span class="text-body-sm font-body-sm text-secondary">Excellent</span>
+</div>
+</div>
+<div class="mt-4 w-full flex justify-between px-4 text-label-caps font-label-caps text-outline">
+<span>0</span>
+<span>50</span>
+<span>100</span>
+</div>
+<div class="mt-6 flex items-center gap-2 text-green-600 bg-green-50 px-3 py-1 rounded-full">
+<span class="material-symbols-outlined text-[16px]">trending_up</span>
+<span class="text-body-sm font-bold">+2.4% vs last month</span>
+</div>
+</div>
+<!-- Guidance Tips Card -->
+<div class="lg:col-span-2 bg-surface-container-lowest border border-outline-variant p-card-padding rounded-xl">
+<div class="flex items-center justify-between mb-6">
+<h3 class="text-title-sm font-title-sm text-primary">How to improve your score</h3>
+<span class="material-symbols-outlined text-secondary">lightbulb</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div class="p-4 border border-outline-variant rounded-lg hover:border-primary-container transition-all cursor-pointer group">
+<div class="flex items-center gap-3 mb-2">
+<span class="material-symbols-outlined text-primary group-hover:scale-110 transition-transform">verified</span>
+<h4 class="text-body-md font-bold">Fast Resolution</h4>
+</div>
+<p class="text-body-sm text-secondary">Resolve reported discrepancies within 4 hours to gain a 'Rapid Responder' badge and +5 score points.</p>
+</div>
+<div class="p-4 border border-outline-variant rounded-lg hover:border-primary-container transition-all cursor-pointer group">
+<div class="flex items-center gap-3 mb-2">
+<span class="material-symbols-outlined text-primary group-hover:scale-110 transition-transform">photo_camera</span>
+<h4 class="text-body-md font-bold">Photo Evidence</h4>
+</div>
+<p class="text-body-sm text-secondary">Attach clear photos to every resolution. Verified photographic evidence reduces dispute risk by 40%.</p>
+</div>
+<div class="p-4 border border-outline-variant rounded-lg hover:border-primary-container transition-all cursor-pointer group">
+<div class="flex items-center gap-3 mb-2">
+<span class="material-symbols-outlined text-primary group-hover:scale-110 transition-transform">history</span>
+<h4 class="text-body-md font-bold">Uptime Accuracy</h4>
+</div>
+<p class="text-body-sm text-secondary">Ensure heartbeat signals are synchronized. Inconsistent heartbeat logs are the #1 cause of score drops.</p>
+</div>
+<div class="p-4 border border-outline-variant rounded-lg hover:border-primary-container transition-all cursor-pointer group">
+<div class="flex items-center gap-3 mb-2">
+<span class="material-symbols-outlined text-primary group-hover:scale-110 transition-transform">diversity_3</span>
+<h4 class="text-body-md font-bold">Customer Feedback</h4>
+</div>
+<p class="text-body-sm text-secondary">Encourage users to rate the station after a resolved issue. Positive ratings amplify score growth.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Discrepancy Log Table Card -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden">
+<div class="px-card-padding py-4 border-b border-outline-variant flex items-center justify-between">
+<div>
+<h3 class="text-title-sm font-title-sm text-primary">Discrepancy Log</h3>
+<p class="text-body-sm text-secondary">Tracking reported issues vs. physical reality</p>
+</div>
+<div class="flex gap-2">
+<button class="px-3 py-1.5 text-body-sm border border-outline-variant rounded flex items-center gap-2 hover:bg-surface-container-low transition-all">
+<span class="material-symbols-outlined text-[18px]">filter_list</span> Filter
+                        </button>
+<button class="px-3 py-1.5 text-body-sm border border-outline-variant rounded flex items-center gap-2 hover:bg-surface-container-low transition-all">
+<span class="material-symbols-outlined text-[18px]">download</span> Export CSV
+                        </button>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead class="bg-surface-container-low border-b border-outline-variant">
+<tr>
+<th class="p-table-cell-padding text-label-caps font-label-caps text-secondary uppercase">Date & Time</th>
+<th class="p-table-cell-padding text-label-caps font-label-caps text-secondary uppercase">Station</th>
+<th class="p-table-cell-padding text-label-caps font-label-caps text-secondary uppercase">Issue Reported</th>
+<th class="p-table-cell-padding text-label-caps font-label-caps text-secondary uppercase">Actual Status</th>
+<th class="p-table-cell-padding text-label-caps font-label-caps text-secondary uppercase">Resolution</th>
+<th class="p-table-cell-padding text-label-caps font-label-caps text-secondary uppercase">Impact</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant">
+<tr class="hover:bg-surface-container-low/50 transition-colors">
+<td class="p-table-cell-padding text-data-mono font-data-mono">2023-11-24 09:12</td>
+<td class="p-table-cell-padding">
+<div class="flex flex-col">
+<span class="text-body-md font-bold">London Wall E2</span>
+<span class="text-body-sm text-secondary">ID: 8821-X</span>
+</div>
+</td>
+<td class="p-table-cell-padding">
+<span class="px-2 py-1 bg-red-100 text-red-700 rounded text-xs font-bold uppercase tracking-wider">Cable Damage</span>
+</td>
+<td class="p-table-cell-padding">
+<span class="text-body-sm">Operational (False Alarm)</span>
+</td>
+<td class="p-table-cell-padding">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-green-600 text-[18px]">check_circle</span>
+<span class="text-body-sm">Verified by Fleet Driver</span>
+</div>
+</td>
+<td class="p-table-cell-padding text-green-600 font-bold">+0.5</td>
+</tr>
+<tr class="hover:bg-surface-container-low/50 transition-colors">
+<td class="p-table-cell-padding text-data-mono font-data-mono">2023-11-23 14:45</td>
+<td class="p-table-cell-padding">
+<div class="flex flex-col">
+<span class="text-body-md font-bold">Manchester Central</span>
+<span class="text-body-sm text-secondary">ID: 4120-P</span>
+</div>
+</td>
+<td class="p-table-cell-padding">
+<span class="px-2 py-1 bg-orange-100 text-orange-700 rounded text-xs font-bold uppercase tracking-wider">Payment Failure</span>
+</td>
+<td class="p-table-cell-padding">
+<span class="text-body-sm">Intermittent NFC Error</span>
+</td>
+<td class="p-table-cell-padding">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-[18px]">build</span>
+<span class="text-body-sm">Remote Reset Performed</span>
+</div>
+</td>
+<td class="p-table-cell-padding text-secondary font-bold">0.0</td>
+</tr>
+<tr class="hover:bg-surface-container-low/50 transition-colors">
+<td class="p-table-cell-padding text-data-mono font-data-mono">2023-11-22 11:20</td>
+<td class="p-table-cell-padding">
+<div class="flex flex-col">
+<span class="text-body-md font-bold">Birmingham New St</span>
+<span class="text-body-sm text-secondary">ID: 9901-L</span>
+</div>
+</td>
+<td class="p-table-cell-padding">
+<span class="px-2 py-1 bg-gray-100 text-gray-700 rounded text-xs font-bold uppercase tracking-wider">ICEing</span>
+</td>
+<td class="p-table-cell-padding">
+<span class="text-body-sm">Non-EV Blocked Stall</span>
+</td>
+<td class="p-table-cell-padding">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-red-600 text-[18px]">cancel</span>
+<span class="text-body-sm">Unresolved - Tow Requested</span>
+</div>
+</td>
+<td class="p-table-cell-padding text-red-600 font-bold">-1.2</td>
+</tr>
+<tr class="hover:bg-surface-container-low/50 transition-colors">
+<td class="p-table-cell-padding text-data-mono font-data-mono">2023-11-20 22:10</td>
+<td class="p-table-cell-padding">
+<div class="flex flex-col">
+<span class="text-body-md font-bold">Leeds Dock Hub</span>
+<span class="text-body-sm text-secondary">ID: 5562-Q</span>
+</div>
+</td>
+<td class="p-table-cell-padding">
+<span class="px-2 py-1 bg-red-100 text-red-700 rounded text-xs font-bold uppercase tracking-wider">Screen Blank</span>
+</td>
+<td class="p-table-cell-padding">
+<span class="text-body-sm">Total Display Failure</span>
+</td>
+<td class="p-table-cell-padding">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-green-600 text-[18px]">check_circle</span>
+<span class="text-body-sm">Technician Repaired</span>
+</div>
+</td>
+<td class="p-table-cell-padding text-green-600 font-bold">+2.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="p-4 flex items-center justify-between border-t border-outline-variant bg-surface-container-low">
+<span class="text-body-sm text-secondary">Showing 1-4 of 128 discrepancies</span>
+<div class="flex gap-1">
+<button class="p-1 border border-outline-variant rounded hover:bg-white transition-all"><span class="material-symbols-outlined text-[18px]">chevron_left</span></button>
+<button class="px-3 py-1 border border-primary bg-primary text-white rounded text-body-sm">1</button>
+<button class="px-3 py-1 border border-outline-variant rounded hover:bg-white transition-all text-body-sm">2</button>
+<button class="px-3 py-1 border border-outline-variant rounded hover:bg-white transition-all text-body-sm">3</button>
+<button class="p-1 border border-outline-variant rounded hover:bg-white transition-all"><span class="material-symbols-outlined text-[18px]">chevron_right</span></button>
+</div>
+</div>
+</div>
+<!-- Operational Insights (Bento Grid Style) -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter">
+<div class="bg-surface-container-lowest border border-outline-variant p-card-padding rounded-xl">
+<p class="text-label-caps font-label-caps text-secondary mb-2">AVG. RESOLUTION TIME</p>
+<p class="text-headline-md font-headline-md text-primary">3.2 hrs</p>
+<div class="flex items-center gap-1 text-green-600 mt-2 text-xs">
+<span class="material-symbols-outlined text-[14px]">arrow_downward</span>
+<span>12% faster this week</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant p-card-padding rounded-xl">
+<p class="text-label-caps font-label-caps text-secondary mb-2">TOTAL UPTIME</p>
+<p class="text-headline-md font-headline-md text-primary">99.91%</p>
+<div class="flex items-center gap-1 text-green-600 mt-2 text-xs">
+<span class="material-symbols-outlined text-[14px]">check_circle</span>
+<span>Above SLA target</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant p-card-padding rounded-xl">
+<p class="text-label-caps font-label-caps text-secondary mb-2">PENDING VERIFICATION</p>
+<p class="text-headline-md font-headline-md text-primary">03</p>
+<div class="flex items-center gap-1 text-red-600 mt-2 text-xs">
+<span class="material-symbols-outlined text-[14px]">priority_high</span>
+<span>Action required</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant p-card-padding rounded-xl">
+<p class="text-label-caps font-label-caps text-secondary mb-2">OPERATOR RANK</p>
+<p class="text-headline-md font-headline-md text-primary">Top 5%</p>
+<div class="flex items-center gap-1 text-primary mt-2 text-xs">
+<span class="material-symbols-outlined text-[14px]">stars</span>
+<span>Elite Operator Tier</span>
+</div>
+</div>
+</div>
+</div>
+</main>
+<script>
+        // Animate the gauge on load
+        window.addEventListener('DOMContentLoaded', () => {
+            const score = 94;
+            const dashArray = 440; // Max dash offset for half circle (approx)
+            const offset = dashArray - (dashArray * (score / 100));
+            
+            setTimeout(() => {
+                const path = document.getElementById('gaugePath');
+                path.style.strokeDashoffset = offset;
+            }, 300);
+        });
+
+        // Theme Toggle Logic (Simple version for demo)
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark');
+        }
+    </script>
+</body></html>

@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
+<title>My Bookings - Chargefinder</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .progress-shimmer {
+            background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.4) 50%, rgba(255,255,255,0) 100%);
+            background-size: 200% 100%;
+            animation: shimmer 2s infinite;
+        }
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "inverse-on-surface": "#eff1f3",
+                    "primary": "#006e2f",
+                    "on-secondary-fixed": "#111c2d",
+                    "on-primary-fixed": "#002109",
+                    "surface-dim": "#d8dadc",
+                    "tertiary-fixed": "#ffddb8",
+                    "secondary-fixed-dim": "#bcc7de",
+                    "on-primary": "#ffffff",
+                    "on-surface": "#191c1e",
+                    "outline": "#6d7b6c",
+                    "inverse-primary": "#4ae176",
+                    "on-tertiary-container": "#5c3800",
+                    "on-tertiary": "#ffffff",
+                    "primary-fixed-dim": "#4ae176",
+                    "tertiary": "#855300",
+                    "secondary": "#545f73",
+                    "on-primary-fixed-variant": "#005321",
+                    "secondary-fixed": "#d8e3fb",
+                    "primary-container": "#22c55e",
+                    "on-error": "#ffffff",
+                    "tertiary-fixed-dim": "#ffb95f",
+                    "primary-fixed": "#6bff8f",
+                    "surface-tint": "#006e2f",
+                    "on-primary-container": "#004b1e",
+                    "outline-variant": "#bccbb9",
+                    "on-secondary-container": "#586377",
+                    "surface-container-highest": "#e0e3e5",
+                    "secondary-container": "#d5e0f8",
+                    "surface-variant": "#e0e3e5",
+                    "tertiary-container": "#ef9900",
+                    "on-tertiary-fixed": "#2a1700",
+                    "surface": "#f7f9fb",
+                    "on-secondary-fixed-variant": "#3c475a",
+                    "surface-container-low": "#f2f4f6",
+                    "error-container": "#ffdad6",
+                    "surface-container-lowest": "#ffffff",
+                    "surface-bright": "#f7f9fb",
+                    "on-background": "#191c1e",
+                    "on-error-container": "#93000a",
+                    "inverse-surface": "#2d3133",
+                    "on-tertiary-fixed-variant": "#653e00",
+                    "background": "#f7f9fb",
+                    "surface-container": "#eceef0",
+                    "on-secondary": "#ffffff",
+                    "on-surface-variant": "#3d4a3d",
+                    "surface-container-high": "#e6e8ea",
+                    "error": "#ba1a1a"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "stack-xs": "4px",
+                    "stack-lg": "24px",
+                    "stack-md": "16px",
+                    "safe-margin": "20px",
+                    "inline-gutter": "16px",
+                    "stack-sm": "8px"
+            },
+            "fontFamily": {
+                    "headline-md": ["Inter"],
+                    "headline-lg-mobile": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "label-bold": ["Inter"],
+                    "label-sm": ["Inter"],
+                    "body-sm": ["Inter"]
+            },
+            "fontSize": {
+                    "headline-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "30px", "fontWeight": "700"}],
+                    "headline-lg": ["28px", {"lineHeight": "34px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "label-bold": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+                    "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface min-h-screen pb-32">
+<!-- TopAppBar -->
+<header class="bg-surface/95 dark:bg-surface-dim/95 backdrop-blur-md border-b border-outline-variant dark:border-outline docked full-width top-0 sticky flex items-center justify-between px-safe-margin h-16 w-full z-50">
+<div class="flex items-center gap-4">
+<button class="active:scale-95 duration-100 p-2 -ml-2 rounded-full hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-primary dark:text-primary-fixed-dim">arrow_back</span>
+</button>
+<h1 class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed-dim">Bookings</h1>
+</div>
+<div class="flex gap-2">
+<button class="p-2 rounded-full hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-on-surface-variant">search</span>
+</button>
+<button class="p-2 rounded-full hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-on-surface-variant">filter_list</span>
+</button>
+</div>
+</header>
+<main class="px-safe-margin mt-stack-md">
+<!-- Tabs -->
+<div class="flex bg-surface-container-low p-1 rounded-xl mb-stack-lg">
+<button class="flex-1 py-2 font-label-bold text-label-bold rounded-lg transition-all duration-200 bg-surface shadow-sm text-primary" id="tab-upcoming" onclick="switchTab('upcoming')">Upcoming</button>
+<button class="flex-1 py-2 font-label-bold text-label-bold rounded-lg transition-all duration-200 text-secondary hover:bg-surface-container-high" id="tab-completed" onclick="switchTab('completed')">Completed</button>
+</div>
+<!-- Section: Active Charging (Bento Highlight) -->
+<div class="space-y-stack-md" id="upcoming-view">
+<!-- Active Session Card -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-stack-md relative overflow-hidden ring-2 ring-primary/10">
+<div class="flex justify-between items-start mb-stack-sm">
+<div class="flex flex-col">
+<span class="font-label-bold text-label-bold text-primary uppercase tracking-wider mb-1">Charging Now</span>
+<h2 class="font-headline-md text-headline-md text-on-surface">Central Plaza Hub</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Charger #04 • CCS2 (150kW)</p>
+</div>
+<div class="bg-primary/10 text-primary px-3 py-1 rounded-full flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">bolt</span>
+<span class="font-label-bold text-label-bold">Active</span>
+</div>
+</div>
+<!-- Progress Tracker -->
+<div class="mt-stack-md space-y-2">
+<div class="flex justify-between items-end">
+<div class="flex flex-col">
+<span class="font-label-bold text-label-bold text-on-surface-variant uppercase">Current Battery</span>
+<span class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface">64%</span>
+</div>
+<div class="text-right">
+<span class="font-label-bold text-label-bold text-on-surface-variant uppercase">Time Left</span>
+<span class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface">12m</span>
+</div>
+</div>
+<div class="h-3 w-full bg-surface-container-high rounded-full overflow-hidden relative">
+<div class="h-full bg-primary w-[64%] rounded-full relative" id="progress-bar">
+<div class="absolute inset-0 progress-shimmer"></div>
+</div>
+</div>
+<div class="flex justify-between text-label-sm font-label-sm text-on-surface-variant">
+<span>32.4 kWh delivered</span>
+<span>$14.50 est.</span>
+</div>
+</div>
+<!-- Action Button for Active -->
+<button class="mt-stack-md w-full py-3 bg-primary text-on-primary rounded-lg font-label-bold text-label-bold flex items-center justify-center gap-2 active:scale-95 duration-200">
+<span class="material-symbols-outlined">stop_circle</span>
+                    Stop Charging Session
+                </button>
+</div>
+<!-- List Divider Title -->
+<h3 class="font-label-bold text-label-bold text-secondary uppercase tracking-widest pt-stack-sm">Scheduled Bookings</h3>
+<!-- Upcoming Booking Card -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-stack-md flex gap-stack-md items-center">
+<div class="w-14 h-14 rounded-lg bg-surface-container-high flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-primary text-3xl">ev_station</span>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-start">
+<h4 class="font-label-bold text-label-bold text-on-surface">Greenway FastCharge</h4>
+<span class="bg-tertiary-container/20 text-on-tertiary-fixed-variant px-2 py-0.5 rounded text-[10px] font-bold uppercase">Upcoming</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Tomorrow, Oct 24 • 09:30 AM</p>
+<div class="mt-2 flex items-center gap-4 text-label-sm font-label-sm text-secondary">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">pin_drop</span> 2.4 km away</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">timer</span> 45 min slot</span>
+</div>
+</div>
+</div>
+<!-- Upcoming Booking Card 2 -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-stack-md flex gap-stack-md items-center opacity-80">
+<div class="w-14 h-14 rounded-lg bg-surface-container-high flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-secondary text-3xl">ev_station</span>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-start">
+<h4 class="font-label-bold text-label-bold text-on-surface">Westside Mall Parking</h4>
+<span class="bg-secondary-container text-on-secondary-container px-2 py-0.5 rounded text-[10px] font-bold uppercase">Reserved</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Oct 26 • 02:15 PM</p>
+<div class="mt-2 flex items-center gap-4 text-label-sm font-label-sm text-secondary">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">pin_drop</span> 5.1 km away</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">timer</span> 1h 30m slot</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Section: Completed (Initially Hidden) -->
+<div class="hidden space-y-stack-md" id="completed-view">
+<div class="flex items-center justify-between bg-secondary-container/30 p-stack-md rounded-xl mb-4">
+<div>
+<p class="text-label-sm font-label-sm text-secondary">Total Energy This Month</p>
+<p class="text-headline-md font-headline-md text-primary">142.8 kWh</p>
+</div>
+<div class="text-right">
+<p class="text-label-sm font-label-sm text-secondary">Total Spent</p>
+<p class="text-headline-md font-headline-md text-on-surface">$64.20</p>
+</div>
+</div>
+<!-- Completed Card 1 -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-stack-md">
+<div class="flex justify-between mb-2">
+<div class="flex items-center gap-2">
+<div class="p-2 bg-surface-container-high rounded-full">
+<span class="material-symbols-outlined text-secondary text-base">check_circle</span>
+</div>
+<h4 class="font-label-bold text-label-bold text-on-surface">Highway Service A1</h4>
+</div>
+<span class="font-label-bold text-label-bold text-on-surface">$22.45</span>
+</div>
+<div class="flex justify-between items-end pl-10">
+<div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Oct 21 • 11:04 AM</p>
+<p class="font-label-sm text-label-sm text-secondary">42 kWh delivered • CCS2</p>
+</div>
+<button class="text-primary font-label-bold text-label-bold flex items-center gap-1">
+                        Receipt <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- Completed Card 2 -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-stack-md">
+<div class="flex justify-between mb-2">
+<div class="flex items-center gap-2">
+<div class="p-2 bg-surface-container-high rounded-full">
+<span class="material-symbols-outlined text-secondary text-base">check_circle</span>
+</div>
+<h4 class="font-label-bold text-label-bold text-on-surface">Downtown Supercharger</h4>
+</div>
+<span class="font-label-bold text-label-bold text-on-surface">$18.10</span>
+</div>
+<div class="flex justify-between items-end pl-10">
+<div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Oct 18 • 08:30 PM</p>
+<p class="font-label-sm text-label-sm text-secondary">31 kWh delivered • Type 2</p>
+</div>
+<button class="text-primary font-label-bold text-label-bold flex items-center gap-1">
+                        Receipt <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- Completed Card 3 -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-stack-md">
+<div class="flex justify-between mb-2">
+<div class="flex items-center gap-2">
+<div class="p-2 bg-surface-container-high rounded-full">
+<span class="material-symbols-outlined text-secondary text-base">check_circle</span>
+</div>
+<h4 class="font-label-bold text-label-bold text-on-surface">Metro Parking Station</h4>
+</div>
+<span class="font-label-bold text-label-bold text-on-surface">$12.50</span>
+</div>
+<div class="flex justify-between items-end pl-10">
+<div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Oct 14 • 04:12 PM</p>
+<p class="font-label-sm text-label-sm text-secondary">24 kWh delivered • Type 2</p>
+</div>
+<button class="text-primary font-label-bold text-label-bold flex items-center gap-1">
+                        Receipt <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+</main>
+<!-- Floating Navigation Menu (Web Only Cluster - usually hidden on mobile via layout rules) -->
+<!-- Applying Responsive Pivot as per guidelines -->
+<!-- BottomNavBar (Mobile Layout) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center pt-2 pb-6 px-inline-gutter bg-surface/95 dark:bg-surface-dim/95 backdrop-blur-md border-t border-outline-variant dark:border-outline shadow-sm rounded-t-xl">
+<a class="flex flex-col items-center justify-center text-secondary dark:text-secondary-fixed-dim hover:opacity-80 transition-opacity active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined">map</span>
+<span class="font-label-bold text-label-bold mt-1">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-primary dark:text-primary-fixed-dim hover:opacity-80 transition-opacity active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">receipt_long</span>
+<span class="font-label-bold text-label-bold mt-1">Bookings</span>
+</a>
+<a class="flex flex-col items-center justify-center text-secondary dark:text-secondary-fixed-dim hover:opacity-80 transition-opacity active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-bold text-label-bold mt-1">Profile</span>
+</a>
+</nav>
+<script>
+        function switchTab(tab) {
+            const upcomingBtn = document.getElementById('tab-upcoming');
+            const completedBtn = document.getElementById('tab-completed');
+            const upcomingView = document.getElementById('upcoming-view');
+            const completedView = document.getElementById('completed-view');
+
+            if (tab === 'upcoming') {
+                upcomingBtn.classList.add('bg-surface', 'shadow-sm', 'text-primary');
+                upcomingBtn.classList.remove('text-secondary', 'hover:bg-surface-container-high');
+                completedBtn.classList.remove('bg-surface', 'shadow-sm', 'text-primary');
+                completedBtn.classList.add('text-secondary', 'hover:bg-surface-container-high');
+                
+                upcomingView.classList.remove('hidden');
+                completedView.classList.add('hidden');
+            } else {
+                completedBtn.classList.add('bg-surface', 'shadow-sm', 'text-primary');
+                completedBtn.classList.remove('text-secondary', 'hover:bg-surface-container-high');
+                upcomingBtn.classList.remove('bg-surface', 'shadow-sm', 'text-primary');
+                upcomingBtn.classList.add('text-secondary', 'hover:bg-surface-container-high');
+                
+                completedView.classList.remove('hidden');
+                upcomingView.classList.add('hidden');
+            }
+        }
+
+        // Live progress simulation
+        let currentProgress = 64;
+        const progressBar = document.getElementById('progress-bar');
+        
+        setInterval(() => {
+            if (currentProgress < 100) {
+                currentProgress += 0.05;
+                progressBar.style.width = currentProgress + '%';
+            }
+        }, 3000);
+    </script>
+</body></html>

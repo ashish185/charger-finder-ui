@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>VoltOps Pro - Fault &amp; Maintenance Management</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #e2e8f0;
+            border-radius: 10px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #cbd5e1;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "primary-container": "#1e293b",
+                      "on-primary-fixed": "#111c2d",
+                      "secondary": "#515f74",
+                      "surface-container": "#eceef0",
+                      "on-primary-container": "#8590a6",
+                      "secondary-fixed": "#d5e3fd",
+                      "surface-tint": "#545f73",
+                      "surface-bright": "#f7f9fb",
+                      "inverse-primary": "#bcc7de",
+                      "tertiary-container": "#35260c",
+                      "on-tertiary-container": "#a38c6a",
+                      "primary-fixed": "#d8e3fb",
+                      "error-container": "#ffdad6",
+                      "inverse-surface": "#2d3133",
+                      "surface-container-high": "#e6e8ea",
+                      "on-tertiary-fixed": "#271902",
+                      "surface-container-highest": "#e0e3e5",
+                      "on-background": "#191c1e",
+                      "secondary-fixed-dim": "#b9c7e0",
+                      "surface": "#f7f9fb",
+                      "error": "#ba1a1a",
+                      "on-secondary-container": "#57657b",
+                      "on-primary-fixed-variant": "#3c475a",
+                      "outline-variant": "#c5c6cd",
+                      "on-tertiary-fixed-variant": "#564427",
+                      "on-error-container": "#93000a",
+                      "tertiary": "#1e1200",
+                      "on-secondary-fixed": "#0d1c2f",
+                      "primary-fixed-dim": "#bcc7de",
+                      "background": "#f7f9fb",
+                      "tertiary-fixed": "#fadfb8",
+                      "surface-container-lowest": "#ffffff",
+                      "on-primary": "#ffffff",
+                      "on-secondary": "#ffffff",
+                      "tertiary-fixed-dim": "#ddc39d",
+                      "on-tertiary": "#ffffff",
+                      "on-surface-variant": "#45474c",
+                      "surface-dim": "#d8dadc",
+                      "secondary-container": "#d5e3fd",
+                      "surface-variant": "#e0e3e5",
+                      "outline": "#75777d",
+                      "surface-container-low": "#f2f4f6",
+                      "primary": "#091426",
+                      "on-surface": "#191c1e",
+                      "on-secondary-fixed-variant": "#3a485c",
+                      "on-error": "#ffffff",
+                      "inverse-on-surface": "#eff1f3"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "table-cell-padding": "12px 16px",
+                      "sidebar-width": "260px",
+                      "container-margin": "32px",
+                      "gutter": "24px",
+                      "card-padding": "20px"
+              },
+              "fontFamily": {
+                      "body-md": ["Inter"],
+                      "data-mono": ["Inter"],
+                      "label-caps": ["Inter"],
+                      "headline-md": ["Inter"],
+                      "title-sm": ["Inter"],
+                      "display-lg": ["Inter"],
+                      "body-sm": ["Inter"]
+              },
+              "fontSize": {
+                      "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                      "data-mono": ["13px", {"lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500"}],
+                      "label-caps": ["11px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                      "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                      "title-sm": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
+                      "display-lg": ["36px", {"lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "body-sm": ["13px", {"lineHeight": "18px", "fontWeight": "400"}]
+              }
+            },
+          },
+        }
+    </script>
+</head>
+<body class="bg-background font-body-md text-on-background antialiased selection:bg-primary-fixed selection:text-primary">
+<!-- SIDEBAR NAVIGATION (Anchored from JSON) -->
+<aside class="fixed left-0 top-0 h-full w-[260px] bg-primary dark:bg-on-primary-fixed border-r border-outline-variant dark:border-outline z-50 flex flex-col">
+<div class="p-6">
+<h1 class="text-headline-md font-headline-md text-surface-lowest tracking-tight">VoltOps Pro</h1>
+<p class="text-body-sm font-body-sm text-on-primary-container/60 mt-1">Charge Point Operator</p>
+</div>
+<nav class="flex-1 px-2 space-y-1">
+<a class="flex items-center px-4 py-3 text-on-primary-container/70 hover:text-on-primary-container hover:bg-primary-container/50 transition-colors mx-2 duration-150" href="#">
+<span class="material-symbols-outlined mr-3">dashboard</span>
+<span class="text-body-md font-body-md">Dashboard</span>
+</a>
+<a class="flex items-center px-4 py-3 text-on-primary-container/70 hover:text-on-primary-container hover:bg-primary-container/50 transition-colors mx-2 duration-150" href="#">
+<span class="material-symbols-outlined mr-3">ev_station</span>
+<span class="text-body-md font-body-md">Stations</span>
+</a>
+<a class="flex items-center px-4 py-3 text-on-primary-container/70 hover:text-on-primary-container hover:bg-primary-container/50 transition-colors mx-2 duration-150" href="#">
+<span class="material-symbols-outlined mr-3">event_available</span>
+<span class="text-body-md font-body-md">Bookings</span>
+</a>
+<!-- Active State: Discrepancies (Logic mapping to Fault/Maintenance) -->
+<a class="flex items-center px-4 py-3 bg-primary-container text-on-primary-container rounded-lg mx-2 scale-95 active:scale-90 duration-150" href="#">
+<span class="material-symbols-outlined mr-3">report_problem</span>
+<span class="text-body-md font-body-md">Discrepancies</span>
+</a>
+<a class="flex items-center px-4 py-3 text-on-primary-container/70 hover:text-on-primary-container hover:bg-primary-container/50 transition-colors mx-2 duration-150" href="#">
+<span class="material-symbols-outlined mr-3">support_agent</span>
+<span class="text-body-md font-body-md">Support</span>
+</a>
+</nav>
+<div class="p-4 mt-auto">
+<button class="w-full bg-surface-container-lowest text-primary py-3 px-4 rounded-lg font-title-sm text-title-sm flex items-center justify-center gap-2 hover:bg-surface-bright transition-all active:scale-[0.98]">
+<span class="material-symbols-outlined">add</span>
+                + Add Station
+            </button>
+</div>
+</aside>
+<!-- TOP NAVIGATION (Anchored from JSON) -->
+<header class="fixed top-0 right-0 left-[260px] h-16 bg-surface-lowest dark:bg-inverse-surface border-b border-outline-variant dark:border-outline flex items-center justify-between px-gutter z-40">
+<div class="flex items-center gap-4">
+<span class="text-title-sm font-title-sm text-on-surface dark:text-inverse-on-surface">VoltOps Management</span>
+<div class="h-4 w-px bg-outline-variant"></div>
+<div class="flex items-center text-body-sm font-body-sm text-secondary">
+<span>Infrastructure</span>
+<span class="material-symbols-outlined text-[16px] mx-1">chevron_right</span>
+<span class="text-primary font-bold">Fault Management</span>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<div class="relative w-64">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px]">search</span>
+<input class="w-full bg-surface-container-low border-none rounded-lg pl-10 pr-4 py-2 text-body-sm focus:ring-2 focus:ring-primary/20" placeholder="Search faults, stations..." type="text"/>
+</div>
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined text-secondary hover:bg-surface-container-low p-2 rounded-full transition-all">notifications</button>
+<button class="material-symbols-outlined text-secondary hover:bg-surface-container-low p-2 rounded-full transition-all">settings</button>
+<div class="w-8 h-8 rounded-full overflow-hidden border border-outline-variant">
+<img class="w-full h-full object-cover" data-alt="A professional headshot of a middle-aged male technician wearing a dark corporate uniform, set against a blurred industrial background with warm orange lighting. The image style is clean, sharp, and high-contrast, fitting for a premium enterprise management application with a focus on trust and accountability." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBlHMJLPjRCy3MShcuBbg_HrV-drlADMU8TM0qBC0mJU-4wHH2V04NMpppY0K5tGhAymC60E0Oan39__mKhsNS0QtH6mcBYteNE3-bSyZiLlVutmYSK2iScsrgT2xtqeQUhzV9UVVuhMjKNGvnyQoUkgtcxRttqYaaGcN6m6DMv6siZZ00AolEuFCcQhsKKuXAyNchjOTt5FHj-Fg2MKxP53fVDt5natWs30h8RFIWnIpFkPtLEdzAY"/>
+</div>
+</div>
+</div>
+</header>
+<!-- MAIN CONTENT CANVAS -->
+<main class="ml-[260px] mt-16 p-gutter max-w-[1600px] mx-auto min-h-screen">
+<!-- DASHBOARD HEADER -->
+<section class="mb-8 flex justify-between items-end">
+<div>
+<h2 class="text-display-lg font-display-lg text-primary tracking-tight">Active Fault Report</h2>
+<p class="text-body-md text-secondary mt-1">Detailed operational log and maintenance scheduling for Station #VO-9921-X</p>
+</div>
+<div class="flex gap-3">
+<button class="px-5 py-2.5 rounded-lg border border-outline text-secondary font-title-sm flex items-center gap-2 hover:bg-surface-container transition-all">
+<span class="material-symbols-outlined text-[20px]">cloud_download</span>
+                    Export Log
+                </button>
+<button class="px-5 py-2.5 rounded-lg bg-primary text-on-primary font-title-sm flex items-center gap-2 hover:opacity-90 active:scale-95 transition-all shadow-sm">
+<span class="material-symbols-outlined text-[20px]">build</span>
+                    Initiate Repair
+                </button>
+</div>
+</section>
+<!-- BENTO GRID CONTENT -->
+<div class="grid grid-cols-12 gap-6 items-start">
+<!-- LEFT COLUMN: Fault Details & Technical Stats (8 Cols) -->
+<div class="col-span-12 lg:col-span-8 space-y-6">
+<!-- FAULT DETAIL CARD -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden">
+<div class="bg-error-container/20 border-b border-error/10 p-5 flex items-center justify-between">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-lg bg-error-container flex items-center justify-center">
+<span class="material-symbols-outlined text-error font-bold text-[28px]" style="font-variation-settings: 'FILL' 1;">warning</span>
+</div>
+<div>
+<h3 class="text-title-sm font-title-sm text-on-error-container">Critical Component Failure: Inverter Module B</h3>
+<p class="text-body-sm text-secondary">Detected 4 hours ago • Priority: <span class="text-error font-bold">URGENT</span></p>
+</div>
+</div>
+<div class="px-3 py-1 bg-error rounded-full text-[10px] font-bold text-on-error tracking-widest uppercase">CRITICAL</div>
+</div>
+<div class="p-6 grid grid-cols-2 gap-8">
+<div class="space-y-4">
+<div>
+<label class="text-label-caps text-on-surface-variant mb-1 block">STATION LOCATION</label>
+<p class="text-body-md font-medium text-primary">Terminal 4, North Sector - Brussels Central</p>
+<div class="mt-2 rounded-lg h-32 w-full overflow-hidden border border-outline-variant relative">
+<div class="absolute inset-0 bg-slate-200" data-location="Brussels, Belgium" style=""></div>
+<div class="absolute inset-0 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-4xl" style="font-variation-settings: 'FILL' 1;">location_on</span>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div>
+<label class="text-label-caps text-on-surface-variant mb-1 block">DEVICE ID</label>
+<p class="font-data-mono text-data-mono text-primary">EV-9921-X-BRU</p>
+</div>
+<div>
+<label class="text-label-caps text-on-surface-variant mb-1 block">LAST UPTIME</label>
+<p class="font-data-mono text-data-mono text-primary">98.42% (30d)</p>
+</div>
+</div>
+</div>
+<div class="space-y-4">
+<div>
+<label class="text-label-caps text-on-surface-variant mb-1 block">ERROR LOG SNIPPET</label>
+<div class="bg-primary-container p-3 rounded-lg font-data-mono text-data-mono text-on-primary-container border border-outline/30 h-44 overflow-y-auto custom-scrollbar">
+<p class="text-on-primary-container/50">[14:22:01] System boot complete</p>
+<p class="text-on-primary-container/50">[14:25:33] Charging session #8821 started</p>
+<p class="text-error font-bold">[15:02:11] ERR_INVERTER_OVERHEAT: Sensor 02-B reported 104°C</p>
+<p class="text-error">[15:02:12] EMERGENCY_SHUTDOWN_TRIGGERED</p>
+<p class="text-on-primary-container/50">[15:02:15] Notifying central operator...</p>
+<p class="text-on-primary-container/50">[15:02:20] Heartbeat: Status Offline</p>
+<p class="text-on-primary-container/50">[16:00:00] Auto-diagnostic retry 1: FAILED</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- FAULT TIMELINE -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-6">
+<h3 class="text-title-sm font-title-sm text-primary mb-6">Incident Timeline</h3>
+<div class="relative space-y-8 before:content-[''] before:absolute before:left-[11px] before:top-2 before:bottom-2 before:w-[2px] before:bg-outline-variant">
+<!-- Timeline Item 1 -->
+<div class="relative pl-10">
+<div class="absolute left-0 top-1 w-6 h-6 rounded-full bg-error-container flex items-center justify-center ring-4 ring-surface-container-lowest">
+<span class="material-symbols-outlined text-error text-[16px] font-bold">bolt</span>
+</div>
+<div class="flex justify-between items-start">
+<div>
+<h4 class="text-body-md font-bold text-primary">Initial Fault Detection</h4>
+<p class="text-body-sm text-secondary mt-1">Automatic alert generated by CloudWatch Sentinel. Voltage drop detected in Terminal 2.</p>
+</div>
+<span class="text-data-mono text-secondary">Today, 15:02</span>
+</div>
+</div>
+<!-- Timeline Item 2 -->
+<div class="relative pl-10">
+<div class="absolute left-0 top-1 w-6 h-6 rounded-full bg-secondary-fixed flex items-center justify-center ring-4 ring-surface-container-lowest">
+<span class="material-symbols-outlined text-secondary text-[16px]">visibility</span>
+</div>
+<div class="flex justify-between items-start">
+<div>
+<h4 class="text-body-md font-bold text-primary">Assigned to Field Ops</h4>
+<p class="text-body-sm text-secondary mt-1">Ticket #82291 assigned to Technician Marcus V. (Senior Electrician).</p>
+</div>
+<span class="text-data-mono text-secondary">Today, 15:15</span>
+</div>
+</div>
+<!-- Timeline Item 3 -->
+<div class="relative pl-10">
+<div class="absolute left-0 top-1 w-6 h-6 rounded-full bg-surface-container flex items-center justify-center ring-4 ring-surface-container-lowest border border-outline">
+<span class="material-symbols-outlined text-secondary text-[16px]">edit_note</span>
+</div>
+<div class="flex justify-between items-start">
+<div>
+<h4 class="text-body-md font-bold text-primary">Diagnostic Note Added</h4>
+<p class="text-body-sm text-secondary mt-1 italic">"Remote visual confirmation shows structural integrity is fine, internal modules likely fried."</p>
+</div>
+<span class="text-data-mono text-secondary">Today, 15:45</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- RIGHT COLUMN: Scheduler & Notes (4 Cols) -->
+<div class="col-span-12 lg:col-span-4 space-y-6">
+<!-- SCHEDULE MAINTENANCE TOOL -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl shadow-sm overflow-hidden">
+<div class="p-5 border-b border-outline-variant bg-surface-bright">
+<h3 class="text-title-sm font-title-sm text-primary flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">calendar_month</span>
+                            Schedule Maintenance
+                        </h3>
+</div>
+<form class="p-6 space-y-5">
+<div class="space-y-1">
+<label class="text-label-caps text-on-surface-variant">MAINTENANCE TYPE</label>
+<select class="w-full rounded-lg border-outline-variant focus:border-primary focus:ring-primary/20 text-body-md">
+<option>Emergency Repair (Level 1)</option>
+<option>Routine Inspection</option>
+<option>Hardware Replacement</option>
+<option>Firmware Patch</option>
+</select>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div class="space-y-1">
+<label class="text-label-caps text-on-surface-variant">START TIME</label>
+<input class="w-full rounded-lg border-outline-variant focus:border-primary focus:ring-primary/20 text-body-sm" type="datetime-local"/>
+</div>
+<div class="space-y-1">
+<label class="text-label-caps text-on-surface-variant">END TIME</label>
+<input class="w-full rounded-lg border-outline-variant focus:border-primary focus:ring-primary/20 text-body-sm" type="datetime-local"/>
+</div>
+</div>
+<div class="space-y-1">
+<label class="text-label-caps text-on-surface-variant">TECHNICIAN ASSIGNMENT</label>
+<div class="flex items-center p-3 border border-outline-variant rounded-lg gap-3 hover:border-primary transition-all cursor-pointer">
+<div class="w-8 h-8 rounded-full bg-secondary-fixed flex items-center justify-center text-primary font-bold text-xs">MV</div>
+<div class="flex-1">
+<p class="text-body-sm font-bold">Marcus Vancore</p>
+<p class="text-[11px] text-secondary">Senior Field Ops • 4.9★</p>
+</div>
+<span class="material-symbols-outlined text-secondary">expand_more</span>
+</div>
+</div>
+<button class="w-full bg-primary text-on-primary py-3 rounded-lg font-title-sm flex items-center justify-center gap-2 hover:opacity-90 transition-all shadow-md active:scale-[0.98]" type="submit">
+                            Confirm Schedule
+                        </button>
+</form>
+</div>
+<!-- INTERNAL NOTES LOG -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl shadow-sm h-[500px] flex flex-col overflow-hidden">
+<div class="p-5 border-b border-outline-variant bg-surface-bright flex justify-between items-center">
+<h3 class="text-title-sm font-title-sm text-primary flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">forum</span>
+                            Technician Log
+                        </h3>
+<span class="px-2 py-0.5 bg-surface-container-high rounded text-[10px] font-bold text-secondary uppercase">Internal Only</span>
+</div>
+<!-- Notes Content -->
+<div class="flex-1 overflow-y-auto p-5 space-y-6 custom-scrollbar">
+<!-- Message Received -->
+<div class="space-y-1">
+<div class="flex items-center gap-2 mb-1">
+<span class="text-body-sm font-bold">System Admin</span>
+<span class="text-[10px] text-secondary">15:05</span>
+</div>
+<div class="bg-surface-container-low p-3 rounded-tr-xl rounded-b-xl max-w-[90%]">
+<p class="text-body-sm">Initial fault report verified. Overheat issue confirmed. Station suppressed from customer view.</p>
+</div>
+</div>
+<!-- Message Sent (Technician) -->
+<div class="space-y-1 flex flex-col items-end">
+<div class="flex items-center gap-2 mb-1">
+<span class="text-[10px] text-secondary">15:50</span>
+<span class="text-body-sm font-bold">Marcus Vancore</span>
+</div>
+<div class="bg-primary text-on-primary p-3 rounded-tl-xl rounded-b-xl max-w-[90%]">
+<p class="text-body-sm">Checking inventory for Model X Inverters. We might have a spare in the regional hub. Will update once I arrive at site.</p>
+</div>
+</div>
+<!-- New Entry Input -->
+<div class="mt-4 pt-4 border-t border-outline-variant/30 italic text-body-sm text-secondary text-center">
+                            Awaiting field arrival confirmation...
+                        </div>
+</div>
+<!-- Input Footer -->
+<div class="p-4 border-t border-outline-variant bg-surface-container-low">
+<div class="flex items-center gap-2 bg-white rounded-full border border-outline-variant px-4 py-2">
+<input class="flex-1 border-none focus:ring-0 text-body-sm bg-transparent" placeholder="Type a note..." type="text"/>
+<button class="material-symbols-outlined text-primary hover:scale-110 transition-transform">send</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- FLOATING ACTION BUTTON (Suppressed on details page per logic, but adding a "Quick Help" for technician support) -->
+<div class="fixed bottom-6 right-6 flex flex-col gap-3">
+<button class="w-14 h-14 bg-surface-container-lowest border border-outline-variant rounded-full shadow-lg flex items-center justify-center text-primary hover:bg-surface-bright transition-all group active:scale-90">
+<span class="material-symbols-outlined text-3xl">help_outline</span>
+<span class="absolute right-full mr-4 bg-primary text-on-primary px-3 py-1 rounded text-sm opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">Technician Guide</span>
+</button>
+</div>
+<!-- SIMPLE MICRO-INTERACTION SCRIPT -->
+<script>
+        // Simple ripple effect for primary buttons
+        document.querySelectorAll('.bg-primary').forEach(button => {
+            button.addEventListener('mousedown', function(e) {
+                this.classList.add('opacity-80');
+                setTimeout(() => this.classList.remove('opacity-80'), 200);
+            });
+        });
+
+        // Search highlight interaction
+        const searchInput = document.querySelector('input[type="text"]');
+        searchInput.addEventListener('focus', () => {
+            searchInput.parentElement.classList.add('ring-2', 'ring-primary/20');
+        });
+        searchInput.addEventListener('blur', () => {
+            searchInput.parentElement.classList.remove('ring-2', 'ring-primary/20');
+        });
+    </script>
+</body></html>

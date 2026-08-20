@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Chargefinder Admin - Command Deck</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&amp;family=JetBrains+Mono:wght@100..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary-fixed": "#c9e6ff",
+                        "on-primary-fixed-variant": "#5a00c6",
+                        "primary-fixed-dim": "#d2bbff",
+                        "surface-dim": "#0b1326",
+                        "on-background": "#dae2fd",
+                        "on-secondary": "#00344d",
+                        "on-tertiary-fixed": "#002113",
+                        "error-container": "#93000a",
+                        "surface-container-high": "#222a3d",
+                        "surface-variant": "#2d3449",
+                        "on-error-container": "#ffdad6",
+                        "primary-fixed": "#eaddff",
+                        "surface-container-low": "#131b2e",
+                        "inverse-primary": "#732ee4",
+                        "tertiary": "#4edea3",
+                        "surface-tint": "#d2bbff",
+                        "on-error": "#690005",
+                        "outline-variant": "#4a4455",
+                        "error": "#ffb4ab",
+                        "on-primary-fixed": "#25005a",
+                        "on-tertiary": "#003824",
+                        "on-primary": "#3f008e",
+                        "on-secondary-fixed-variant": "#004c6e",
+                        "tertiary-fixed": "#6ffbbe",
+                        "on-tertiary-container": "#76ffc2",
+                        "surface-container": "#171f33",
+                        "secondary-fixed-dim": "#89ceff",
+                        "on-tertiary-fixed-variant": "#005236",
+                        "primary": "#d2bbff",
+                        "on-secondary-container": "#00344e",
+                        "tertiary-fixed-dim": "#4edea3",
+                        "on-surface": "#dae2fd",
+                        "background": "#0b1326",
+                        "surface": "#0b1326",
+                        "secondary": "#89ceff",
+                        "outline": "#958da1",
+                        "on-surface-variant": "#ccc3d8",
+                        "secondary-container": "#00a2e6",
+                        "surface-container-highest": "#2d3449",
+                        "surface-bright": "#31394d",
+                        "surface-container-lowest": "#060e20",
+                        "on-secondary-fixed": "#001e2f",
+                        "on-primary-container": "#ede0ff",
+                        "tertiary-container": "#007650",
+                        "inverse-on-surface": "#283044",
+                        "primary-container": "#7c3aed",
+                        "inverse-surface": "#dae2fd"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "unit": "4px",
+                        "stack-lg": "32px",
+                        "container-padding": "24px",
+                        "stack-sm": "8px",
+                        "gutter": "16px",
+                        "stack-md": "16px",
+                        "margin-page": "32px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Geist"],
+                        "body-lg": ["JetBrains Mono"],
+                        "body-sm": ["JetBrains Mono"],
+                        "headline-md-mobile": ["Geist"],
+                        "display-lg": ["Geist"],
+                        "headline-sm": ["Geist"],
+                        "body-md": ["JetBrains Mono"],
+                        "label-caps": ["JetBrains Mono"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "body-sm": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+                        "headline-md-mobile": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "display-lg": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "headline-sm": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
+                        "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "label-caps": ["11px", {"lineHeight": "16px", "letterSpacing": "0.08em", "fontWeight": "700"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            background-color: #020617; /* Deep Space Base */
+            color: #dae2fd;
+            -webkit-font-smoothing: antialiased;
+        }
+        .command-glow {
+            box-shadow: inset 0 0 10px rgba(210, 187, 255, 0.1);
+        }
+        .pulse-critical {
+            animation: pulse-red 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        @keyframes pulse-red {
+            0%, 100% { opacity: 1; }
+            50% { opacity: .5; }
+        }
+        .chart-grid {
+            background-image: linear-gradient(#334155 1px, transparent 1px), linear-gradient(90deg, #334155 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-body-md text-body-md overflow-x-hidden pb-20">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-surface-container-low border-b border-outline-variant flex items-center justify-between px-gutter h-14 w-full">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">bolt</span>
+<h1 class="font-headline-md text-headline-md font-bold text-primary tracking-tight">Chargefinder Admin</h1>
+</div>
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-on-surface-variant hover:bg-surface-container-high transition-colors p-1 rounded cursor-pointer active:scale-95 duration-100">search</span>
+<span class="material-symbols-outlined text-on-surface-variant hover:bg-surface-container-high transition-colors p-1 rounded cursor-pointer active:scale-95 duration-100">account_circle</span>
+</div>
+</header>
+<main class="mt-20 px-container-padding space-y-gutter">
+<!-- Welcome Segment -->
+<div class="flex flex-col gap-1">
+<span class="font-label-caps text-label-caps text-secondary">SYS_STATUS: OPERATIONAL</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Command Dashboard</h2>
+</div>
+<!-- High Level Metrics Bento Grid -->
+<div class="grid grid-cols-2 gap-stack-sm">
+<!-- Revenue Card -->
+<div class="bg-surface-container p-stack-md border border-outline-variant rounded-lg relative overflow-hidden command-glow">
+<div class="absolute top-0 right-0 p-1 opacity-20">
+<span class="material-symbols-outlined text-primary">payments</span>
+</div>
+<p class="font-label-caps text-label-caps text-on-surface-variant">TOTAL REVENUE</p>
+<h3 class="font-headline-md-mobile text-headline-md-mobile text-on-surface mt-1">$42.5k</h3>
+<div class="flex items-center gap-1 mt-2">
+<span class="material-symbols-outlined text-tertiary text-[14px]">trending_up</span>
+<span class="font-body-sm text-body-sm text-tertiary">+12%</span>
+</div>
+</div>
+<!-- Active Stations -->
+<div class="bg-surface-container p-stack-md border border-outline-variant rounded-lg relative overflow-hidden command-glow">
+<div class="absolute top-0 right-0 p-1 opacity-20">
+<span class="material-symbols-outlined text-secondary">ev_station</span>
+</div>
+<p class="font-label-caps text-label-caps text-on-surface-variant">ACTIVE NODES</p>
+<h3 class="font-headline-md-mobile text-headline-md-mobile text-on-surface mt-1">156</h3>
+<div class="flex items-center gap-1 mt-2">
+<div class="w-2 h-2 rounded-full bg-tertiary animate-pulse"></div>
+<span class="font-body-sm text-body-sm text-tertiary-fixed-dim">All Live</span>
+</div>
+</div>
+<!-- Energy Dispensed -->
+<div class="bg-surface-container p-stack-md border border-outline-variant rounded-lg col-span-2 relative overflow-hidden">
+<div class="flex justify-between items-end">
+<div>
+<p class="font-label-caps text-label-caps text-on-surface-variant">ENERGY DISPENSED (TOTAL)</p>
+<h3 class="font-headline-md text-headline-md text-on-surface mt-1">850 <span class="text-secondary font-body-sm">MWh</span></h3>
+</div>
+<div class="text-right">
+<p class="font-label-caps text-label-caps text-tertiary">PEAK LOAD</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">42.2 MW / HR</p>
+</div>
+</div>
+<div class="mt-4 h-1 bg-surface-variant rounded-full overflow-hidden">
+<div class="h-full bg-primary" style="width: 74%"></div>
+</div>
+</div>
+</div>
+<!-- Revenue Over Time (Visual Representation) -->
+<section class="bg-surface-container border border-outline-variant rounded-lg p-stack-md overflow-hidden">
+<div class="flex justify-between items-center mb-6">
+<h4 class="font-label-caps text-label-caps text-on-surface">REVENUE_TIME_SERIES</h4>
+<div class="flex gap-2">
+<span class="px-2 py-0.5 rounded border border-outline text-[9px] font-label-caps text-on-surface-variant">7D</span>
+<span class="px-2 py-0.5 rounded bg-primary text-on-primary text-[9px] font-label-caps">30D</span>
+</div>
+</div>
+<div class="relative h-40 w-full chart-grid opacity-30 rounded border border-outline-variant flex items-end px-2 gap-1">
+<!-- Simple CSS Bar Visualizer as Line Chart Mockup -->
+<div class="bg-primary-container/40 border-t border-primary flex-1 h-[40%]"></div>
+<div class="bg-primary-container/40 border-t border-primary flex-1 h-[55%]"></div>
+<div class="bg-primary-container/40 border-t border-primary flex-1 h-[45%]"></div>
+<div class="bg-primary-container/40 border-t border-primary flex-1 h-[70%]"></div>
+<div class="bg-primary-container/40 border-t border-primary flex-1 h-[85%]"></div>
+<div class="bg-primary-container/40 border-t border-primary flex-1 h-[65%]"></div>
+<div class="bg-primary-container/40 border-t border-primary flex-1 h-[90%]"></div>
+<div class="bg-primary-container/40 border-t border-primary flex-1 h-[75%]"></div>
+<div class="bg-primary-container/40 border-t border-primary flex-1 h-[95%]"></div>
+<div class="bg-primary-container/40 border-t border-primary flex-1 h-[80%]"></div>
+</div>
+<div class="flex justify-between mt-2 font-label-caps text-[9px] text-outline px-1">
+<span>OCT 01</span>
+<span>OCT 15</span>
+<span>OCT 30</span>
+</div>
+</section>
+<!-- Top Performing Stations List -->
+<section class="bg-surface-container border border-outline-variant rounded-lg overflow-hidden">
+<div class="p-stack-md border-b border-outline-variant bg-surface-container-high/50 flex justify-between items-center">
+<h4 class="font-label-caps text-label-caps text-on-surface">TOP_PERFORMING_STATIONS</h4>
+<span class="material-symbols-outlined text-secondary text-sm">settings_ethernet</span>
+</div>
+<div class="divide-y divide-outline-variant">
+<!-- Station 1 -->
+<div class="p-stack-md flex justify-between items-center hover:bg-surface-variant transition-colors">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-surface-dim border border-outline flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-[18px]">bolt</span>
+</div>
+<div>
+<p class="font-body-md text-on-surface font-bold">Node_Alpha_7</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">San Francisco, CA</p>
+</div>
+</div>
+<div class="text-right">
+<p class="font-body-sm text-on-surface font-bold">$1,240.50</p>
+<p class="text-[10px] font-label-caps text-tertiary">98.2% Uptime</p>
+</div>
+</div>
+<!-- Station 2 -->
+<div class="p-stack-md flex justify-between items-center hover:bg-surface-variant transition-colors">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-surface-dim border border-outline flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-[18px]">bolt</span>
+</div>
+<div>
+<p class="font-body-md text-on-surface font-bold">Node_Bravo_2</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Austin, TX</p>
+</div>
+</div>
+<div class="text-right">
+<p class="font-body-sm text-on-surface font-bold">$1,112.20</p>
+<p class="text-[10px] font-label-caps text-tertiary">97.8% Uptime</p>
+</div>
+</div>
+<!-- Station 3 -->
+<div class="p-stack-md flex justify-between items-center hover:bg-surface-variant transition-colors">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-surface-dim border border-outline flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-[18px]">bolt</span>
+</div>
+<div>
+<p class="font-body-md text-on-surface font-bold">Node_Delta_9</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Seattle, WA</p>
+</div>
+</div>
+<div class="text-right">
+<p class="font-body-sm text-on-surface font-bold">$958.00</p>
+<p class="text-[10px] font-label-caps text-error">Low Power</p>
+</div>
+</div>
+</div>
+<button class="w-full py-stack-md text-center bg-surface-container-low hover:bg-surface-variant transition-colors border-t border-outline-variant font-label-caps text-on-primary-container tracking-widest text-[10px]">
+                VIEW_ALL_STATIONS_DATA
+            </button>
+</section>
+<!-- Command Prompt Section (Theme Element) -->
+<section class="bg-black p-stack-md border border-primary/20 rounded-lg font-body-sm">
+<div class="flex items-center gap-2 mb-2 text-primary">
+<span class="material-symbols-outlined text-sm">terminal</span>
+<span class="font-label-caps text-[10px]">CMD_TERMINAL</span>
+</div>
+<div class="text-on-surface-variant leading-relaxed">
+<p>&gt; fetch system_logs --last 5m</p>
+<p class="text-tertiary">[SUCCESS] node_connection_stable</p>
+<p class="text-secondary">[INFO] payment_gateway_rebalanced</p>
+<p class="animate-pulse">&gt; _</p>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 w-full z-50 bg-surface-container-lowest border-t border-outline-variant flex justify-around items-center h-16 w-full px-container-padding">
+<div class="flex flex-col items-center justify-center text-secondary font-bold">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">dashboard</span>
+<span class="font-label-caps text-label-caps">Dashboard</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant hover:text-secondary-fixed-dim active:opacity-80 transition-opacity">
+<span class="material-symbols-outlined">ev_station</span>
+<span class="font-label-caps text-label-caps">Stations</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant hover:text-secondary-fixed-dim active:opacity-80 transition-opacity">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-label-caps text-label-caps">Analytics</span>
+</div>
+</nav>
+<!-- Floating Action Button (FAB) suppressed on dashboard as per instructions for focused screens, 
+         but technically the prompt asks for features of an Admin Dashboard. 
+         Keeping UI lean and tactical as per Cyber-Minimalist style. -->
+<script>
+        // Micro-interactions for terminal
+        const lines = [
+            "> verifying_transaction_integrity...",
+            "> loading_realtime_metrics...",
+            "> encrypting_admin_session..."
+        ];
+        let currentLine = 0;
+        const terminalDiv = document.querySelector('section.bg-black .text-on-surface-variant');
+        
+        setInterval(() => {
+            if (currentLine < lines.length) {
+                const p = document.createElement('p');
+                p.textContent = lines[currentLine];
+                p.className = 'text-primary/60';
+                terminalDiv.insertBefore(p, terminalDiv.lastElementChild);
+                currentLine++;
+            }
+        }, 3000);
+    </script>
+</body></html>

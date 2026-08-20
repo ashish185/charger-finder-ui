@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>VoltOps Pro - Station Management</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "primary-container": "#1e293b",
+                    "on-primary-fixed": "#111c2d",
+                    "secondary": "#515f74",
+                    "surface-container": "#eceef0",
+                    "on-primary-container": "#8590a6",
+                    "secondary-fixed": "#d5e3fd",
+                    "surface-tint": "#545f73",
+                    "surface-bright": "#f7f9fb",
+                    "inverse-primary": "#bcc7de",
+                    "tertiary-container": "#35260c",
+                    "on-tertiary-container": "#a38c6a",
+                    "primary-fixed": "#d8e3fb",
+                    "error-container": "#ffdad6",
+                    "inverse-surface": "#2d3133",
+                    "surface-container-high": "#e6e8ea",
+                    "on-tertiary-fixed": "#271902",
+                    "surface-container-highest": "#e0e3e5",
+                    "on-background": "#191c1e",
+                    "secondary-fixed-dim": "#b9c7e0",
+                    "surface": "#f7f9fb",
+                    "error": "#ba1a1a",
+                    "on-secondary-container": "#57657b",
+                    "on-primary-fixed-variant": "#3c475a",
+                    "outline-variant": "#c5c6cd",
+                    "on-tertiary-fixed-variant": "#564427",
+                    "on-error-container": "#93000a",
+                    "tertiary": "#1e1200",
+                    "on-secondary-fixed": "#0d1c2f",
+                    "primary-fixed-dim": "#bcc7de",
+                    "background": "#f7f9fb",
+                    "tertiary-fixed": "#fadfb8",
+                    "surface-container-lowest": "#ffffff",
+                    "on-primary": "#ffffff",
+                    "on-secondary": "#ffffff",
+                    "tertiary-fixed-dim": "#ddc39d",
+                    "on-tertiary": "#ffffff",
+                    "on-surface-variant": "#45474c",
+                    "surface-dim": "#d8dadc",
+                    "secondary-container": "#d5e3fd",
+                    "surface-variant": "#e0e3e5",
+                    "outline": "#75777d",
+                    "surface-container-low": "#f2f4f6",
+                    "primary": "#091426",
+                    "on-surface": "#191c1e",
+                    "on-secondary-fixed-variant": "#3a485c",
+                    "on-error": "#ffffff",
+                    "inverse-on-surface": "#eff1f3"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "table-cell-padding": "12px 16px",
+                    "sidebar-width": "260px",
+                    "container-margin": "32px",
+                    "gutter": "24px",
+                    "card-padding": "20px"
+            },
+            "fontFamily": {
+                    "body-md": ["Inter"],
+                    "data-mono": ["Inter"],
+                    "label-caps": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "title-sm": ["Inter"],
+                    "display-lg": ["Inter"],
+                    "body-sm": ["Inter"]
+            },
+            "fontSize": {
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "data-mono": ["13px", {"lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500"}],
+                    "label-caps": ["11px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "title-sm": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
+                    "display-lg": ["36px", {"lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-sm": ["13px", {"lineHeight": "18px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        vertical-align: middle;
+      }
+      body {
+        font-family: 'Inter', sans-serif;
+        background-color: #f8fafc;
+      }
+      .custom-scrollbar::-webkit-scrollbar {
+        width: 6px;
+      }
+      .custom-scrollbar::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      .custom-scrollbar::-webkit-scrollbar-thumb {
+        background: #cbd5e1;
+        border-radius: 10px;
+      }
+      .status-badge-live {
+        background-color: #dcfce7;
+        color: #166534;
+        padding: 2px 8px;
+        border-radius: 4px;
+        font-weight: 600;
+        font-size: 11px;
+        text-transform: uppercase;
+      }
+      .status-badge-offline {
+        background-color: #fee2e2;
+        color: #991b1b;
+        padding: 2px 8px;
+        border-radius: 4px;
+        font-weight: 600;
+        font-size: 11px;
+        text-transform: uppercase;
+      }
+    </style>
+</head>
+<body class="text-on-background">
+<!-- Shell: SideNavBar -->
+<aside class="fixed left-0 top-0 h-full w-[260px] z-50 flex flex-col bg-primary dark:bg-on-primary-fixed border-r border-outline-variant dark:border-outline">
+<div class="p-6">
+<h1 class="text-headline-md font-headline-md text-surface-lowest tracking-tight">VoltOps Pro</h1>
+<p class="text-body-sm font-body-sm text-on-primary-container/60 mt-1">Charge Point Operator</p>
+</div>
+<nav class="flex-1 mt-4 space-y-1">
+<!-- Dashboard -->
+<a class="flex items-center px-4 py-3 mx-2 text-on-primary-container/70 hover:text-on-primary-container hover:bg-primary-container/50 transition-colors rounded-lg group" href="#">
+<span class="material-symbols-outlined mr-3">dashboard</span>
+<span class="text-body-md font-body-md">Dashboard</span>
+</a>
+<!-- Stations (Active) -->
+<a class="flex items-center px-4 py-3 bg-primary-container text-on-primary-container rounded-lg mx-2 group" href="#">
+<span class="material-symbols-outlined mr-3">ev_station</span>
+<span class="text-body-md font-body-md">Stations</span>
+</a>
+<!-- Bookings -->
+<a class="flex items-center px-4 py-3 mx-2 text-on-primary-container/70 hover:text-on-primary-container hover:bg-primary-container/50 transition-colors rounded-lg group" href="#">
+<span class="material-symbols-outlined mr-3">event_available</span>
+<span class="text-body-md font-body-md">Bookings</span>
+</a>
+<!-- Discrepancies -->
+<a class="flex items-center px-4 py-3 mx-2 text-on-primary-container/70 hover:text-on-primary-container hover:bg-primary-container/50 transition-colors rounded-lg group" href="#">
+<span class="material-symbols-outlined mr-3">report_problem</span>
+<span class="text-body-md font-body-md">Discrepancies</span>
+</a>
+<!-- Support -->
+<a class="flex items-center px-4 py-3 mx-2 text-on-primary-container/70 hover:text-on-primary-container hover:bg-primary-container/50 transition-colors rounded-lg group" href="#">
+<span class="material-symbols-outlined mr-3">support_agent</span>
+<span class="text-body-md font-body-md">Support</span>
+</a>
+</nav>
+<div class="p-4 border-t border-on-primary-container/10">
+<button class="w-full bg-primary-fixed text-primary px-4 py-3 rounded-lg font-semibold flex items-center justify-center gap-2 active:scale-95 duration-150">
+<span class="material-symbols-outlined">add</span>
+<span>Add Station</span>
+</button>
+</div>
+</aside>
+<!-- Shell: TopNavBar -->
+<header class="fixed top-0 right-0 left-[260px] h-16 flex items-center justify-between px-gutter z-40 bg-surface-lowest dark:bg-inverse-surface border-b border-outline-variant dark:border-outline">
+<div class="flex items-center gap-4">
+<nav class="flex items-center text-body-sm font-body-sm text-secondary">
+<span>Infrastructure</span>
+<span class="material-symbols-outlined mx-1 text-[16px]">chevron_right</span>
+<span class="text-primary font-bold">Stations</span>
+</nav>
+<div class="h-6 w-[1px] bg-outline-variant mx-2"></div>
+<div class="relative w-64">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px]">search</span>
+<input class="w-full bg-surface-container-low border-none rounded-lg pl-10 pr-4 py-1.5 text-body-sm focus:ring-1 focus:ring-primary" placeholder="Search UUID or Name..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 hover:bg-surface-container-low rounded-full relative transition-all opacity-80 active:opacity-100">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-error rounded-full"></span>
+</button>
+<button class="p-2 hover:bg-surface-container-low rounded-full transition-all opacity-80 active:opacity-100">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<div class="flex items-center gap-3 ml-2 pl-4 border-l border-outline-variant">
+<div class="text-right">
+<p class="text-body-sm font-bold text-on-surface">Alex Rivera</p>
+<p class="text-[10px] uppercase font-bold text-secondary">Super Admin</p>
+</div>
+<div class="w-8 h-8 rounded-full bg-primary-fixed flex items-center justify-center text-primary font-bold overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A professional headshot of a Hispanic male in his late 30s with short dark hair and a confident expression, wearing a navy blue blazer over a white shirt. The background is a clean, minimalist office environment with soft lighting that aligns with a high-end corporate management portal aesthetic. The image is crisp and professional." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCXH0gcEV7SDUZtzkQpH-2BnTI0prJ0xImRBqXJclhohQtwaaMF2ski2n2FAyKqMhRfYI2JsbSoRxU9gHsYxNu0JihxdzFQF3AAw5RzCQwVp-VMGIMCR9uwr_Hk_4tfGWfYhwVwhQXVL-z-SylHooPwdh_eanbe3TeBVMAbDkynyVMrGarTPLVdfr9DxGdDwPJdJOR0Rvys2d8VvmCZZKTJeSEfrscYKl53e4148ovUpXHA_2NSPDvz"/>
+</div>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="ml-[260px] pt-16 p-gutter min-h-screen">
+<!-- Content Header -->
+<div class="flex items-end justify-between mb-8">
+<div>
+<h2 class="text-display-lg font-display-lg text-primary">Station Network</h2>
+<p class="text-body-md font-body-md text-secondary mt-1">Real-time oversight of 1,248 active charging hubs.</p>
+</div>
+<div class="flex gap-3">
+<button class="px-4 py-2 border border-outline-variant rounded-lg bg-surface-lowest text-body-md font-semibold flex items-center gap-2 hover:bg-surface-container-low transition-all">
+<span class="material-symbols-outlined">download</span>
+                    Export CSV
+                </button>
+<button class="px-4 py-2 bg-primary text-on-primary rounded-lg text-body-md font-semibold flex items-center gap-2 active:scale-95 transition-transform">
+<span class="material-symbols-outlined">add</span>
+                    + Add New Station
+                </button>
+</div>
+</div>
+<!-- Metric Summaries -->
+<div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+<div class="bg-surface-lowest border border-outline-variant p-card-padding rounded-xl">
+<div class="flex justify-between items-start mb-2">
+<span class="text-secondary font-label-caps text-label-caps">AVERAGE UPTIME</span>
+<span class="material-symbols-outlined text-success text-[20px]" style="color: #22c55e;">trending_up</span>
+</div>
+<p class="text-headline-md font-headline-md text-on-surface">99.82%</p>
+<p class="text-[11px] text-secondary mt-1">+0.04% from last month</p>
+</div>
+<div class="bg-surface-lowest border border-outline-variant p-card-padding rounded-xl">
+<div class="flex justify-between items-start mb-2">
+<span class="text-secondary font-label-caps text-label-caps">ACTIVE SESSIONS</span>
+<span class="material-symbols-outlined text-primary text-[20px]">bolt</span>
+</div>
+<p class="text-headline-md font-headline-md text-on-surface">412</p>
+<p class="text-[11px] text-secondary mt-1">12,401 kWh currently drawing</p>
+</div>
+<div class="bg-surface-lowest border border-outline-variant p-card-padding rounded-xl">
+<div class="flex justify-between items-start mb-2">
+<span class="text-secondary font-label-caps text-label-caps">PENDING ALERTS</span>
+<span class="material-symbols-outlined text-error text-[20px]">warning</span>
+</div>
+<p class="text-headline-md font-headline-md text-error">3</p>
+<p class="text-[11px] text-secondary mt-1">Requires immediate attention</p>
+</div>
+<div class="bg-surface-lowest border border-outline-variant p-card-padding rounded-xl border-l-4 border-l-primary">
+<div class="flex justify-between items-start mb-2">
+<span class="text-secondary font-label-caps text-label-caps">TRUST SCORE</span>
+<span class="material-symbols-outlined text-primary text-[20px]">verified</span>
+</div>
+<p class="text-headline-md font-headline-md text-on-surface">94/100</p>
+<div class="w-full bg-surface-container mt-2 h-1.5 rounded-full">
+<div class="bg-primary h-full rounded-full w-[94%]"></div>
+</div>
+</div>
+</div>
+<!-- Filter Bar -->
+<div class="bg-surface-lowest border border-outline-variant rounded-xl p-4 mb-6 flex flex-wrap items-center gap-4">
+<div class="flex items-center gap-2">
+<span class="text-body-sm font-bold text-secondary">Filter By:</span>
+</div>
+<div class="relative">
+<select class="appearance-none bg-surface-container-low border border-outline-variant rounded-lg px-4 py-2 text-body-sm font-medium focus:ring-1 focus:ring-primary min-w-[140px]">
+<option>Status: All</option>
+<option>Status: Live</option>
+<option>Status: Maintenance</option>
+<option>Status: Offline</option>
+</select>
+<span class="material-symbols-outlined absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none text-secondary">expand_more</span>
+</div>
+<div class="relative">
+<select class="appearance-none bg-surface-container-low border border-outline-variant rounded-lg px-4 py-2 text-body-sm font-medium focus:ring-1 focus:ring-primary min-w-[140px]">
+<option>City: All</option>
+<option>San Francisco</option>
+<option>Los Angeles</option>
+<option>New York</option>
+<option>Seattle</option>
+</select>
+<span class="material-symbols-outlined absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none text-secondary">expand_more</span>
+</div>
+<div class="relative">
+<select class="appearance-none bg-surface-container-low border border-outline-variant rounded-lg px-4 py-2 text-body-sm font-medium focus:ring-1 focus:ring-primary min-w-[140px]">
+<option>Freshness: Any</option>
+<option>Last 1 hr</option>
+<option>Last 24 hrs</option>
+<option>Over 1 week</option>
+</select>
+<span class="material-symbols-outlined absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none text-secondary">expand_more</span>
+</div>
+<div class="ml-auto flex gap-2">
+<button class="p-2 text-secondary hover:bg-surface-container-low rounded-lg transition-all" title="Clear Filters">
+<span class="material-symbols-outlined">filter_alt_off</span>
+</button>
+<button class="p-2 text-secondary hover:bg-surface-container-low rounded-lg transition-all" title="Grid View">
+<span class="material-symbols-outlined">grid_view</span>
+</button>
+<button class="p-2 bg-surface-container-high text-primary rounded-lg transition-all" title="Table View">
+<span class="material-symbols-outlined">format_list_bulleted</span>
+</button>
+</div>
+</div>
+<!-- Stations Table -->
+<div class="bg-surface-lowest border border-outline-variant rounded-xl overflow-hidden">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low border-b border-outline-variant">
+<th class="p-table-cell-padding text-label-caps font-label-caps text-secondary">STATION NAME + ADDRESS</th>
+<th class="p-table-cell-padding text-label-caps font-label-caps text-secondary">LIVE STATUS</th>
+<th class="p-table-cell-padding text-label-caps font-label-caps text-secondary">LAST UPDATED</th>
+<th class="p-table-cell-padding text-label-caps font-label-caps text-secondary text-center">ACK.</th>
+<th class="p-table-cell-padding text-label-caps font-label-caps text-secondary text-right">ACTIONS</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant">
+<!-- Row 1 -->
+<tr class="hover:bg-surface-container-low/50 transition-colors group">
+<td class="p-table-cell-padding">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded bg-secondary-fixed flex items-center justify-center text-on-secondary-container">
+<span class="material-symbols-outlined">ev_station</span>
+</div>
+<div>
+<p class="text-body-md font-bold text-on-surface">Mission Bay Hub #42</p>
+<p class="text-body-sm text-secondary">450 Terry Francois Blvd, San Francisco, CA</p>
+</div>
+</div>
+</td>
+<td class="p-table-cell-padding">
+<span class="status-badge-live">LIVE</span>
+</td>
+<td class="p-table-cell-padding">
+<p class="text-data-mono font-data-mono text-on-surface">2 mins ago</p>
+<p class="text-[10px] text-secondary">SYNC SUCCESSFUL</p>
+</td>
+<td class="p-table-cell-padding text-center">
+<span class="material-symbols-outlined text-[#22c55e]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</td>
+<td class="p-table-cell-padding text-right">
+<div class="flex items-center justify-end gap-1">
+<button class="p-2 hover:bg-surface-container-high rounded-lg text-secondary hover:text-primary transition-all">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+</button>
+<button class="p-2 hover:bg-surface-container-high rounded-lg text-secondary hover:text-primary transition-all">
+<span class="material-symbols-outlined text-[20px]">visibility</span>
+</button>
+<button class="p-2 hover:bg-surface-container-high rounded-lg text-secondary hover:text-primary transition-all">
+<span class="material-symbols-outlined text-[20px]">toggle_on</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-surface-container-low/50 transition-colors group">
+<td class="p-table-cell-padding">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded bg-secondary-fixed flex items-center justify-center text-on-secondary-container">
+<span class="material-symbols-outlined">ev_station</span>
+</div>
+<div>
+<p class="text-body-md font-bold text-on-surface">Westside Terminal A</p>
+<p class="text-body-sm text-secondary">10200 Santa Monica Blvd, Los Angeles, CA</p>
+</div>
+</div>
+</td>
+<td class="p-table-cell-padding">
+<span class="status-badge-live">LIVE</span>
+</td>
+<td class="p-table-cell-padding">
+<p class="text-data-mono font-data-mono text-on-surface">14 mins ago</p>
+<p class="text-[10px] text-secondary">SYNC SUCCESSFUL</p>
+</td>
+<td class="p-table-cell-padding text-center">
+<span class="material-symbols-outlined text-[#22c55e]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</td>
+<td class="p-table-cell-padding text-right">
+<div class="flex items-center justify-end gap-1">
+<button class="p-2 hover:bg-surface-container-high rounded-lg text-secondary hover:text-primary transition-all">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+</button>
+<button class="p-2 hover:bg-surface-container-high rounded-lg text-secondary hover:text-primary transition-all">
+<span class="material-symbols-outlined text-[20px]">visibility</span>
+</button>
+<button class="p-2 hover:bg-surface-container-high rounded-lg text-secondary hover:text-primary transition-all">
+<span class="material-symbols-outlined text-[20px]">toggle_on</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 3 (Error State) -->
+<tr class="hover:bg-surface-container-low/50 transition-colors group bg-error-container/20">
+<td class="p-table-cell-padding">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded bg-error-container flex items-center justify-center text-error">
+<span class="material-symbols-outlined">warning</span>
+</div>
+<div>
+<p class="text-body-md font-bold text-on-surface">Capitol Hill Plaza</p>
+<p class="text-body-sm text-secondary">1501 Broadway, Seattle, WA</p>
+</div>
+</div>
+</td>
+<td class="p-table-cell-padding">
+<span class="status-badge-offline">OFFLINE</span>
+</td>
+<td class="p-table-cell-padding">
+<p class="text-data-mono font-data-mono text-error">3 hours ago</p>
+<p class="text-[10px] text-error font-bold uppercase">COMMUNICATION LOST</p>
+</td>
+<td class="p-table-cell-padding text-center">
+<span class="material-symbols-outlined text-error" style="font-variation-settings: 'FILL' 1;">error</span>
+</td>
+<td class="p-table-cell-padding text-right">
+<div class="flex items-center justify-end gap-1">
+<button class="p-2 hover:bg-surface-container-high rounded-lg text-secondary hover:text-primary transition-all">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+</button>
+<button class="p-2 hover:bg-surface-container-high rounded-lg text-secondary hover:text-primary transition-all">
+<span class="material-symbols-outlined text-[20px]">visibility</span>
+</button>
+<button class="p-2 hover:bg-surface-container-high rounded-lg text-secondary hover:text-primary transition-all">
+<span class="material-symbols-outlined text-[20px]">toggle_off</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-surface-container-low/50 transition-colors group">
+<td class="p-table-cell-padding">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded bg-secondary-fixed flex items-center justify-center text-on-secondary-container">
+<span class="material-symbols-outlined">ev_station</span>
+</div>
+<div>
+<p class="text-body-md font-bold text-on-surface">Chelsea Market NW</p>
+<p class="text-body-sm text-secondary">75 9th Ave, New York, NY</p>
+</div>
+</div>
+</td>
+<td class="p-table-cell-padding">
+<span class="status-badge-live">LIVE</span>
+</td>
+<td class="p-table-cell-padding">
+<p class="text-data-mono font-data-mono text-on-surface">5 mins ago</p>
+<p class="text-[10px] text-secondary">SYNC SUCCESSFUL</p>
+</td>
+<td class="p-table-cell-padding text-center">
+<span class="material-symbols-outlined text-[#22c55e]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</td>
+<td class="p-table-cell-padding text-right">
+<div class="flex items-center justify-end gap-1">
+<button class="p-2 hover:bg-surface-container-high rounded-lg text-secondary hover:text-primary transition-all">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+</button>
+<button class="p-2 hover:bg-surface-container-high rounded-lg text-secondary hover:text-primary transition-all">
+<span class="material-symbols-outlined text-[20px]">visibility</span>
+</button>
+<button class="p-2 hover:bg-surface-container-high rounded-lg text-secondary hover:text-primary transition-all">
+<span class="material-symbols-outlined text-[20px]">toggle_on</span>
+</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<!-- Pagination -->
+<div class="p-4 bg-surface-container-low flex items-center justify-between border-t border-outline-variant">
+<p class="text-body-sm text-secondary">Showing <span class="font-bold text-on-surface">1-4</span> of <span class="font-bold text-on-surface">1,248</span> stations</p>
+<div class="flex gap-2">
+<button class="px-3 py-1.5 border border-outline-variant rounded-lg text-body-sm font-semibold opacity-50 cursor-not-allowed">Previous</button>
+<div class="flex items-center">
+<button class="w-8 h-8 rounded-lg bg-primary text-on-primary text-body-sm font-bold">1</button>
+<button class="w-8 h-8 rounded-lg hover:bg-surface-container-high text-body-sm">2</button>
+<button class="w-8 h-8 rounded-lg hover:bg-surface-container-high text-body-sm">3</button>
+<span class="mx-1 text-secondary">...</span>
+<button class="w-8 h-8 rounded-lg hover:bg-surface-container-high text-body-sm">312</button>
+</div>
+<button class="px-3 py-1.5 border border-outline-variant rounded-lg text-body-sm font-semibold hover:bg-surface-lowest transition-all">Next</button>
+</div>
+</div>
+</div>
+<!-- System Message -->
+<div class="mt-8 p-4 bg-tertiary-fixed/20 border border-tertiary-fixed rounded-xl flex items-center gap-4">
+<span class="material-symbols-outlined text-tertiary">info</span>
+<div>
+<p class="text-body-md font-bold text-tertiary">Infrastructure Maintenance Window</p>
+<p class="text-body-sm text-on-tertiary-fixed-variant">Scheduled database synchronization will occur at 02:00 UTC. Station reporting may experience a 30-second latency during this period.</p>
+</div>
+</div>
+</main>
+<!-- Map View Background Overlay (Visual Flare) -->
+<div class="fixed bottom-8 right-8 z-30">
+<button class="group relative flex items-center justify-center w-14 h-14 bg-primary text-on-primary rounded-full shadow-lg hover:w-40 transition-all duration-300 overflow-hidden">
+<span class="material-symbols-outlined absolute left-4">map</span>
+<span class="ml-8 opacity-0 group-hover:opacity-100 whitespace-nowrap font-semibold pr-4">Global Map View</span>
+</button>
+</div>
+<!-- Background Decoration -->
+<div class="fixed inset-0 pointer-events-none -z-10 opacity-30">
+<div class="w-full h-full" style="background-image: radial-gradient(#cbd5e1 1px, transparent 1px); background-size: 32px 32px;"></div>
+</div>
+<script>
+        // Micro-interactions and Status effects
+        document.querySelectorAll('button').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                const ripple = document.createElement('span');
+                ripple.classList.add('ripple');
+                this.appendChild(ripple);
+                setTimeout(() => ripple.remove(), 600);
+            });
+        });
+    </script>
+</body></html>
