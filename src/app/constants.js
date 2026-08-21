@@ -1,5 +1,5 @@
 
-export const authUrl = `${NEXT_PUBLIC_API_URL}/auth`;
+export const authUrl = `${process.env.NEXT_PUBLIC_API_URL}/auth`;
 const jsonHeaders = { "Content-Type": "application/json" };
 export const STATE = {
     LOADING: "loading",
