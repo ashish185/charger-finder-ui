@@ -1,7 +1,5 @@
-const API_URL = "http://localhost:5000";
-const API_VERSION = "v1";
-const baseUrl = `${API_URL}/api/${API_VERSION}`;
-export const authUrl = `${baseUrl}/auth`;
+
+export const authUrl = `${NEXT_PUBLIC_API_URL}/auth`;
 const jsonHeaders = { "Content-Type": "application/json" };
 export const STATE = {
     LOADING: "loading",
