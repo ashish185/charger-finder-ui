@@ -8,6 +8,7 @@ import {
 import { auth } from "../../../firebase"; // Adjust the import path as necessary
 import { authUrl } from "../../constants"
 import { getPostAuthRoute } from "@/utils/auth";
+import { useAuth } from "@/app/auth/provider";
 
 async function handleResponse(res, fallbackMessage) {
     const text = await res.text();
@@ -48,6 +49,7 @@ export default function PhoneLogin() {
     const [sendingOtp, setSendingOtp] = useState(false);
     const [verifyingOtp, setVerifyingOtp] = useState(false);
     const recaptchaVerifierRef = useRef(null);
+    const { setUser } = useAuth();
 
     const setupRecaptcha = () => {
         // reCAPTCHA must be set up once, tied to a DOM node
@@ -90,6 +92,9 @@ export default function PhoneLogin() {
             const idToken = await userCredential.user.getIdToken();
             // Send this token to your Express backend
             const { user } = await phoneLogin(idToken) ?? {};
+            if(user){
+                setUser(user);
+            }
             router.push(getPostAuthRoute(user));
         } catch (err) {
             console.error("OTP verification failed:", err);

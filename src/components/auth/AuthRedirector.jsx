@@ -9,7 +9,6 @@ import { getPostAuthRoute } from "@/utils/auth";
 export default function AuthRedirector() {
   const router = useRouter();
   const { user, userStatus } = useAuth();
-
   useEffect(() => {
     if (userStatus === STATE.LOADING) return;
     router.replace(getPostAuthRoute(user));
