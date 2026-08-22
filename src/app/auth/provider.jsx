@@ -4,7 +4,7 @@
 "use client"
 import { createContext, useContext, useEffect, useState } from "react";
 import { STATE } from  "../constants";
-import { UserService } from "@/service/user";
+import { UserService } from "@/services/userService";
 
 const AuthContext = createContext(null);
 

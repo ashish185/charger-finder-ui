@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/app/auth/provider";
-import { UserService } from "@/service/user";
+import { UserService } from "@/services/userService";
 import { ROLE } from "@/app/constants";
 
 export default function SelectRolePage() {
@@ -55,7 +55,7 @@ export default function SelectRolePage() {
             {submittingRole === ROLE.OPERATOR ? "Saving…" : "Operator"}
           </button>
           <button
-            onClick={() => chooseRole(ROLE.CUSTOMER)}you
+            onClick={() => chooseRole(ROLE.CUSTOMER)}
             disabled={submittingRole !== null}
             className="w-full rounded-lg border border-outline-variant bg-surface-container-lowest py-2.5 text-sm font-semibold text-on-surface transition hover:bg-surface disabled:cursor-not-allowed disabled:opacity-50"
           >

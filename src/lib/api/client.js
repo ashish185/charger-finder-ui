@@ -11,6 +11,7 @@ export class ApiError extends Error {
 
 export async function apiFetch(path, { token, ...options } = {}) {
   const response = await fetch(`${API_BASE_URL}${path}`, {
+    credentials: "include",
     ...options,
     headers: {
       "Content-Type": "application/json",

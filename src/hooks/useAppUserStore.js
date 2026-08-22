@@ -1,6 +1,6 @@
 import { create } from "zustand";
-import { getUserByPhone, registerUser } from "@/lib/api/userService";
-import { createVehicle } from "@/lib/api/vehicleService";
+import { getUserByPhone, registerUser } from "@/services/userService";
+import { createVehicle } from "@/services/vehicleService";
 
 export const useAppUserStore = create((set) => ({
   user: null,

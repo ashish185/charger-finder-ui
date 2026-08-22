@@ -12,7 +12,3 @@ export const ROLE = {
     CUSTOMER: "customer",
     PRICING_MANAGER: "pricing_manager",
 }
-
-export const URLS= {
-    BASE: `${import.meta.env.VITE_API_URL}/api/v1`,
-}

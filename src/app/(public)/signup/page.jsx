@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/app/auth/provider";
-import { UserService } from "@/service/user";
+import { UserService } from "@/services/userService";
 
 export default function UserSignupPage() {
   const router = useRouter();

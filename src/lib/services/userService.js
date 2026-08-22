@@ -1,9 +1,19 @@
-const baseUrl= `${process.env.NEXT_PUBLIC_API_URL}`;
+import UserRepository from "../repositories/userRepository";
+
+const baseUrl = `${process.env.NEXT_PUBLIC_API_URL}`;
 const authUrl = `${process.env.NEXT_PUBLIC_API_URL}/auth`;
 
 const jsonHeaders = {
   "Content-Type": "application/json",
 };
+
+export async function getUserByPhone(phone, token) {
+  return UserRepository.findByPhone(phone, token);
+}
+
+export async function registerUser({ phone, name, email }) {
+  return UserRepository.create({ phone, name, email });
+}
 
 export class UserService {
   static async getProfile() {

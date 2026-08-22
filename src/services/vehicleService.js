@@ -1,4 +1,14 @@
+import VehicleRepository from "@/repositories/vehicleRepository";
+
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+
+export async function createVehicle(vehicle, token) {
+  return VehicleRepository.create(vehicle, token);
+}
+
+export async function listVehicles(token) {
+  return VehicleRepository.findAll(token);
+}
 
 export class VehicleService {
   static async list() {

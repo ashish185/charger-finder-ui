@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { signOut } from "firebase/auth";
 import { auth } from "@/firebase"
-import { UserService } from "@/service/user";
+import { UserService } from "@/services/userService";
 
 export default function LogoutButton({ className = "" }) {
   const router = useRouter();
