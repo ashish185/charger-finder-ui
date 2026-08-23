@@ -19,7 +19,7 @@ async function handleResponse(res, fallbackMessage) {
     } catch {
         data = text;
     }
-
+    console.log('err', res);
     if (!res.ok) {
         const message = parseError(data, fallbackMessage);
         throw new Error(message);

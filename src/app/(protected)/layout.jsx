@@ -1,11 +1,9 @@
 import Link from "next/link";
 import LogoutButton from "@/components/auth/LogoutButton";
-import AuthGateFireBase from "@/components/auth/AuthGateFirebase";
 import BottomNav from "@/components/navigation/BottomNav";
 
 export default function ProtectedLayout({ children }) {
   return (
-    <AuthGateFireBase>
       <div className="flex min-h-screen flex-col bg-surface">
         <header className="border-b border-outline-variant/40 bg-surface-container-lowest">
           <div className="mx-auto flex max-w-sm items-center justify-between px-4 py-3">
@@ -27,6 +25,5 @@ export default function ProtectedLayout({ children }) {
 
         <BottomNav />
       </div>
-    </AuthGateFireBase>
   );
 }
