@@ -6,8 +6,8 @@ import { getPostAuthRoute } from "@/utils/auth";
 
 // Hook form of getPostAuthRoute: pulls the current user and path from
 // context/router so callers don't have to wire them up themselves.
-export function usePostAuthRoute() {
+export const usePostAuthRoute = () => {
   const { user } = useAuth();
   const pathName = usePathname();
   return getPostAuthRoute(user, pathName);
-}
+};

@@ -10,14 +10,14 @@ import { getPostAuthRoute } from "@/utils/auth";
 
 const PROFILE_QUERY_KEY = ["authProfile"];
 
-async function fetchProfile() {
+const fetchProfile = async () => {
   const response = await UserService.getProfile();
   return response?.user ?? response?.data ?? null;
 }
 
 // Fetches the current user's profile on mount and redirects to the
 // appropriate post-auth route once the fetch settles.
-export function useAuthProfile() {
+export const useAuthProfile = () => {
   const pathName = usePathname();
   const router = useRouter();
   const queryClient = useQueryClient();
@@ -47,11 +47,11 @@ export function useAuthProfile() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSuccess, isError, user]);
 
-  function setUser(newUser) {
+  const setUser = (newUser) => {
     queryClient.setQueryData(PROFILE_QUERY_KEY, newUser ?? null);
-  }
+  };
 
-  function setUserStatus(newStatus) {
+  const setUserStatus = (newStatus) => {
     if (newStatus === STATE.SUCCESS) {
       queryClient.setQueryData(PROFILE_QUERY_KEY, (old) => old ?? null);
     }

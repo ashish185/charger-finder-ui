@@ -8,7 +8,7 @@ const OPTIONS = [
   { value: "dark", label: "Dark" },
 ];
 
-export default function ThemeToggle() {
+const ThemeToggle = () => {
   const theme = useThemeStore((state) => state.theme);
   const setTheme = useThemeStore((state) => state.setTheme);
 
@@ -40,3 +40,5 @@ export default function ThemeToggle() {
     </div>
   );
 }
+
+export default ThemeToggle;

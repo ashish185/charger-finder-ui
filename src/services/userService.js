@@ -7,13 +7,13 @@ const jsonHeaders = {
   "Content-Type": "application/json",
 };
 
-export async function getUserByPhone(phone, token) {
+export const getUserByPhone = async (phone, token) => {
   return UserRepository.findByPhone(phone, token);
-}
+};
 
-export async function registerUser({ phone, name, email }) {
+export const registerUser = async ({ phone, name, email }) => {
   return UserRepository.create({ phone, name, email });
-}
+};
 
 export class UserService {
   static async getProfile() {
@@ -61,7 +61,7 @@ export class UserService {
   }
 }
 
-async function handleResponse(res, errorMessage) {
+const handleResponse = async (res, errorMessage) => {
   const data = await res.json().catch(() => null);
 
   if (!res.ok) {
@@ -69,4 +69,4 @@ async function handleResponse(res, errorMessage) {
   }
 
   return data;
-}
+};

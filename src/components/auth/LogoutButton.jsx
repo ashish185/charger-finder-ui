@@ -7,7 +7,7 @@ import { auth } from "@/firebase"
 import { UserService } from "@/services/userService";
 import { useAuth } from "@/app/auth/provider";
 
-export default function LogoutButton({ className = "" }) {
+const LogoutButton = ({ className = "" }) => {
   const router = useRouter();
   const { logout } = useAuth();
   const [loggingOut, setLoggingOut] = useState(false);
@@ -41,3 +41,5 @@ export default function LogoutButton({ className = "" }) {
     </button>
   );
 }
+
+export default LogoutButton;

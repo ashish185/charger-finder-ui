@@ -1,7 +1,7 @@
 "use client"
 import { redirect, usePathname } from "next/navigation";
 
-export default function Home() {
+const Home = () => {
   const pathName= usePathname();
   if(pathName === '/'){
     redirect("/login")
@@ -12,3 +12,5 @@ export default function Home() {
     </div>
   );
 }
+
+export default Home;

@@ -4,7 +4,7 @@ import { useAuth } from "@/app/auth/provider";
 import { STATE } from "@/app/constants";
 import ThemeToggle from "@/components/ThemeToggle";
 
-function initials(name) {
+const initials = (name) => {
   if (!name) return "?";
   return name
     .trim()
@@ -12,16 +12,16 @@ function initials(name) {
     .slice(0, 2)
     .map((part) => part[0]?.toUpperCase())
     .join("");
-}
+};
 
-function formatDate(value) {
+const formatDate = (value) => {
   if (!value) return null;
   const date = new Date(value);
   if (Number.isNaN(date.getTime())) return null;
   return date.toLocaleDateString(undefined, { dateStyle: "medium" });
-}
+};
 
-export default function ProfilePage() {
+const ProfilePage = () => {
   const { user, userStatus } = useAuth();
   return (
     <div className="mx-auto w-full max-w-sm px-4 py-6">
@@ -102,3 +102,5 @@ export default function ProfilePage() {
     </div>
   );
 }
+
+export default ProfilePage;

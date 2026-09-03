@@ -2,7 +2,7 @@ import { ROLE } from "@/app/constants";
 
 // Central place to decide where an authenticated user should land based on
 // how complete their profile is (role selection, full name).
-export function getPostAuthRoute(user, currentPath) {
+export const getPostAuthRoute = (user, currentPath) => {
   console.log("user", user);
   if (!user) return "/login";
   const roles = Array.isArray(user.role) ? user.role : user.role ? [user.role] : [];
@@ -17,4 +17,4 @@ export function getPostAuthRoute(user, currentPath) {
     return "/dashboard";
   }
   return currentPath;
-}
+};

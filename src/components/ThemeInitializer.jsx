@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 import { useThemeStore } from "@/hooks/useThemeStore";
 
-export default function ThemeInitializer() {
+const ThemeInitializer = () => {
   const init = useThemeStore((state) => state.init);
 
   useEffect(() => {
@@ -11,4 +11,6 @@ export default function ThemeInitializer() {
   }, [init]);
 
   return null;
-}
+};
+
+export default ThemeInitializer;

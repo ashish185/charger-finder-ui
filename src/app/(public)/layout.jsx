@@ -1,7 +1,9 @@
 "use client"
 import { useAuthProfile } from "@/hooks/useAuthProfile"
 
-export default function PublicRoute({ children }) {
+const PublicRoute = ({ children }) => {
     useAuthProfile();
     return (children)
 }
+
+export default PublicRoute;

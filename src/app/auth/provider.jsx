@@ -9,19 +9,19 @@ import { STATE } from "../constants";
 
 const AuthContext = createContext(null);
 
-export function AuthProvider({ children }) {
+export const AuthProvider = ({ children }) => {
     const pathName = usePathname();
     const { user, userStatus, setUser, setUserStatus } = useAuthProfile(pathName);
 
-    function loginSuccess(newUser) {
+    const loginSuccess = (newUser) => {
         setUser(newUser);
         setUserStatus(STATE.SUCCESS);
-    }
+    };
 
-    function logout() {
+    const logout = () => {
         setUser(null);
         setUserStatus(STATE.SUCCESS);
-    }
+    };
 
     return (
         <AuthContext.Provider value={{ user, loginSuccess, logout, userStatus, setUser }}>
@@ -30,8 +30,8 @@ export function AuthProvider({ children }) {
     );
 }
 
-export function useAuth() {
+export const useAuth = () => {
     const ctx = useContext(AuthContext);
     if (!ctx) throw new Error("useAuth must be used inside AuthProvider");
     return ctx;
-}
+};

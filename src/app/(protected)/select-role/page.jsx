@@ -6,7 +6,7 @@ import { useAuth } from "@/app/auth/provider";
 import { UserService } from "@/services/userService";
 import { ROLE } from "@/app/constants";
 
-export default function SelectRolePage() {
+const SelectRolePage = () => {
   const router = useRouter();
   const { user, loginSuccess } = useAuth();
   const [submittingRole, setSubmittingRole] = useState(null);
@@ -66,3 +66,5 @@ export default function SelectRolePage() {
     </div>
   );
 }
+
+export default SelectRolePage;

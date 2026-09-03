@@ -2,17 +2,17 @@ import { create } from "zustand";
 
 const STORAGE_KEY = "theme";
 
-function getSystemTheme() {
+const getSystemTheme = () => {
   if (typeof window === "undefined") return "light";
   return window.matchMedia("(prefers-color-scheme: dark)").matches
     ? "dark"
     : "light";
-}
+};
 
-function applyTheme(resolved) {
+const applyTheme = (resolved) => {
   if (typeof document === "undefined") return;
   document.documentElement.classList.toggle("dark", resolved === "dark");
-}
+};
 
 export const useThemeStore = create((set, get) => ({
   // "system" | "light" | "dark"

@@ -1,5 +1,5 @@
 "use client"
-import { useState, useRef } from "react";
+import { Suspense, useState, useRef } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import {
     RecaptchaVerifier,
@@ -10,7 +10,13 @@ import { authUrl } from "../../constants"
 import { getPostAuthRoute } from "@/utils/auth";
 import { useAuth } from "@/app/auth/provider";
 
-async function handleResponse(res, fallbackMessage) {
+const parseError = (data, fallbackMessage) => {
+    if (typeof data === "string" && data) return data;
+    if (data && typeof data === "object" && typeof data.message === "string") return data.message;
+    return fallbackMessage;
+};
+
+const handleResponse = async (res, fallbackMessage) => {
     const text = await res.text();
     let data = null;
 
@@ -19,14 +25,14 @@ async function handleResponse(res, fallbackMessage) {
     } catch {
         data = text;
     }
-    console.log('err', res);
+
     if (!res.ok) {
         const message = parseError(data, fallbackMessage);
         throw new Error(message);
     }
 
     return data !== null ? data : {};
-}
+};
 
 
 const phoneLogin = async (idToken) => {
@@ -40,7 +46,7 @@ const phoneLogin = async (idToken) => {
     return handleResponse(res, "Login failed");
 }
 
-export default function PhoneLogin() {
+const PhoneLogin = () => {
     const router = useRouter();
     const searchParams = useSearchParams();
     const [phone, setPhone] = useState("");
@@ -196,4 +202,14 @@ export default function PhoneLogin() {
             </div>
         </div>
     );
-}
+};
+
+const LoginPage = () => {
+    return (
+        <Suspense fallback={null}>
+            <PhoneLogin />
+        </Suspense>
+    );
+};
+
+export default LoginPage;

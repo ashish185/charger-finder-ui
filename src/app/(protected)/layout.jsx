@@ -3,7 +3,7 @@ import LogoutButton from "@/components/auth/LogoutButton";
 import BottomNav from "@/components/navigation/BottomNav";
 import { AuthProvider } from "../auth/provider";
 
-export default function ProtectedLayout({ children }) {
+const ProtectedLayout = ({ children }) => {
   return (
     <AuthProvider>
       <div className="flex min-h-screen flex-col bg-surface">
@@ -31,3 +31,5 @@ export default function ProtectedLayout({ children }) {
     </AuthProvider>
   );
 }
+
+export default ProtectedLayout;

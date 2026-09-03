@@ -1,2 +1,2 @@
-export function proxy() {
-}
+export const proxy = () => {
+};

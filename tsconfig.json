@@ -33,7 +33,8 @@
     "**/*.mts",
     "**/*.ts",
     "**/*.tsx"
-, "src/app/(public)/signup/page.jsx", "src/app/(public)/login/page.jsx"  ],
+, "src/app/(protected)/signup/page.jsx", "src/app/(public)/login/page.jsx" 
+ ],
   "exclude": [
     "node_modules"
   ]
