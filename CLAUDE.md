@@ -56,6 +56,9 @@ public/
 * Avoid unnecessary client components.
 
 ## Components
+- Component should be modular
+- no props drilling
+- Make reusable components
 
 Create reusable components inside:
 

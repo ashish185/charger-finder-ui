@@ -72,7 +72,7 @@ const RootLayout = ({ children }) => {
         </head>
         <body className="min-h-full flex flex-col">
             <ThemeInitializer />
-            <ServiceWorkerRegistration />
+            {/* <ServiceWorkerRegistration /> */}
             <QueryProvider>
               {children}
             </QueryProvider>

@@ -1,4 +1,4 @@
-const CACHE_NAME = "charge-finder-cache-v1";
+const CACHE_NAME = "charge-finder-cache-v2";
 const OFFLINE_URLS = ["/", "/icon.svg", "/manifest.webmanifest"];
 
 self.addEventListener("install", (event) => {
@@ -25,6 +25,11 @@ self.addEventListener("activate", (event) => {
 
 self.addEventListener("fetch", (event) => {
   if (event.request.method !== "GET") {
+    return;
+  }
+
+  const url = new URL(event.request.url);
+  if (url.pathname.startsWith("/api/")) {
     return;
   }
 
