@@ -2,6 +2,7 @@
 
 import { useAuth } from "@/app/auth/provider";
 import { STATE } from "@/app/constants";
+import ThemeToggle from "@/components/ThemeToggle";
 
 function initials(name) {
   if (!name) return "?";
@@ -22,11 +23,12 @@ function formatDate(value) {
 
 export default function ProfilePage() {
   const { user, userStatus } = useAuth();
-
+  console.log("userStatus", userStatus);
   return (
     <div className="mx-auto w-full max-w-sm px-4 py-6">
-      <header className="mb-4">
+      <header className="mb-4 flex items-center justify-between gap-3">
         <h1 className="text-2xl font-bold text-on-surface">Profile</h1>
+        <ThemeToggle />
       </header>
 
       {userStatus === STATE.LOADING && (

@@ -13,14 +13,11 @@ export default function AuthRedirector() {
   const pathName = usePathname();
   useEffect(() => {
     if (userStatus === STATE.LOADING) return;
+    
     const path = getPostAuthRoute(user);
-    if (pathName === "/" && !path) {
+    if ((pathName === "/" && !path) || !user) {
       router.push(path);
     }
-    else {
-      router.replace(path);
-    }
-
   }, [user, userStatus, router, pathName]);
 
   return null;
