@@ -5,9 +5,11 @@ import { useRouter } from "next/navigation";
 import { signOut } from "firebase/auth";
 import { auth } from "@/firebase"
 import { UserService } from "@/services/userService";
+import { useAuth } from "@/app/auth/provider";
 
 export default function LogoutButton({ className = "" }) {
   const router = useRouter();
+  const { logout } = useAuth();
   const [loggingOut, setLoggingOut] = useState(false);
 
   const handleLogout = async () => {
@@ -24,6 +26,7 @@ export default function LogoutButton({ className = "" }) {
       console.error("Firebase sign-out failed:", err);
     }
 
+    logout();
     setLoggingOut(false);
     router.push("/login");
   };

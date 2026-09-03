@@ -2,28 +2,18 @@
 // Small context so any component can read "am I logged in" and "who am I"
 // without prop-drilling. Authentication is managed via cookies on the backend.
 "use client"
-import { createContext, useContext, useEffect, useState } from "react";
-import { STATE } from  "../constants";
-import { UserService } from "@/services/userService";
+import { usePathname } from "next/navigation";
+import { createContext, useContext } from "react";
+import { useAuthProfile } from "../../hooks/useAuthProfile";
+import { STATE } from "../constants";
+import { getPostAuthRoute } from "@/utils/auth";
+import AuthRedirector from "@/components/auth/AuthRedirector"
 
 const AuthContext = createContext(null);
 
 export function AuthProvider({ children }) {
-    const [user, setUser] = useState(null);
-    const [userStatus, setUserStatus] = useState(STATE.LOADING);
-
-    useEffect(() => {
-        UserService.getProfile()
-            .then((response) => {
-                const userFromResponse = response?.user ?? response?.data ?? null;
-                setUser(userFromResponse);
-                setUserStatus(STATE.SUCCESS);
-            })
-            .catch(() => {
-                setUser(null);
-                setUserStatus(STATE.ERROR);
-            })
-    }, []);
+    const pathName = usePathname();
+    const { user, userStatus, setUser, setUserStatus } = useAuthProfile(pathName);
 
     function loginSuccess(newUser) {
         setUser(newUser);
@@ -32,12 +22,14 @@ export function AuthProvider({ children }) {
 
     function logout() {
         setUser(null);
-        setUserStatus(STATE.LOADING);
+        setUserStatus(STATE.SUCCESS);
     }
 
     return (
         <AuthContext.Provider value={{ user, loginSuccess, logout, userStatus, setUser }}>
-            {children}
+            <AuthRedirector user={user} userStatus={userStatus}>
+                {children}
+            </AuthRedirector>
         </AuthContext.Provider>
     );
 }

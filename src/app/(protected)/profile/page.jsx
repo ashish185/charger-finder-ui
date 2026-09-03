@@ -23,7 +23,6 @@ function formatDate(value) {
 
 export default function ProfilePage() {
   const { user, userStatus } = useAuth();
-  console.log("userStatus", userStatus);
   return (
     <div className="mx-auto w-full max-w-sm px-4 py-6">
       <header className="mb-4 flex items-center justify-between gap-3">

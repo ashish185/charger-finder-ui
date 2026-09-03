@@ -1,24 +1,22 @@
 "use client";
 
 import { useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname, redirect } from "next/navigation";
 import { useAuth } from "@/app/auth/provider";
 import { STATE } from "@/app/constants";
 import { getPostAuthRoute } from "@/utils/auth";
-import { usePathname } from "next/navigation";
 
-export default function AuthRedirector() {
-  const router = useRouter();
-  const { user, userStatus } = useAuth();
+const AuthRedirector = ({ children, user, userStatus }) => {
   const pathName = usePathname();
+  const path = getPostAuthRoute(user, pathName);
+     console.log("path path is", path);
   useEffect(() => {
     if (userStatus === STATE.LOADING) return;
-    
-    const path = getPostAuthRoute(user);
-    if ((pathName === "/" && !path) || !user) {
-      router.push(path);
-    }
-  }, [user, userStatus, router, pathName]);
+    console.log("inside hook")
+    redirect(path);
+  }, []);
 
-  return null;
-}
+  return user ? children : null;
+};
+
+export default AuthRedirector;

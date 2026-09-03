@@ -1,5 +1,3 @@
-import { AuthProvider } from "@/app/auth/provider";
-import AuthRedirector from "@/components/auth/AuthRedirector";
 import ThemeInitializer from "@/components/ThemeInitializer";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
@@ -40,14 +38,10 @@ export default function RootLayout({ children }) {
         className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
       >
         <head>
-          <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
         </head>
         <body className="min-h-full flex flex-col">
             <ThemeInitializer />
-            <AuthProvider>
-              <AuthRedirector />
               {children}
-            </AuthProvider>
         </body>
       </html>
   );
