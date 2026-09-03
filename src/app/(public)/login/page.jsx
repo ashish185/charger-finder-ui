@@ -1,6 +1,6 @@
 "use client"
 import { useState, useRef } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import {
     RecaptchaVerifier,
     signInWithPhoneNumber,
@@ -42,6 +42,7 @@ const phoneLogin = async (idToken) => {
 
 export default function PhoneLogin() {
     const router = useRouter();
+    const searchParams = useSearchParams();
     const [phone, setPhone] = useState("");
     const [otp, setOtp] = useState("");
     const [confirmationResult, setConfirmationResult] = useState(null);
@@ -92,7 +93,9 @@ export default function PhoneLogin() {
             const idToken = await userCredential.user.getIdToken();
             // Send this token to your Express backend
             const { user } = await phoneLogin(idToken) ?? {};
-            router.push(getPostAuthRoute(user));
+            const redirectPath = searchParams.get("redirect");
+            const isSafeRedirect = redirectPath?.startsWith("/") && !redirectPath.startsWith("//");
+            router.push(isSafeRedirect ? redirectPath : getPostAuthRoute(user));
         } catch (err) {
             console.error("OTP verification failed:", err);
             setError("That code didn't work. Please check it and try again.");

@@ -6,8 +6,6 @@ import { usePathname } from "next/navigation";
 import { createContext, useContext } from "react";
 import { useAuthProfile } from "../../hooks/useAuthProfile";
 import { STATE } from "../constants";
-import { getPostAuthRoute } from "@/utils/auth";
-import AuthRedirector from "@/components/auth/AuthRedirector"
 
 const AuthContext = createContext(null);
 
@@ -27,9 +25,7 @@ export function AuthProvider({ children }) {
 
     return (
         <AuthContext.Provider value={{ user, loginSuccess, logout, userStatus, setUser }}>
-            <AuthRedirector user={user} userStatus={userStatus}>
-                {children}
-            </AuthRedirector>
+            {children}
         </AuthContext.Provider>
     );
 }

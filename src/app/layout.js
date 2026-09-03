@@ -1,4 +1,5 @@
 import ThemeInitializer from "@/components/ThemeInitializer";
+import QueryProvider from "./query-provider";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
@@ -41,7 +42,9 @@ export default function RootLayout({ children }) {
         </head>
         <body className="min-h-full flex flex-col">
             <ThemeInitializer />
+            <QueryProvider>
               {children}
+            </QueryProvider>
         </body>
       </html>
   );
