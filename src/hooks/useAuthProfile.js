@@ -29,7 +29,7 @@ export const useAuthProfile = () => {
     staleTime: 5 * 60 * 1000, // data is "fresh" for 5 min — no auto refetch while fresh
     gcTime: 10 * 60 * 1000, // unused cache entry is garbage-collected after 10 min idle
 
-    retry: 3, // retry a failed fetch up to 3 times before settling into error status
+    retry: 0, // retry a failed fetch up to 3 times before settling into error status
     refetchOnWindowFocus: false, // don't refetch just because the tab regained focus
   });
 
@@ -42,7 +42,7 @@ export const useAuthProfile = () => {
       console.log("path",path);
       router.replace(path);
     } else if (isError) {
-      router.replace(`/login?redirect=${encodeURIComponent(pathName)}`);
+      router.replace(`/login`);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSuccess, isError, user]);

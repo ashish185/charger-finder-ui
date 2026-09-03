@@ -1,62 +1,28 @@
 "use client"
-import { Suspense, useState, useRef } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { getPostAuthRoute } from "@/utils/auth";
+import { PhoneService } from "@/services/phoneService";
 import {
     RecaptchaVerifier,
     signInWithPhoneNumber,
 } from "firebase/auth";
+import { useRouter, useSearchParams } from "next/navigation";
+import { Suspense, useRef, useState } from "react";
 import { auth } from "../../../firebase"; // Adjust the import path as necessary
-import { authUrl } from "../../constants"
-import { getPostAuthRoute } from "@/utils/auth";
-import { useAuth } from "@/app/auth/provider";
 
-const parseError = (data, fallbackMessage) => {
-    if (typeof data === "string" && data) return data;
-    if (data && typeof data === "object" && typeof data.message === "string") return data.message;
-    return fallbackMessage;
-};
-
-const handleResponse = async (res, fallbackMessage) => {
-    const text = await res.text();
-    let data = null;
-
-    try {
-        data = text ? JSON.parse(text) : null;
-    } catch {
-        data = text;
-    }
-
-    if (!res.ok) {
-        const message = parseError(data, fallbackMessage);
-        throw new Error(message);
-    }
-
-    return data !== null ? data : {};
-};
-
-
-const phoneLogin = async (idToken) => {
-    const res = await fetch(`${authUrl}/otp/verify`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-        body: JSON.stringify({ idToken }),
-    });
-
-    return handleResponse(res, "Login failed");
-}
+const PHONE_STORAGE_KEY = "chargefinder_phone";
 
 const PhoneLogin = () => {
     const router = useRouter();
     const searchParams = useSearchParams();
-    const [phone, setPhone] = useState("");
+    const [phone, setPhone] = useState(() =>
+        typeof window === "undefined" ? "" : window.localStorage.getItem(PHONE_STORAGE_KEY) ?? ""
+    );
     const [otp, setOtp] = useState("");
     const [confirmationResult, setConfirmationResult] = useState(null);
     const [error, setError] = useState("");
     const [sendingOtp, setSendingOtp] = useState(false);
     const [verifyingOtp, setVerifyingOtp] = useState(false);
     const recaptchaVerifierRef = useRef(null);
-    
 
     const setupRecaptcha = () => {
         // reCAPTCHA must be set up once, tied to a DOM node
@@ -69,14 +35,20 @@ const PhoneLogin = () => {
         }
     };
 
+    const isValidPhone = phone.length === 10;
+
     const sendOtp = async () => {
         setError("");
+        if (!isValidPhone) {
+            setError("Enter a valid 10 digit phone number.");
+            return;
+        }
         setupRecaptcha();
         setSendingOtp(true);
         try {
             const result = await signInWithPhoneNumber(
                 auth,
-                phone, // must be E.164 format, e.g. +919876543210
+                `+91${phone}`, // must be E.164 format, e.g. +919876543210
                 recaptchaVerifierRef.current
             );
             setConfirmationResult(result);
@@ -98,7 +70,7 @@ const PhoneLogin = () => {
             const userCredential = await confirmationResult.confirm(otp);
             const idToken = await userCredential.user.getIdToken();
             // Send this token to your Express backend
-            const { user } = await phoneLogin(idToken) ?? {};
+            const { user } = await PhoneService.phoneLogin(idToken) ?? {};
             const redirectPath = searchParams.get("redirect");
             const isSafeRedirect = redirectPath?.startsWith("/") && !redirectPath.startsWith("//");
             router.push(isSafeRedirect ? redirectPath : getPostAuthRoute(user));
@@ -144,18 +116,29 @@ const PhoneLogin = () => {
                             >
                                 Phone number
                             </label>
-                            <input
-                                id="phone"
-                                type="tel"
-                                placeholder="+91XXXXXXXXXX"
-                                value={phone}
-                                onChange={(e) => setPhone(e.target.value)}
-                                className="w-full rounded-lg border border-outline-variant bg-surface-container-lowest px-3.5 py-2.5 text-on-surface placeholder:text-on-surface-variant/60 outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
-                            />
+                            <div className="flex items-center rounded-lg border border-outline-variant bg-surface-container-lowest focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/20">
+                                <span className="pl-3.5 pr-2 text-on-surface-variant">
+                                    +91
+                                </span>
+                                <input
+                                    id="phone"
+                                    type="tel"
+                                    inputMode="numeric"
+                                    placeholder="XXXXXXXXXX"
+                                    maxLength={10}
+                                    value={phone}
+                                    onChange={(e) => {
+                                        const digits = e.target.value.replace(/\D/g, "").slice(0, 10);
+                                        setPhone(digits);
+                                        window.localStorage.setItem(PHONE_STORAGE_KEY, digits);
+                                    }}
+                                    className="w-full rounded-r-lg bg-transparent py-2.5 pr-3.5 text-on-surface placeholder:text-on-surface-variant/60 outline-none"
+                                />
+                            </div>
                         </div>
                         <button
                             onClick={sendOtp}
-                            disabled={!phone || sendingOtp}
+                            disabled={!isValidPhone || sendingOtp}
                             className="w-full rounded-lg bg-primary py-2.5 text-sm font-semibold text-on-primary transition hover:bg-primary-strong disabled:cursor-not-allowed disabled:opacity-50"
                         >
                             {sendingOtp ? "Sending OTP…" : "Send OTP"}

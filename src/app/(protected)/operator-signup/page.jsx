@@ -4,8 +4,9 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/app/auth/provider";
 import { UserService } from "@/services/userService";
+import FormField from "@/components/FormField";
 
-export default function OperatorSignupPage() {
+const OperatorSignupPage = () => {
   const router = useRouter();
   const { loginSuccess } = useAuth();
   const [fullName, setFullName] = useState("");
@@ -56,57 +57,35 @@ export default function OperatorSignupPage() {
         )}
 
         <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label
-              htmlFor="fullName"
-              className="mb-1.5 block text-sm font-medium text-on-surface"
-            >
-              Full name
-            </label>
-            <input
-              id="fullName"
-              type="text"
-              placeholder="Jane Doe"
-              value={fullName}
-              onChange={(e) => setFullName(e.target.value)}
-              required
-              className="w-full rounded-lg border border-outline-variant bg-surface-container-lowest px-3.5 py-2.5 text-on-surface placeholder:text-on-surface-variant/60 outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
-            />
-          </div>
+          <FormField
+            id="fullName"
+            label="Full name"
+            type="text"
+            placeholder="Jane Doe"
+            value={fullName}
+            onChange={(e) => setFullName(e.target.value)}
+            required
+          />
 
-          <div>
-            <label
-              htmlFor="email"
-              className="mb-1.5 block text-sm font-medium text-on-surface"
-            >
-              Email <span className="text-on-surface-variant">(optional)</span>
-            </label>
-            <input
-              id="email"
-              type="email"
-              placeholder="jane@example.com"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="w-full rounded-lg border border-outline-variant bg-surface-container-lowest px-3.5 py-2.5 text-on-surface placeholder:text-on-surface-variant/60 outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
-            />
-          </div>
+          <FormField
+            id="email"
+            label="Email"
+            optional
+            type="email"
+            placeholder="jane@example.com"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
 
-          <div>
-            <label
-              htmlFor="password"
-              className="mb-1.5 block text-sm font-medium text-on-surface"
-            >
-              Password <span className="text-on-surface-variant">(optional)</span>
-            </label>
-            <input
-              id="password"
-              type="password"
-              placeholder="••••••••"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="w-full rounded-lg border border-outline-variant bg-surface-container-lowest px-3.5 py-2.5 text-on-surface placeholder:text-on-surface-variant/60 outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
-            />
-          </div>
+          <FormField
+            id="password"
+            label="Password"
+            optional
+            type="password"
+            placeholder="••••••••"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
 
           <label className="flex items-start gap-2 text-sm text-on-surface-variant">
             <input
@@ -130,4 +109,6 @@ export default function OperatorSignupPage() {
       </div>
     </div>
   );
-}
+};
+
+export default OperatorSignupPage;

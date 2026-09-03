@@ -1,72 +1,27 @@
 import UserRepository from "@/repositories/userRepository";
 
-const baseUrl = `${process.env.NEXT_PUBLIC_API_URL}`;
-const authUrl = `${process.env.NEXT_PUBLIC_API_URL}/auth`;
-
-const jsonHeaders = {
-  "Content-Type": "application/json",
-};
-
-export const getUserByPhone = async (phone, token) => {
-  return UserRepository.findByPhone(phone, token);
-};
-
-export const registerUser = async ({ phone, name, email }) => {
-  return UserRepository.create({ phone, name, email });
-};
-
 export class UserService {
-  static async getProfile() {
-    const res = await fetch(`${baseUrl}/user/me`, {
-      credentials: "include",
-    });
+  static getUserByPhone = async (phone, token) => {
+    return UserRepository.findByPhone(phone, token);
+  };
 
-    return handleResponse(res, "Could not fetch profile");
-  }
+  static registerUser = async ({ phone, name, email }) => {
+    return UserRepository.create({ phone, name, email });
+  };
 
-  static async completeProfile({ fullName, email, password, agreedToTerms }) {
-    const res = await fetch(`${baseUrl}/user/me`, {
-      method: "PATCH",
-      headers: jsonHeaders,
-      credentials: "include",
-      body: JSON.stringify({
-        full_name: fullName,
-        ...(email ? { email } : {}),
-        ...(password ? { password } : {}),
-        agreed_to_terms: agreedToTerms,
-      }),
-    });
+  static getProfile = async () => {
+    return UserRepository.getProfile();
+  };
 
-    return handleResponse(res, "Could not save your details");
-  }
+  static completeProfile = async ({ fullName, email, password, agreedToTerms }) => {
+    return UserRepository.completeProfile({ fullName, email, password, agreedToTerms });
+  };
 
-  static async setRole(role) {
-    const res = await fetch(`${baseUrl}/user/role`, {
-      method: "PATCH",
-      headers: jsonHeaders,
-      credentials: "include",
-      body: JSON.stringify({ role }),
-    });
+  static setRole = async (role) => {
+    return UserRepository.setRole(role);
+  };
 
-    return handleResponse(res, "Could not update role");
-  }
-
-  static async logout() {
-    const res = await fetch(`${authUrl}/logout`, {
-      method: "POST",
-      credentials: "include",
-    });
-
-    return handleResponse(res, "Logout failed");
-  }
+  static logout = async () => {
+    return UserRepository.logout();
+  };
 }
-
-const handleResponse = async (res, errorMessage) => {
-  const data = await res.json().catch(() => null);
-
-  if (!res.ok) {
-    throw new Error(data?.message || errorMessage);
-  }
-
-  return data;
-};
