@@ -38,7 +38,8 @@ public/
 * Use `.js` for JavaScript files and `.jsx` for React components.
 * Do not introduce TypeScript unless explicitly requested.
 * Prefer functional React components.
-* Use modern ES6+ JavaScript syntax.
+* Use modern ES6+ JavaScript syntax and es 6 arrow functions.
+- Do not use the native function.
 
 ## Next.js Guidelines
 
