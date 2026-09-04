@@ -8,6 +8,10 @@ const ServiceWorkerRegistration = () => {
       return;
     }
 
+    if (process.env.NODE_ENV !== "production") {
+      return;
+    }
+
     navigator.serviceWorker.register("/sw.js", { scope: "/" }).catch((error) => {
       console.error("Service worker registration failed:", error);
     });

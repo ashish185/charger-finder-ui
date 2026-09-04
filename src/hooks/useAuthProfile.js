@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { STATE } from "@/app/constants";
@@ -18,7 +18,7 @@ const fetchProfile = async () => {
 // Fetches the current user's profile on mount and redirects to the
 // appropriate post-auth route once the fetch settles.
 export const useAuthProfile = () => {
-  const pathName = usePathname();
+  const currentPath = usePathname();
   const router = useRouter();
   const queryClient = useQueryClient();
 
@@ -38,14 +38,14 @@ export const useAuthProfile = () => {
 
   useEffect(() => {
     if (isSuccess) {
-      const path = getPostAuthRoute(user, pathName);
-      console.log("path",path);
+      const path = getPostAuthRoute(user, currentPath);
+      console.log("path", user);
       router.replace(path);
     } else if (isError) {
       router.replace(`/login`);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isSuccess, isError, user]);
+  }, [isSuccess]);
 
   const setUser = (newUser) => {
     queryClient.setQueryData(PROFILE_QUERY_KEY, newUser ?? null);

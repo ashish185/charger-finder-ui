@@ -4,27 +4,33 @@ import {
     RecaptchaVerifier,
     signInWithPhoneNumber,
 } from "firebase/auth";
-import { useRouter, useSearchParams } from "next/navigation";
-import { useRef, useState } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
 import { auth } from "@/firebase";
 
 const PHONE_STORAGE_KEY = "chargefinder_phone";
 
-const getStoredPhone = () =>
-    typeof window === "undefined"
-        ? ""
-        : window.localStorage.getItem(PHONE_STORAGE_KEY) ?? "";
-
 export const usePhoneAuth = () => {
     const router = useRouter();
     const searchParams = useSearchParams();
-    const [phone, setPhone] = useState(getStoredPhone);
+    const [phone, setPhone] = useState("");
     const [otp, setOtp] = useState("");
     const [confirmationResult, setConfirmationResult] = useState(null);
     const [error, setError] = useState("");
-    const [sendingOtp, setSendingOtp] = useState(false);
+    const [sendingOtp, setSendingOtp] = useState(false);    
     const [verifyingOtp, setVerifyingOtp] = useState(false);
     const recaptchaVerifierRef = useRef(null);
+    const pathName = usePathname();
+
+    useEffect(() => {
+        // Read localStorage only after mount so the client's first render matches
+        // the server's (which has no access to it), avoiding a hydration mismatch.
+        const storedPhone = window.localStorage.getItem(PHONE_STORAGE_KEY);
+        if (storedPhone) {
+            // eslint-disable-next-line react-hooks/set-state-in-effect
+            setPhone(storedPhone);
+        }
+    }, []);
 
     const setupRecaptcha = () => {
         // reCAPTCHA must be set up once, tied to a DOM node
@@ -80,9 +86,12 @@ export const usePhoneAuth = () => {
             const idToken = await userCredential.user.getIdToken();
             // Send this token to your Express backend
             const { user } = await PhoneService.phoneLogin(idToken) ?? {};
-            const redirectPath = searchParams.get("redirect");
-            const isSafeRedirect = redirectPath?.startsWith("/") && !redirectPath.startsWith("//");
-            router.push(isSafeRedirect ? redirectPath : getPostAuthRoute(user));
+            const newPath = getPostAuthRoute(user, pathName);
+            await new Promise((resolve) => setTimeout(resolve, 4000));
+            if(pathName !== newPath){
+                router.push(newPath);
+                return;
+            }
         } catch (err) {
             console.error("OTP verification failed:", err);
             setError("That code didn't work. Please check it and try again.");

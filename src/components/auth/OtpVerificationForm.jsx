@@ -14,9 +14,10 @@ const OtpVerificationForm = ({ otp, onOtpChange, verifyingOtp, onSubmit, onUseDi
                     id="otp"
                     type="text"
                     inputMode="numeric"
-                    placeholder="Enter OTP"
+                    maxLength={6}
+                    placeholder="Enter 6 digit OTP"
                     value={otp}
-                    onChange={(e) => onOtpChange(e.target.value)}
+                    onChange={(e) => onOtpChange(e.target.value.replace(/\D/g, "").slice(0, 6))}
                     className="w-full rounded-lg border border-outline-variant bg-surface-container-lowest px-3.5 py-2.5 pr-10 tracking-widest text-on-surface placeholder:text-on-surface-variant/60 outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
                 />
                 {otp && !verifyingOtp && (
@@ -26,7 +27,7 @@ const OtpVerificationForm = ({ otp, onOtpChange, verifyingOtp, onSubmit, onUseDi
         </div>
         <button
             type="submit"
-            disabled={!otp || verifyingOtp}
+            disabled={otp.length !== 6 || verifyingOtp}
             className="flex w-full items-center justify-center gap-2 rounded-lg bg-primary py-2.5 text-sm font-semibold text-on-primary transition hover:bg-primary-strong disabled:cursor-not-allowed disabled:opacity-50"
         >
             {!verifyingOtp && <CheckIcon className="h-4 w-4" />}

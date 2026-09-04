@@ -9,6 +9,7 @@ export class PhoneService {
       credentials: "include",
       body: JSON.stringify({ idToken }),
     });
+    console.log("res",res);
 
     return handleResponse(res, "Login failed");
   }

@@ -3,7 +3,6 @@ import OtpVerificationForm from "@/components/auth/OtpVerificationForm";
 import PhoneNumberForm from "@/components/auth/PhoneNumberForm";
 import LoginHeader from "@/components/auth/presentational/LoginHeader";
 import { usePhoneAuth } from "@/hooks/usePhoneAuth";
-import { Suspense } from "react";
 
 const PhoneLogin = () => {
     const {
@@ -57,9 +56,7 @@ const PhoneLogin = () => {
 };
 
 const LoginPage = () => (
-    <Suspense fallback={null}>
-        <PhoneLogin />
-    </Suspense>
+    <PhoneLogin />
 );
 
 export default LoginPage;

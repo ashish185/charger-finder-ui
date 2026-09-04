@@ -1,5 +1,4 @@
 import ThemeInitializer from "@/components/ThemeInitializer";
-import ServiceWorkerRegistration from "@/components/ServiceWorkerRegistration";
 import QueryProvider from "./query-provider";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
@@ -17,7 +16,6 @@ const geistMono = Geist_Mono({
 const appUrl = process.env.NEXT_PUBLIC_APP_URL || "https://charge-finder.vercel.app";
 
 export const metadata = {
-  metadataBase: new URL(appUrl),
   title: {
     default: "Charge Finder",
     template: "Charge Finder",

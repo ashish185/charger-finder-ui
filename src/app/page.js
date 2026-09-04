@@ -3,7 +3,7 @@ import { redirect, usePathname } from "next/navigation";
 
 const Home = () => {
   const pathName= usePathname();
-  if(pathName === '/'){
+  if(pathName === '/' ){
     redirect("/login")
   }
   return (
