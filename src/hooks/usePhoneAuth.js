@@ -4,7 +4,7 @@ import {
     RecaptchaVerifier,
     signInWithPhoneNumber,
 } from "firebase/auth";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { auth } from "@/firebase";
 
@@ -12,7 +12,6 @@ const PHONE_STORAGE_KEY = "chargefinder_phone";
 
 export const usePhoneAuth = () => {
     const router = useRouter();
-    const searchParams = useSearchParams();
     const [phone, setPhone] = useState("");
     const [otp, setOtp] = useState("");
     const [confirmationResult, setConfirmationResult] = useState(null);
