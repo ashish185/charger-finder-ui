@@ -14,7 +14,7 @@ export const getPostAuthRoute = (user, currentPath) => {
     if (roles.includes(ROLE.OPERATOR)) return "/operator-signup";
   }
   if(!currentPath || currentPath==="/login"){
-    return "/dashboard";
+    return roles.includes(ROLE.OPERATOR) ? "/cpo" : "/dashboard";
   }
   return currentPath;
 };

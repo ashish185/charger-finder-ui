@@ -29,7 +29,7 @@ const OperatorSignupPage = () => {
       });
       const updatedUser = response?.user ?? response?.data ?? null;
       if (updatedUser) loginSuccess(updatedUser);
-      router.replace("/dashboard");
+      router.replace("/cpo");
     } catch (err) {
       console.error("Failed to save profile:", err);
       setError(err.message || "Couldn't save your details. Please try again.");
@@ -64,6 +64,7 @@ const OperatorSignupPage = () => {
             placeholder="Jane Doe"
             value={fullName}
             onChange={(e) => setFullName(e.target.value)}
+            autoComplete="name"
             required
           />
 
@@ -75,6 +76,7 @@ const OperatorSignupPage = () => {
             placeholder="jane@example.com"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            autoComplete="email"
           />
 
           <FormField
@@ -85,6 +87,7 @@ const OperatorSignupPage = () => {
             placeholder="••••••••"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            autoComplete="new-password"
           />
 
           <label className="flex items-start gap-2 text-sm text-on-surface-variant">
