@@ -1,11 +1,11 @@
 "use client";
 
-import { useAuth } from "@/app/auth/provider";
-import { ROLE } from "@/app/constants";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 
 const CpoLayout = ({ children }) => {
+  const pathname = usePathname();
+
   return (
     <div className="mx-auto max-w-sm px-4 py-4">
       <nav className="mb-4 flex items-center gap-4 border-b border-outline-variant/40 pb-3 text-sm font-semibold">

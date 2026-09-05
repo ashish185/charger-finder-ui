@@ -2,17 +2,19 @@
   "name": "my-next-app",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "lint:fix": "eslint --fix"
   },
   "dependencies": {
     "@tanstack/react-query": "^5.102.8",
     "firebase": "^12.18.0",
     "next": "16.3.1",
-    "react": "19.2.8",
+    "react": "19.2.8",  
     "react-dom": "19.2.8",
     "zustand": "^5.0.15"
   },
@@ -22,6 +24,8 @@
     "@types/react": "19.2.18",
     "eslint": "^9",
     "eslint-config-next": "16.3.1",
+    "eslint-import-resolver-typescript": "^3.10.1",
+    "eslint-plugin-import": "^2.32.0",
     "tailwindcss": "^4"
   }
 }
