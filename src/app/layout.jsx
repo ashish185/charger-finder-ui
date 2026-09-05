@@ -26,7 +26,6 @@ export const metadata = {
     icon: "/icon.svg",
     apple: "/icon.svg",
   },
-  manifest: "/manifest.webmanifest",
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",

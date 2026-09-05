@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import LogoutButton from "@/components/auth/LogoutButton";
 import BottomNav from "@/components/navigation/BottomNav";
 
-const ProtectedChrome = ({ children }) => {
+const ChargeFinderHeader = ({ children }) => {
   const pathname = usePathname();
   const isCpoSection = pathname?.startsWith("/cpo");
 
@@ -35,4 +35,4 @@ const ProtectedChrome = ({ children }) => {
   );
 };
 
-export default ProtectedChrome;
+export default ChargeFinderHeader;

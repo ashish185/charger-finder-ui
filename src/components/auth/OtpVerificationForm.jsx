@@ -1,6 +1,16 @@
+"use client";
+
+import { useEffect, useRef } from "react";
 import { CheckIcon, EnterKeyIcon } from "@/components/icons/AuthIcons";
 
-const OtpVerificationForm = ({ otp, onOtpChange, verifyingOtp, onSubmit, onUseDifferentNumber }) => (
+const OtpVerificationForm = ({ otp, onOtpChange, verifyingOtp, onSubmit, onUseDifferentNumber }) => {
+    const otpInputRef = useRef(null);
+
+    useEffect(() => {
+        otpInputRef.current?.focus();
+    }, []);
+
+    return (
     <form className="space-y-4" onSubmit={onSubmit}>
         <div>
             <label
@@ -11,6 +21,7 @@ const OtpVerificationForm = ({ otp, onOtpChange, verifyingOtp, onSubmit, onUseDi
             </label>
             <div className="relative">
                 <input
+                    ref={otpInputRef}
                     id="otp"
                     type="text"
                     inputMode="numeric"
@@ -41,6 +52,7 @@ const OtpVerificationForm = ({ otp, onOtpChange, verifyingOtp, onSubmit, onUseDi
             Use a different number
         </button>
     </form>
-);
+    );
+};
 
 export default OtpVerificationForm;

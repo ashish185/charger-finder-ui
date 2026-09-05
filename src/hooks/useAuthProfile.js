@@ -36,16 +36,16 @@ export const useAuthProfile = () => {
   const userStatus =
     status === "pending" ? STATE.LOADING : status === "success" ? STATE.SUCCESS : STATE.ERROR;
 
-  useEffect(() => {
-    if (isSuccess) {
-      const path = getPostAuthRoute(user, currentPath);
-      console.log("path", user);
-      router.replace(path);
-    } else if (isError) {
-      router.replace(`/login`);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isSuccess]);
+  // useEffect(() => {
+  //   if (isSuccess) {
+  //     const path = getPostAuthRoute(user, currentPath);
+  //     console.log("path", user);
+  //     router.replace(path);
+  //   } else if (isError) {
+  //     router.replace(`/login`);
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [isSuccess]);
 
   const setUser = (newUser) => {
     queryClient.setQueryData(PROFILE_QUERY_KEY, newUser ?? null);

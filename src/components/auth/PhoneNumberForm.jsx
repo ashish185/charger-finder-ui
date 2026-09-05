@@ -1,6 +1,16 @@
+"use client";
+
+import { useEffect, useRef } from "react";
 import { EnterKeyIcon, SendIcon } from "@/components/icons/AuthIcons";
 
-const PhoneNumberForm = ({ phone, onPhoneChange, isValidPhone, sendingOtp, onSubmit }) => (
+const PhoneNumberForm = ({ phone, onPhoneChange, isValidPhone, sendingOtp, onSubmit }) => {
+    const phoneInputRef = useRef(null);
+
+    useEffect(() => {
+        phoneInputRef.current?.focus();
+    }, []);
+
+    return (
     <form className="space-y-4" onSubmit={onSubmit}>
         <div>
             <label
@@ -14,11 +24,11 @@ const PhoneNumberForm = ({ phone, onPhoneChange, isValidPhone, sendingOtp, onSub
                     +91
                 </span>
                 <input
+                    ref={phoneInputRef}
                     id="phone"
                     type="tel"
                     inputMode="numeric"
                     placeholder="XXXXXXXXXX"
-                    maxLength={10}
                     value={phone}
                     onChange={(e) => onPhoneChange(e.target.value.replace(/\D/g, "").slice(0, 10))}
                     className="w-full rounded-r-lg bg-transparent py-2.5 pr-3.5 text-on-surface placeholder:text-on-surface-variant/60 outline-none"
@@ -37,6 +47,7 @@ const PhoneNumberForm = ({ phone, onPhoneChange, isValidPhone, sendingOtp, onSub
             {sendingOtp ? "Sending OTP…" : "Send OTP"}
         </button>
     </form>
-);
+    );
+};
 
 export default PhoneNumberForm;
