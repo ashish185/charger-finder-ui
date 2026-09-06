@@ -3,6 +3,14 @@
 import { useEffect, useRef } from "react";
 import { EnterKeyIcon, SendIcon } from "@/components/icons/AuthIcons";
 
+const stripCountryCode = (digits) => {
+    // Pasted numbers often include the +91 country code; drop it so only the 10 digit number remains.
+    if (digits.length > 10 && digits.startsWith("91")) {
+        return digits.slice(2);
+    }
+    return digits;
+};
+
 const PhoneNumberForm = ({ phone, onPhoneChange, isValidPhone, sendingOtp, onSubmit }) => {
     const phoneInputRef = useRef(null);
 
@@ -30,7 +38,7 @@ const PhoneNumberForm = ({ phone, onPhoneChange, isValidPhone, sendingOtp, onSub
                     inputMode="numeric"
                     placeholder="XXXXXXXXXX"
                     value={phone}
-                    onChange={(e) => onPhoneChange(e.target.value.replace(/\D/g, "").slice(0, 10))}
+                    onChange={(e) => onPhoneChange(stripCountryCode(e.target.value.replace(/\D/g, "")).slice(0, 10))}
                     className="w-full rounded-r-lg bg-transparent py-2.5 pr-3.5 text-on-surface placeholder:text-on-surface-variant/60 outline-none"
                 />
                 {isValidPhone && !sendingOtp && (

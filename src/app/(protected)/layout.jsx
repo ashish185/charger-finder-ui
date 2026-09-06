@@ -14,7 +14,6 @@ const GeneralLayout = ({ children }) => {
 
 const ProtectedLayout = async ({ children }) => {
   console.log("*************protected layout is called");
-
   const cookieStore = await cookies();
   const token = cookieStore.get("token");
   if (!token) {

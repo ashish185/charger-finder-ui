@@ -31,6 +31,15 @@ export const usePhoneAuth = () => {
         }
     }, []);
 
+    const clearRecaptcha = () => {
+        recaptchaVerifierRef.current?.clear();
+        recaptchaVerifierRef.current = null;
+    };
+
+    useEffect(() => {
+        return () => clearRecaptcha();
+    }, []);
+
     const setupRecaptcha = () => {
         // reCAPTCHA must be set up once, tied to a DOM node
         if (!recaptchaVerifierRef.current) {
@@ -47,6 +56,8 @@ export const usePhoneAuth = () => {
     const updatePhone = (digits) => {
         setPhone(digits);
         window.localStorage.setItem(PHONE_STORAGE_KEY, digits);
+        // Recaptcha is tied to the number it was solved for; drop it so a fresh one is set up.
+        clearRecaptcha();
     };
 
     const sendOtp = async (e) => {
@@ -69,8 +80,7 @@ export const usePhoneAuth = () => {
             console.error("OTP send failed:", err);
             setError("Couldn't send the OTP. Check the number and try again.");
             // Reset recaptcha on failure so user can retry
-            recaptchaVerifierRef.current?.clear();
-            recaptchaVerifierRef.current = null;
+            clearRecaptcha();
         } finally {
             setSendingOtp(false);
         }
@@ -86,7 +96,6 @@ export const usePhoneAuth = () => {
             // Send this token to your Express backend
             const { user } = await PhoneService.phoneLogin(idToken) ?? {};
             const newPath = getPostAuthRoute(user, pathName);
-            await new Promise((resolve) => setTimeout(resolve, 4000));
             if(pathName !== newPath){
                 router.push(newPath);
                 return;
