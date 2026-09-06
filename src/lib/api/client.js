@@ -1,4 +1,4 @@
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL;
+import { SERVER_V1_URL } from "@/app/constants";
 
 export class ApiError extends Error {
   constructor(message, { status, code } = {}) {
@@ -10,7 +10,7 @@ export class ApiError extends Error {
 }
 
 export async function apiFetch(path, { token, ...options } = {}) {
-  const response = await fetch(`${API_BASE_URL}${path}`, {
+  const response = await fetch(`${SERVER_V1_URL}${path}`, {
     credentials: "include",
     ...options,
     headers: {

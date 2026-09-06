@@ -1,7 +1,5 @@
 import UserRepository from "../repositories/userRepository";
-
-const baseUrl = `${process.env.NEXT_PUBLIC_API_URL}`;
-const authUrl = `${process.env.NEXT_PUBLIC_API_URL}/auth`;
+import { apiFetch } from "../api/client";
 
 const jsonHeaders = {
   "Content-Type": "application/json",
@@ -17,7 +15,7 @@ export async function registerUser({ phone, name, email }) {
 
 export class UserService {
   static async getProfile() {
-    const res = await fetch(`${baseUrl}/user/me`, {
+    const res = await apiFetch(`/user/me`, {
       credentials: "include",
     });
 
@@ -25,7 +23,7 @@ export class UserService {
   }
 
   static async completeProfile({ fullName, email, password, agreedToTerms }) {
-    const res = await fetch(`${baseUrl}/user/me`, {
+    const res = await apiFetch(`/user/me`, {
       method: "PATCH",
       headers: jsonHeaders,
       credentials: "include",
@@ -41,7 +39,7 @@ export class UserService {
   }
 
   static async setRole(role) {
-    const res = await fetch(`${baseUrl}/user/role`, {
+    const res = await apiFetch(`/user/role`, {
       method: "PATCH",
       headers: jsonHeaders,
       credentials: "include",
@@ -52,7 +50,7 @@ export class UserService {
   }
 
   static async logout() {
-    const res = await fetch(`${authUrl}/logout`, {
+    const res = await apiFetch(`/auth/logout`, {
       method: "POST",
       credentials: "include",
     });

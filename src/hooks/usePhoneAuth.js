@@ -95,6 +95,7 @@ export const usePhoneAuth = () => {
             const idToken = await userCredential.user.getIdToken();
             // Send this token to your Express backend
             const { user } = await PhoneService.phoneLogin(idToken) ?? {};
+            await new Promise((resolve) => setTimeout(resolve, 4000));
             const newPath = getPostAuthRoute(user, pathName);
             if(pathName !== newPath){
                 router.push(newPath);
