@@ -4,7 +4,7 @@ import { redirect } from "next/navigation";
 import { SERVER_V1_URL } from "./constants";
 
 const Home = async () => {
-  console.log("******************* root layout called")
+  console.log("******************* root layout called");
   const cookieStore = await cookies();
   const token = cookieStore.get("token");
 
