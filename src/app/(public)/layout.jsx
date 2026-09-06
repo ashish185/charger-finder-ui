@@ -1,7 +1,7 @@
+import { redirectionPath } from "@/utils/api";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import { ROLE, SERVER_V1_URL } from "../constants";
-
+import { SERVER_V1_URL } from "../constants";
 
 const PublicLayout = async ({ children }) => {
     console.log("*****************public layout is called");
@@ -24,10 +24,9 @@ const PublicLayout = async ({ children }) => {
     const profile = await response.json();
     const { role = [] } = profile?.data ?? {};
 
-    if (role.includes(ROLE.CUSTOMER)) {
-        redirect("/dashboard")
-    } else if (role.includes(ROLE.OPERATOR)) {
-        redirect("/cpo/stations")
+    const path = redirectionPath(role);
+    if (path) {
+        redirect(path)
     }
     return (<>{children}</>)
 }

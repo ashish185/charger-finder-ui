@@ -1,7 +1,7 @@
 import ChargeFinderHeader from "@/components/navigation/ProtectedChrome";
-import { AuthProvider } from "../auth/provider";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
+import { AuthProvider } from "../auth/provider";
 import { SERVER_V1_URL } from "../constants";
 
 const GeneralLayout = ({ children }) => {
@@ -9,7 +9,6 @@ const GeneralLayout = ({ children }) => {
     <AuthProvider>
       <ChargeFinderHeader>{children}</ChargeFinderHeader>
     </AuthProvider>
-
   )
 }
 

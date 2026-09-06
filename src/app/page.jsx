@@ -1,7 +1,7 @@
-import { redirect } from "next/navigation";
+import { redirectionPath } from "@/utils/api";
 import { cookies } from "next/headers";
-import { apiFetch } from "@/lib/api/client";
-import { ROLE } from "./constants";
+import { redirect } from "next/navigation";
+import { SERVER_V1_URL } from "./constants";
 
 const Home = async () => {
   console.log("******************* root layout called")
@@ -12,7 +12,7 @@ const Home = async () => {
     redirect("/login");
   }
 
-  const response = await apiFetch("/user/me", {
+  const response = await fetch(`${SERVER_V1_URL}/user/me`, {
     headers: {
       Cookie: cookieStore.toString(),
     },
@@ -25,11 +25,10 @@ const Home = async () => {
 
   const profile = await response.json();
   const { role = [] } = profile?.data ?? {};
-
-  if (role.includes(ROLE.OPERATOR)) {
-    redirect("/cpo/stations");
+  const path = redirectionPath(role);
+  if (path) {
+    redirect(path);
   }
-  redirect("/dashboard");
 }
 
 export default Home;

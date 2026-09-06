@@ -1,3 +1,5 @@
+import { ROLE } from "@/app/constants";
+
 export const parseError = (data, fallbackMessage) => {
     if (typeof data === "string" && data) return data;
     if (data && typeof data === "object" && typeof data.message === "string") return data.message;
@@ -21,3 +23,11 @@ export const handleResponse = async (res, fallbackMessage) => {
 
     return data !== null ? data : {};
 };
+
+export const redirectionPath = (role = []) => {
+    if (role.includes(ROLE.CUSTOMER)) {
+        return "/dashboard";
+    } else if (role.includes(ROLE.OPERATOR)) {
+        return "/cpo";
+    }
+}
