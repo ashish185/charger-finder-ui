@@ -1,7 +1,6 @@
 
-export const authUrl = `${process.env.NEXT_PUBLIC_API_URL}/auth`;
-
 export const SERVER_V1_URL= `${process.env.NEXT_PUBLIC_API_URL}/api/v1`;
+export const authUrl = `${SERVER_V1_URL}/auth`;
 
 export const STATE = {
     LOADING: "loading",
