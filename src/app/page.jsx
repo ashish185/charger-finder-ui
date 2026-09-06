@@ -7,7 +7,7 @@ const Home = async () => {
   console.log("******************* root layout called");
   const cookieStore = await cookies();
   const token = cookieStore.get("token");
-
+  consoole.log("******************* is token present ", !!token);
   if (!token) {
     redirect("/login");
   }
