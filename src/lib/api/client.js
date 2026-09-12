@@ -1,4 +1,4 @@
-import { SERVER_V1_URL } from "@/app/constants";
+import { SERVER_V1_URL, API_BASE_PATH } from "@/app/constants";
 
 export class ApiError extends Error {
   constructor(message, { status, code } = {}) {
@@ -10,7 +10,8 @@ export class ApiError extends Error {
 }
 
 export async function apiFetch(path, { token, ...options } = {}) {
-  const response = await fetch(`${SERVER_V1_URL}${path}`, {
+  console.log("****************apiFetch called", `${API_BASE_PATH}${path}`, options, token);
+  const response = await fetch(`${API_BASE_PATH}${path}`, {
     credentials: "include",
     ...options,
     headers: {

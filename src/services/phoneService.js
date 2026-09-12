@@ -1,9 +1,9 @@
-import { authUrl } from "@/app/constants";
 import { handleResponse } from "@/utils/api";
+import { apiFetch } from "../lib/api/client";
 
 export class PhoneService {
   static async phoneLogin(idToken) {
-    const res = await fetch(`${authUrl}/otp/verify`, {
+    const res = await apiFetch(`/auth/otp/verify`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       credentials: "include",
