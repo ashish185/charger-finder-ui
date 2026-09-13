@@ -7,7 +7,6 @@ export const parseError = (data, fallbackMessage) => {
 };
 
 export const handleResponse = async (res, fallbackMessage) => {
-    console.log("****************handleResponse called", res);
     const isTextFunction = typeof res?.text === "function";
     if (!isTextFunction ) {
         return res;
